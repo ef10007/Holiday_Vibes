@@ -1,1 +1,1 @@
-<img file:///Users/jinny/Desktop/pyweb/holvflask/static/img/holidayicon.png />
+<img src="file:///Users/jinny/Desktop/pyweb/holvflask/static/img/holidayicon.png" />
