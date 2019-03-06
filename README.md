@@ -66,7 +66,7 @@ Regarding the capacity of the server issue, we are going to use GCP(Google Cloud
 
 ----
 
-```5. Front-end```
+```5. Client side```
 
 * Graphic Visualisation
 
