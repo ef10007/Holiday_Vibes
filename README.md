@@ -1,6 +1,6 @@
 # Project plan
 
-**[Presentation Resource](https://docs.google.com/presentation/d/1AvII3M6TztcOlt1fVw902jkoczVbgYWZzz-IWcQg1-Y/edit?usp=sharing)
+[Presentation Resource](https://docs.google.com/presentation/d/1AvII3M6TztcOlt1fVw902jkoczVbgYWZzz-IWcQg1-Y/edit?usp=sharing)
 
 ---
 1. Collecting data
@@ -52,7 +52,14 @@ A brief introduction of associated developers and basic motto of the project.
 
 5. Front-end
 
+* Graphic Visualisation
+
+A fluctuation of ticket price will be graphed by using interactive plot. 
+
 * JQuery
+
+By using functions that hover, on click, 
+
 * MDBootstrap
 
 ----
