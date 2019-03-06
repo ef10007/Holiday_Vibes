@@ -10,7 +10,7 @@ The data will be serviced on-premises to implement a great velocity and decrease
 
 ----
 
-```2. Organising template```
+```2. Organising HTML file```
 
 There will be a few rendering template by using Flask. 
 
