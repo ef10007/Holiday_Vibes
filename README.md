@@ -30,24 +30,39 @@ A brief introduction of associated developers and basic motto of the project.
 It will provide a registration form and the loaded data will be sent to DB. Username will be email and password will be hashed before store. Signing up with social media(Facebook, Google, Github, etc.) is going to be also implemented.
 
 * Calendar
+
+The calendar will be visualised each month by default which can be altered by selecting specific period of time. Each cell of it has anchor tag leads to the search html displaying related information.
+
 * My page
+
+The users can pick their own journey and store them in a list. 
+
 * Search
 
-
+The input data will be split by space( .split(' ') ) and filtered with if/else phrases. Or perhaps we will be using text mining.
 
 ----
 
 ```3. DataBase (MySQL)```
 
-* User
-* Preference
-* Recommendation
+* User (email, password, username( default value is email address), region( nullable)..)
+
+* Preference (temperature, country, purpose of holidays, price range)
+
+* Recommendation - ML, CRM(Customer-relationship management)
 
 ----
 
-```4. Back-end```
+```4. Network communication (Server side) ```
 
-* Ajax
+* Ajax( Asynchronous JavaScript And XML )
+
+Each data on the graph(calendar) has been hovered/clicked by user will be displayed and it will be accomplished via ajax and D3.js. 
+
+
+* Flask with python
+
+Regarding the capacity of the server issue, we are going to use GCP(Google Cloud Platform) to remove the presence of servers that requires redundant power supplies. By using macro, we are going to simplify the python code.
 
 ----
 
@@ -59,9 +74,11 @@ A fluctuation of ticket price will be graphed by using interactive plot. The plo
 
 * JQuery
 
-By using functions such as hover, on click, an interactive user interface/experience will be implemented with showing details on selected day. Navbar on the top and 'My list' on the bottom-left/ sticky(float),  will be having toggle function. 
+By using functions such as hover, on click, an interactive user interface/experience will be implemented with showing details on selected day. Navbar on the top and 'My list' on the bottom-left/ sticky(float), will be having toggle function. 
 
 * MDBootstrap
+
+MDB supports basic template that we will develop the webpage from. 
 
 ---
 ```6. Copyright Issue```
