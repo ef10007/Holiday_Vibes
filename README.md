@@ -3,7 +3,7 @@
 [Presentation Resource](https://docs.google.com/presentation/d/1AvII3M6TztcOlt1fVw902jkoczVbgYWZzz-IWcQg1-Y/edit?usp=sharing)
 
 ---
-1. Collecting data
+```1. Collecting data```
 
 We have first looked for suitable websites and analysed the web structure and found API key. 
 The data will be serviced on-premises to implement a great velocity and decrease memory usage.
