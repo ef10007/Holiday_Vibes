@@ -81,6 +81,7 @@ By using functions such as hover, on click, an interactive user interface/experi
 * MDBootstrap
 
 MDB supports basic template that we will develop the webpage from.  
+
 (7th.Mar.2019 : We have downloaded two zip files from [fullcalendar](https://fullcalendar.io/), calendar and full calendar folder and we first encountered **werkzeug.routing.BuildError** as the folders have not been moved to the static folder that Flask automatically adds a static view that takes a path relative to the flask/static directory and serves it.  This endpoint error has been resolved by directing the right path of each static file.)
 
 ---
@@ -90,6 +91,8 @@ MDB supports basic template that we will develop the webpage from.
 
 
 * Flight -  inform them via email
+
+
 (8th.Mar.2019 : The 'country_code' list is going to be saved as JSON in Python file. Since the country codes are constants that do not require maintenance, we are going to accomplish a high velocity with less access frequency of database.)
 
 ----
