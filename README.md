@@ -5,7 +5,7 @@
 ---
 ```1. Collecting data```
 
-We first looked for suitable websites and analysed the web structure and found an API key. 
+We first looked for suitable websites and analysed the web structure. 
 The data will be serviced on-premises to implement a high velocity and decrease memory usage.
 
 ----
@@ -64,6 +64,7 @@ Each data on the graph(calendar) that hovered/clicked by the user will be displa
 * Flask with python
 
 Regarding the capacity of the server issue, we are going to use GCP(Google Cloud Platform) to remove the presence of servers that require redundant power supplies. By using a macro, we are going to simplify the python code.
+(8th.Mar.2019: Creating GCP accounts for using Web server and DB)
 
 ----
 
@@ -86,7 +87,10 @@ MDB supports basic template that we will develop the webpage from.
 ```6. Copyright Issue```
 
 * Weather - using API
+
+
 * Flight -  inform them via email
+(8th.Mar.2019 : The 'country_code' list is going to be saved as JSON in Python file. Since the country codes are constants that do not require maintenance, we are going to accomplish a high velocity with less access frequency of database.)
 
 ----
 
