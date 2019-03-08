@@ -46,7 +46,7 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 
 ```3. DataBase (MySQL)```
 
-* User (email, passwd, username( default value is email address), region( nullable)..) # MDA256, password function
+* User (email, passwd, username( default value is email address), region( nullable)..) # password store by using MDA256, password function
 
 * Preference (temperature, country, the purpose of holidays, price range)
 
@@ -93,7 +93,7 @@ This endpoint error has been resolved by directing the right path of each static
 
 * Flight -  inform them via email 
 
-(8th.Mar.2019 : The 'country_code' list is going to be saved as JSON in Python file. Since the country codes are constants that do not require maintenance, we are going to accomplish a high velocity with less access frequency of database.)
+(8th.Mar.2019 : The 'country_code' list is going to be saved as JSON 'city_code'. We narrowed the range of city choices that are from each continent - Asia, Africa, North America, South America, Europe, Australia, and Antarctica. )
 
 ----
 
