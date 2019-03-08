@@ -80,7 +80,7 @@ By using functions such as hover, on click, an interactive user interface/experi
 * MDBootstrap
 
 MDB supports basic template that we will develop the webpage from.  
-(7th.Mar.2019 : We have downloaded two zip files from 'fullcalendar.io', calendar and full calendar folder and we first encountered 'werkzeug.routing.BuildError' as the folders have not been moved to the static folder that Flask automatically adds a static view that takes a path relative to the flask/static directory and serves it.  This endpoint error has been resolved by directing the right path of static files.)
+(7th.Mar.2019 : We have downloaded two zip files from [fullcalendar](https://fullcalendar.io/), calendar and full calendar folder and we first encountered **werkzeug.routing.BuildError** as the folders have not been moved to the static folder that Flask automatically adds a static view that takes a path relative to the flask/static directory and serves it.  This endpoint error has been resolved by directing the right path of each static file.)
 
 ---
 ```6. Copyright Issue```
