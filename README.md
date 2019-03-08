@@ -93,7 +93,7 @@ This endpoint error has been resolved by directing the right path of each static
 
 * Flight -  inform them via email 
 
-(8th.Mar.2019 : The 'country_code' list is going to be saved as JSON 'city_code'. We narrowed the range of city choices that are from each continent - Asia, Africa, North America, South America, Europe and Australia.)
+(8th.Mar.2019 : The 'country_code' list is going to be saved as 'city_code'. We narrowed the range of city choices that are from each continent - Asia, Africa, North America, South America, Europe and Australia.)
 
 ----
 
