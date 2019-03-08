@@ -33,6 +33,7 @@ It will provide a registration form, and the loaded data will be sent to DB. The
 
 We will display the calendar each month as a default value that also the user can select a specific period.
  Each cell of it has anchor tag leads to the search HTML displaying related information.
+(8th.Mar.2019 : <script> tag isn't working)
 
 * My page
 
@@ -93,7 +94,7 @@ This endpoint error has been resolved by directing the right path of each static
 
 * Flight -  inform them via email 
 
-(8th.Mar.2019 : The 'country_code' list is going to be saved as 'city_code'. We narrowed the range of city choices that are from each continent - Asia, Africa, North America, South America, Europe and Australia.)
+(8th.Mar.2019 : PLAN - The 'city_code' list is going to be saved as JSON (key=city name, value= city code). Selenium is going to collect the city codes. )
 
 ----
 
