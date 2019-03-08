@@ -1,6 +1,6 @@
-# Project plan and its implementation
+# Project plan and daily note
 
-[Presentation Resource](https://docs.google.com/presentation/d/1AvII3M6TztcOlt1fVw902jkoczVbgYWZzz-IWcQg1-Y/edit?usp=sharing)
+[Presentation Resource - Strategy](https://docs.google.com/presentation/d/1AvII3M6TztcOlt1fVw902jkoczVbgYWZzz-IWcQg1-Y/edit?usp=sharing)
 
 ---
 ```1. Collecting data```
@@ -46,7 +46,7 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 
 ```3. DataBase (MySQL)```
 
-* User (email, password, username( default value is email address), region( nullable)..)
+* User (email, passwd, username( default value is email address), region( nullable)..) # MDA256, password function
 
 * Preference (temperature, country, the purpose of holidays, price range)
 
@@ -64,7 +64,7 @@ Each data on the graph(calendar) that hovered/clicked by the user will be displa
 * Flask with python
 
 Regarding the capacity of the server issue, we are going to use GCP(Google Cloud Platform) to remove the presence of servers that require redundant power supplies. By using a macro, we are going to simplify the python code.
-(8th.Mar.2019: Creating GCP accounts for using Web server and DB)
+(8th.Mar.2019: Creating GCP accoun for SQL)
 
 ----
 
@@ -72,7 +72,7 @@ Regarding the capacity of the server issue, we are going to use GCP(Google Cloud
 
 * Graphics Visualisation
 
-A fluctuation of the ticket price will be graphed by using the interactive plot. The plot is going to be updated every day by setting up a crontab.
+A fluctuation of the ticket price will be graphed by using the interactive plot(D3.js). The plot is going to be updated every day by setting up a crontab.
 
 * JQuery
 
@@ -82,16 +82,16 @@ By using functions such as hover, on click, an interactive user interface/experi
 
 MDB supports basic template that we will develop the webpage from.  
 
-(7th.Mar.2019 : We have downloaded two zip files from [fullcalendar](https://fullcalendar.io/), calendar and full calendar folder and we first encountered **werkzeug.routing.BuildError** as the folders have not been moved to the static folder that Flask automatically adds a static view that takes a path relative to the flask/static directory and serves it.  This endpoint error has been resolved by directing the right path of each static file.)
+(7th.Mar.2019 : We have downloaded two zip files from [fullcalendar](https://fullcalendar.io/), calendar and full calendar folder and we first encountered **werkzeug.routing.BuildError** as the folders have not been moved to the static folder that Flask automatically adds a static view that takes a path relative to the flask/static directory and serves it.  
+This endpoint error has been resolved by directing the right path of each static file.)
 
 ---
-```6. Copyright Issue```
+```6. Copyright Issue- Risk point```
 
 * Weather - using API
+#flask module 
 
-
-* Flight -  inform them via email
-
+* Flight -  inform them via email 
 
 (8th.Mar.2019 : The 'country_code' list is going to be saved as JSON in Python file. Since the country codes are constants that do not require maintenance, we are going to accomplish a high velocity with less access frequency of database.)
 
