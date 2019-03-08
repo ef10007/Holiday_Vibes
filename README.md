@@ -5,7 +5,7 @@
 ---
 ```1. Collecting data```
 
-We have first looked for suitable websites and analysed the web structure and found an API key. 
+We first looked for suitable websites and analysed the web structure and found an API key. 
 The data will be serviced on-premises to implement a high velocity and decrease memory usage.
 
 ----
