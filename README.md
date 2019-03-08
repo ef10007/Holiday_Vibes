@@ -94,7 +94,7 @@ This endpoint error has been resolved by directing the right path of each static
 
 * Flight -  inform them via email 
 
-(8th.Mar.2019 : PLAN - The 'city_code' list is going to be saved as JSON (key=city name, value= city code). Selenium is going to collect the city codes. )
+(8th.Mar.2019 : PLAN - The 'city_code' list is going to be saved as JSON (key=city name, value= city code). Selenium is going to automatically collect the city codes. )
 
 ----
 
