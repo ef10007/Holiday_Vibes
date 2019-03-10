@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="{{ url_for('static', filename='img/holidayicon.png') }}" rel="icon">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %} Jinny's holidays vibes {% endblock title %}</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{{ url_for('static', filename='css/mdb.css') }}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <link rel='stylesheet' href="{{ url_for('static', filename='fullcalendar/fullcalendar.css') }}" />
+    <link rel='stylesheet' href="{{ url_for('static', filename='fullcalendar/fullcalendar.print.css') }}" media="print"/>
+
+</head>
+	
+<body class="grey lighten-4">
+
+    <!--Main Navigation-->
+    <header>
+        
+        <!-- Navbar -->
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light mdb-color darken-2 scrolling-navbar">
+            <div class="container">
+
+                <!-- Brand -->
+                <a class="navbar-brand waves-effect" href="/" target="_blank">
+                    <i class="fas fa-home white-text"></i>
+                </a>
+
+                <!-- Collapse -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Links -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    <!-- Left -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link waves-effect white-text" href="/">Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect white-text" href="/aboutus" target="_blank">
+                            About us
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect white-text" href="/" target="_blank">
+                            My menu
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect white-text" href="/" 
+                            target="_blank">
+                            Sign in
+                        </a>
+                        </li>
+                    </ul>
+
+                    <!-- Right -->
+                      
+                    <ul class="navbar-nav nav-flex-icons">
+
+                        <li class="nav-item">
+                            <a href="/login" class="nav-link border border-light rounded waves-effect white-text" target="_blank" >
+                                <i class="fas fa-user-circle mr-2 white-text"></i>Sign in
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </nav>
+        <!-- Navbar -->
+      
+
+    </header>
+    <!--Main Navigation-->
+    {% block body %}
+    
+    {% endblock body %}
+
+    <!--Footer-->
+    <footer class="page-footer text-center font-medium mdb-color darken-2 wow fadeIn">
+
+        <!--Call to action-->
+        <div class="pt-4">
+            <a class="btn btn-outline-white" href="https://www.worldweatheronline.com/
+            " target="_blank" role="button">Weather    
+            <i class="fas fa-cloud-sun-rain"></i>
+            </a>
+
+            <a class="btn btn-outline-white" href="https://www.skyscanner.net/" target="_blank" role="button">Skyscanner 
+                <i class="fas fa-plane-departure"></i>
+            </a>
+            <a class="btn btn-outline-white" href="https://www.trivago.com/
+            " target="_blank" role="button">Trivago   
+            <i class="fas fa-bed"></i>
+            </a>
+        </div>
+        <!--/.Call to action-->
+
+
+        <!-- Social icons -->
+        <div class="pb-4">
+            <a href="https://github.com/mdbootstrap/bootstrap-material-design" target="_blank"> MDB
+                <i class="fab fa-github mr-3"></i>
+            </a>
+        </div>
+        <!-- Social icons -->
+
+        <!--Copyright-->
+        <div class="footer-copyright py-3">
+            © 2019 Copyright:
+            <a href="https://github.com/ef10007" target="_blank">
+            <i class="fab fa-github  white-text"></i> Jinny Han</a>
+        </div>
+        <!--/.Copyright-->
+
+    </footer>
+    <!--/.Footer-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src= "{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src= "{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/mdb.min.js') }}"></script>
+    <!-- Initializations -->
+
+    <script src='static/calendar/lib/jquery.min.js'></script>
+    <script src='static/calendar/lib/jquery-ui.min.js'></script>
+    <script src='static/calendar/lib/moment.min.js'></script>
+    <script src='static/fullcalendar/fullcalendar.js'></script>
+
+    <script type="text/javascript">
+        // Animations initialization
+        new WOW().init();
+
+        $('#calendar').fullCalendar({
+            schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives'
+          });
+    
+        function send_ajax(url, method, data, dataType, fn) {
+            $.ajax({
+                url: url,
+                data: data,
+                type: method,
+                dataType: dataType
+            }).done(function (res) {
+                if (fn)
+                    fn(res)
+            }).fail(function (xhr, status, errorThrown) {
+                console.error("Sorry, there was a problem!", xhr, status, errorThrown);
+            }).always(function (xhr, status) {
+                console.log("The request is complete!");
+            });
+        }
+    </script>
+</body>
+
+</html>
+
