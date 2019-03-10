@@ -9,7 +9,7 @@ def ticket_prices(userdate):
         print("Please input both year and month (usage. 2019-02)")
         exit()
 
-    city_code = ["SYDA", "LOND", "NYCA", "CPT", "SCLA", "BUEA"]
+    city_code = ["SYDA", "LOND", "NYCA", "HEL", 'VLAD', 'ADDA', 'SPNA']
     
 
     for i, j in enumerate(city_code):

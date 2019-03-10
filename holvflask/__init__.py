@@ -22,11 +22,7 @@ app.config.update(
 def calendar():
     today = date.today()
     today = datetime.now()
-    dt = datetime.strptime('2019-02-14 09:22', '%Y-%m-%d %H:%M')
-    
-    year = request.args.get('year', date.today().year, int)
-    month = request.args.get('month', date.today().month, int)
-    return render_template('calendar.htm', year=year, month=month, dt=dt)
+    return render_template('calendar.htm')
 
 @app.route("/")
 def holiday():
@@ -106,30 +102,5 @@ def dated_url_for(endpoint, **values):
     return url_for(endpoint, **values)
 
 
-def make_date(dt, fmt):
-    if not isinstance(dt, date):
-        return datetime.strptime(dt, fmt)
-    else:
-        return dt
-
-@app.template_filter('sdt')
-def sdt(dt, fmt='%Y-%m-%d'):
-    d = make_date(dt, fmt)
-    wd = d.weekday()
-    return (1 if wd == 6 else wd) * -1
-
-
-@app.template_filter('month')
-def month(dt, fmt='%Y-%m-%d'):
-    d = make_date(dt, fmt)
-    return d.month
-
-
-@app.template_filter('edt')
-def edt(dt, fmt='%Y-%m-%d'):
-    d = make_date(dt, fmt)
-    nextMonth = d + relativedelta(months=1)
-    return (nextMonth - timedelta(1)).day + 1
-
-    # select 'sss', sha2('sss',256); =password format in mysql
+# select 'sss', sha2('sss',256); =password format in mysql
 

@@ -19,6 +19,7 @@ This HTML file will be declaring a default HTML/CSS structure that consists of H
 
 * Main 
 It will display the main page including search and recommendation section. 
+(10.Mar.2019: Skyscanner Widget has been loaded on the right-top card.)
 
 * Login
 We are going to emphasise the advantage of signing up such as users can personalise their preferences ( weather conditions, the range of ticket prices, create their holiday schedule, etc.). Once the user has logged in, session cookies will be set to maintain the session of the user.
@@ -90,11 +91,13 @@ This endpoint error has been resolved by directing the right path of each static
 ```6. Copyright Issue- Risk point```
 
 * Weather - using API
-#flask module 
+ making it as a flask module 
 
 * Flight -  inform them via email 
 
 (8th.Mar.2019 : PLAN - The 'city_code' list is going to be saved as JSON (key=city name, value= city code). Selenium is going to automatically collect the city codes.)
+
+(10.Mar.2019 : The site has blocked my IP. Affiliate section found. Going to select a few cities have distinctive temperature and distances.)
 
 ----
 
