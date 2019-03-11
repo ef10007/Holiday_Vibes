@@ -6,10 +6,10 @@ import os
 def ticket_prices(userdate):
 
     if len(userdate) == 0:
-        print("Please input both year and month (usage. 2019-02)")
+        print("Invaild date")
         exit()
 
-    city_code = ["SYDA", "LOND", "NYCA", "HEL", 'VLAD', 'ADDA', 'SPNA']
+    city_code = ["SYDA", "LOND", "NYCA", "HEL", "VLAD", "SPNA"]
     
 
     for i, j in enumerate(city_code):
@@ -30,3 +30,4 @@ def ticket_prices(userdate):
     print("------------- save --------------")
 
 ticket_prices('2019-03')
+#2019-02

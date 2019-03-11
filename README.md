@@ -33,8 +33,9 @@ It will provide a registration form, and the loaded data will be sent to DB. The
 * Calendar
 
 We will display the calendar each month as a default value that also the user can select a specific period.
- Each cell of it has anchor tag leads to the search HTML displaying related information.
-(8th.Mar.2019 : <script> tag isn't working)
+Each cell of it has anchor tag leads to the search HTML displaying related information.
+
+(8th.Mar.2019 : script tag isn't working.)
 
 * My page
 
@@ -48,9 +49,22 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 
 ```3. DataBase (MySQL)```
 
-* User (email, passwd, username( default value is email address), region( nullable)..) # password store by using MDA256, password function
+(11th.Mar.2019: Organise Tables and Columns. The ticket table added as a few information will be stored for producing graphs.)
 
-* Preference (temperature, country, the purpose of holidays, price range)
+* User (email(String),
+        passwd(String), 
+        username( default value is email address),
+        region( nullable)..) - password store by using MDA256, password function
+
+* Preference (temperature(Integer), 
+              city(String), 
+              purpose(String),
+              price range(Integer))
+
+* Ticket (city(String),
+          date(String),
+          price(Integer),
+          crondt(String)) - Direct Flights Only
 
 * Recommendation - ML, CRM(Customer-relationship management)
 
@@ -66,7 +80,7 @@ Each data on the graph(calendar) that hovered/clicked by the user will be displa
 * Flask with python
 
 Regarding the capacity of the server issue, we are going to use GCP(Google Cloud Platform) to remove the presence of servers that require redundant power supplies. By using a macro, we are going to simplify the python code.
-(8th.Mar.2019: Creating GCP accoun for SQL)
+(8th.Mar.2019: Planning of creating GCP account for SQL)
 
 ----
 
@@ -97,7 +111,7 @@ This endpoint error has been resolved by directing the right path of each static
 
 (8th.Mar.2019 : PLAN - The 'city_code' list is going to be saved as JSON (key=city name, value= city code). Selenium is going to automatically collect the city codes.)
 
-(10.Mar.2019 : The site has blocked my IP. Affiliate section found. Going to select a few cities have distinctive temperature and distances.)
+(10.Mar.2019 : The site has blocked my IP. Affiliate section found instead. Going to select a few cities have distinctive temperature and distances.)
 
 ----
 
