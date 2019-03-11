@@ -54,23 +54,30 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 * User (id(Integer),
         email(String),
         passwd(String), 
-        username( default value is email address)
+        username( default value is email address),
+        fblog(String)
         ) - password store by using MDA256, password function
+
+* City(id(Integer),
+       name(String),
+       citycd(String))
 
 * Preference (uid(Integer),
               temperature(Integer), 
               city(String), 
               purpose(String),
               price range(Integer))
+ # sending email
 
-* Ticket (city(String),
+* Ticket (city(String), + option
           date(String),
           price(Integer),
           crondt(String)) - Direct Flights Only
           
 * Weather (city(String),
            date(String),
-           temp(Integer),
+           mintemp(Integer),
+           maxtemp(Integer),
            main(Integer),
            crondt(String)) # The Unix epoch is the time 00:00:00 UTC on 1 January 1970.
       
