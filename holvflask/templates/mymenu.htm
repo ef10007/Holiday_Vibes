@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="{{ url_for('static', filename='img/holidayicon.png') }}" rel="icon">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>My Menu</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{{ url_for('static', filename='css/mdb.css') }}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <link rel='stylesheet' href="{{ url_for('static', filename='css/fullcalendar.css') }}" />
+    <link rel='stylesheet' href="{{ url_for('static', filename='css/fullcalendar.print.css') }}" media="print"/>
+
+    
+<style>
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+  }
+
+  #calendar {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+</style>
+</head>
+
+<body class="grey lighten-4">
+    <header>
+    
+        <!-- Navbar -->
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light mdb-color darken-2 scrolling-navbar">
+            <div class="container">
+
+                <!-- Brand -->
+                <a class="navbar-brand waves-effect" href="/" target="_blank">
+                    <i class="fas fa-home white-text"></i>
+                </a>
+
+                <!-- Collapse -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Links -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    <!-- Left -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link waves-effect white-text" href="/">Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect white-text" href="/aboutus" target="_blank">
+                            About us
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect white-text" href="/mymenu" target="_blank">
+                            My menu
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect white-text" href="/login" 
+                            target="_blank">
+                            Sign in
+                        </a>
+                        </li>
+                    </ul>
+
+                    <!-- Right -->
+                        
+                    <ul class="navbar-nav nav-flex-icons">
+
+                        <li class="nav-item">
+                            <a href="/login" class="nav-link border border-light rounded waves-effect white-text" target="_blank" >
+                                <i class="fas fa-user-circle mr-2 white-text"></i>Sign in
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </nav>
+        <!-- Navbar -->
+    </header>
+
+    <main class="mt-5 mx-5 pt-5 px-5">
+    <div class="row">
+        <div class="col-md-8 mb-4"> 
+
+        <div class="card text-center wow fadeIn">
+
+            <div class="card-header">My calendar</div>
+
+            <!--Card content-->
+            <div class="card-body">
+                <form>
+                    <div id='calendar'>
+            
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        </div><!-- First Grid -->
+
+        <div class="col-md-4 mb-4">
+            <div class="card mb-4 text-center wow fadeIn">
+
+                <div class="card-header">NULL</div>
+
+                <!--Card content-->
+                <div class="card-body">
+
+                    <!-- Default form login -->
+                    <form>
+
+                        <!-- Default input email -->
+                        <label for="defaultFormEmailEx" class="grey-text">Your email</label>
+                        <input type="email" id="defaultFormLoginEmailEx" class="form-control">
+
+                        <br>
+
+                        <!-- Default input password -->
+                        <label for="defaultFormNameEx" class="grey-text">Your name</label>
+                        <input type="text" id="defaultFormNameEx" class="form-control">
+
+                        <div class="text-center mt-4">
+                            <button class="btn btn-info btn-md" type="submit">Sign up</button>
+                        </div>
+                    </form>
+                    <!-- Default form login -->
+
+                </div>
+
+                </div>
+
+                <div class="card mb-4 text-center wow fadeIn">
+
+                    <div class="card-header">NULL</div>
+    
+                    <!--Card content-->
+                    <div class="card-body">
+    
+                        <!-- Default form login -->
+                        <form>
+    
+                            <!-- Default input email -->
+                            <label for="defaultFormEmailEx" class="grey-text">Your email</label>
+                            <input type="email" id="defaultFormLoginEmailEx" class="form-control">
+    
+                            <br>
+    
+                            <!-- Default input password -->
+                            <label for="defaultFormNameEx" class="grey-text">Your name</label>
+                            <input type="text" id="defaultFormNameEx" class="form-control">
+    
+                            <div class="text-center mt-4">
+                                <button class="btn btn-info btn-md" type="submit">Sign up</button>
+                            </div>
+                        </form>
+                        <!-- Default form login -->
+    
+                    </div>
+    
+                    </div>
+        </div><!-- Second Grid -->
+
+    </div>
+    </main>
+ 
+    <!--Footer-->
+    <footer class="page-footer text-center font-medium mdb-color darken-2 wow fadeIn">
+
+        <!--Call to action-->
+        <div class="pt-4">
+            <a class="btn btn-outline-white" href="https://openweathermap.org/city" target="_blank" role="button">Weather    
+            <i class="fas fa-cloud-sun-rain"></i>
+            </a>
+
+            <a class="btn btn-outline-white" href="https://www.skyscanner.net/" target="_blank" role="button">Skyscanner 
+                <i class="fas fa-plane-departure"></i>
+            </a>
+            <a class="btn btn-outline-white" href="https://www.trivago.com/
+            " target="_blank" role="button">Trivago   
+            <i class="fas fa-bed"></i>
+            </a>
+        </div>
+        <!--/.Call to action-->
+
+
+        <!-- Social icons -->
+        <div class="pb-4">
+            <a href="https://github.com/mdbootstrap/bootstrap-material-design" target="_blank"> MDB
+                <i class="fab fa-github mr-3"></i>
+            </a>
+        </div>
+        <!-- Social icons -->
+
+        <!--Copyright-->
+        <div class="footer-copyright py-3">
+            © 2019 Copyright:
+            <a href="https://github.com/ef10007" target="_blank">
+            <i class="fab fa-github  white-text"></i> Jinny Han</a>
+        </div>
+        <!--/.Copyright-->
+
+    </footer>
+    <!--/.Footer-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src= "{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src= "{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/mdb.min.js') }}"></script>
+    <!-- Initializations -->
+
+    
+<!-- <script language="JavaScript" type="text/javascript" src="/js/jquery-1.2.6.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/jquery-ui-personalized-1.5.2.packed.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/sprinkle.js"></script>-->
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/fullcalendar.js') }}"></script>
+
+
+<script>
+
+$(document).ready(function() {
+  
+    $('#calendar').fullCalendar({
+    header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+    },
+    defaultDate: '2019-01-12',
+    navLinks: true, // can click day/week names to navigate views
+    selectable: true,
+    selectHelper: true,
+    select: function(start, end) {
+        var title = prompt('Event Title:');
+        var eventData;
+        if (title) {
+        eventData = {
+            title: title,
+            start: start,
+            end: end
+        };
+        $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+        }
+        $('#calendar').fullCalendar('unselect');
+    },
+    editable: true,
+    eventLimit: true, // allow "more" link when too many events
+    events: [
+        {
+        title: 'All Day Event',
+        start: '2019-01-01'
+        },
+        {
+        title: 'Long Event',
+        start: '2019-01-07',
+        end: '2019-01-10'
+        },
+        {
+        id: 999,
+        title: 'Repeating Event',
+        start: '2019-01-09T16:00:00'
+        },
+        {
+        id: 999,
+        title: 'Repeating Event',
+        start: '2019-01-16T16:00:00'
+        },
+        {
+        title: 'Conference',
+        start: '2019-01-11',
+        end: '2019-01-13'
+        },
+        {
+        title: 'Meeting',
+        start: '2019-01-12T10:30:00',
+        end: '2019-01-12T12:30:00'
+        },
+        {
+        title: 'Lunch',
+        start: '2019-01-12T12:00:00'
+        },
+        {
+        title: 'Meeting',
+        start: '2019-01-12T14:30:00'
+        },
+        {
+        title: 'Happy Hour',
+        start: '2019-01-12T17:30:00'
+        },
+        {
+        title: 'Dinner',
+        start: '2019-01-12T20:00:00'
+        },
+        {
+        title: 'Birthday Party',
+        start: '2019-01-13T07:00:00'
+        },
+        {
+        title: 'Click for Google',
+        url: 'http://google.com/',
+        start: '2019-01-28'
+        }
+    ]
+    });
+});
+
+$('#calendar').fullCalendar({
+    schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives'
+});
+
+</script>
+
+<script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+
+    
+
+</script>
+</body>
+
+</html>

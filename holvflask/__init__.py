@@ -28,6 +28,15 @@ def calendar():
 def holiday():
     return render_template('main.htm')
 
+@app.route("/mymenu")
+def mymenu():
+    return render_template('mymenu.htm')
+
+@app.route("/selectable")
+def selectable():
+    return render_template('selectable.htm')
+
+
 @app.route('/aboutus')
 def aboutus():
     return render_template('aboutus.htm')
