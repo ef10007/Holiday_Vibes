@@ -51,12 +51,14 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 
 (11th.Mar.2019: Organise Tables and Columns. The ticket table added as a few information will be stored for producing graphs.)
 
-* User (email(String),
+* User (id(Integer),
+        email(String),
         passwd(String), 
-        username( default value is email address),
-        region( nullable)..) - password store by using MDA256, password function
+        username( default value is email address)
+        ) - password store by using MDA256, password function
 
-* Preference (temperature(Integer), 
+* Preference (uid(Integer),
+              temperature(Integer), 
               city(String), 
               purpose(String),
               price range(Integer))
@@ -65,6 +67,13 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
           date(String),
           price(Integer),
           crondt(String)) - Direct Flights Only
+          
+* Weather (city(String),
+           date(String),
+           temp(Integer),
+           main(Integer),
+           crondt(String)) # The Unix epoch is the time 00:00:00 UTC on 1 January 1970.
+      
 
 * Recommendation - ML, CRM(Customer-relationship management)
 
