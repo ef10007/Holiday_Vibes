@@ -129,6 +129,8 @@ This endpoint error has been resolved by directing the right path of each static
 
 (10.Mar.2019 : The site has blocked my IP. Affiliate section found instead. Going to select a few cities have distinctive temperature and distances.)
 
+(12.Mar.2019 : The country codes have been successfully saved as a JSON file.  However, attempting to get the city codes failed and we received dictionary = {['Redirect-to']: some code,  ['Reason']: blocked} instead. We have realised that we were disobeying the 'Market principle' as the ticket website is currently on service showing ticket prices depending on the city name. We altered the plan that we will use IATA (International Air Transport Association) code and generate dummy data that has been engineered to be realistic.)
+
 ----
 
 ```7. Language (optional)```
