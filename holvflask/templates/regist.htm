@@ -15,24 +15,23 @@
             </button>
         </div>
         {% endfor %}
+
         <form class="border border-light p-5">
 
                 <p class="h4 mb-4 text-center">Sign up <img src="static/img/holidayicon.png" alt="holidayicon" width="32" height="32"></p>
 
-                
-                <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name">
-            
-                <input type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name">
+
             
                 <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
             
                 <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
             
                 <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">Minimal 8 characters length</small>
+
+                <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="User name">
+        
             
-                <input type="text" id="defaultRegisterPhonePassword" class="form-control" placeholder="Phone number" aria-describedby="defaultRegisterFormPhoneHelpBlock">
-            
-                <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">Optional - for two step authentication</small>
+                <small id="defaultRegisterFormEmailHelpBlock" class="form-text text-muted mb-4">Optional - for authentication</small>
             
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="defaultRegisterFormNewsletter">
