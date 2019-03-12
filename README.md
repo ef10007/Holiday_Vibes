@@ -58,23 +58,28 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
         fblog(String)
         ) - password store by using MDA256, password function
 
-* City(id(Integer),
-       name(String),
-       citycd(String))
+* Country (id(Integer), 
+           name(String),
+           countrycd(String)
+           )
+           
+* Airport (countrycd(String), 
+           cityname(String),
+           airportcd(String)
+           )
 
 * Preference (uid(Integer),
               temperature(Integer), 
               city(String), 
               purpose(String),
               price range(Integer))
- # sending email
 
-* Ticket (city(String), + option
+* Ticket (cityname(String), + option
           date(String),
           price(Integer),
           crondt(String)) - Direct Flights Only
           
-* Weather (city(String),
+* Weather (cityname(String),
            date(String),
            mintemp(Integer),
            maxtemp(Integer),
@@ -82,7 +87,7 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
            crondt(String)) # The Unix epoch is the time 00:00:00 UTC on 1 January 1970.
       
 
-* Recommendation - ML, CRM(Customer-relationship management)
+* Recommendation - ML, CRM(Customer-relationship management) sending email feature will be added
 
 ----
 
@@ -117,6 +122,8 @@ MDB supports basic template that we will develop the webpage from.
 (7th.Mar.2019 : We have downloaded two zip files from [fullcalendar](https://fullcalendar.io/), calendar and full calendar folder and we first encountered **werkzeug.routing.BuildError** as the folders have not been moved to the static folder that Flask automatically adds a static view that takes a path relative to the flask/static directory and serves it.  
 This endpoint error has been resolved by directing the right path of each static file.)
 
+(11th.Mar.2019: We will no longer use the calendar template as it has a limited feature that cannot fully accomplish what we are going to display. Hence, with a bit of study, we are going to create our own calendar page. )
+
 ---
 ```6. Copyright Issue- Risk point```
 
@@ -129,9 +136,7 @@ This endpoint error has been resolved by directing the right path of each static
 
 (10.Mar.2019 : The site has blocked my IP. Affiliate section found instead. Going to select a few cities have distinctive temperature and distances.)
 
-(12.Mar.2019 : The country codes have been successfully saved as a JSON file.  However, attempting to get the city codes failed and we received dictionary = {['Redirect-to']: some code,  ['Reason']: blocked} instead. We have realised that we were disobeying the 'Market principle' as the ticket website is currently on service showing ticket prices depending on the city name. We altered the plan that we will use IATA (International Air Transport Association) code and generate dummy data that has been engineered to be realistic. 
-
-The IATA codes have been collected from [flightsfrom](https://www.flightsfrom.com/) and saved as a JSON file.)
+(12.Mar.2019 : The country codes have been successfully saved as a JSON file.  However, attempting to get the city codes failed and we received dictionary = {['Redirect-to']: some code,  ['Reason']: blocked} instead. We have realised that we were disobeying the 'Market principle' as the ticket website is currently on service showing ticket prices depending on the city name. We altered the plan that we will use IATA (International Air Transport Association) code and generate dummy data that has been engineered to be realistic. The IATA codes have been collected from [flightsfrom](https://www.flightsfrom.com/) and saved as a JSON file.)
 
 ----
 
