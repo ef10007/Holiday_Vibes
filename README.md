@@ -63,9 +63,9 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
            countrycd(String)
            )
            
-* Airport (countrycd(String), 
+* Airport (countrycode(String), 
            cityname(String),
-           airportcd(String)
+           airportcode(String)
            )
 
 * Preference (uid(Integer),
@@ -89,6 +89,10 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 
 * Recommendation - ML, CRM(Customer-relationship management) sending email feature will be added
 
+(8th.Mar.2019: Planning of creating GCP account for SQL)
+
+(14th.Mar.2019: We created another GCP account for SQL and successfully connected with MySQLWorkbench. We created table 'Airport' and inserted values straight from the URL. The connection details such as username and password have been exported in bash profile so that we can import them using os module. )
+
 ----
 
 ```4. Network communication (Server side) ```
@@ -101,7 +105,6 @@ Each data on the graph(calendar) that hovered/clicked by the user will be displa
 * Flask with python
 
 Regarding the capacity of the server issue, we are going to use GCP(Google Cloud Platform) to remove the presence of servers that require redundant power supplies. By using a macro, we are going to simplify the python code.
-(8th.Mar.2019: Planning of creating GCP account for SQL)
 
 ----
 

@@ -43,7 +43,6 @@ def iatacode():
             src = imgtag.attrs['src']
             # print(type(src)) #str 
 
-            # pat = 'flags/(*.).png'
             pattern = re.compile('flags/(.*).png')
 
             code = re.findall(pattern, src)
@@ -51,10 +50,11 @@ def iatacode():
 
             if countrycd not in data.keys():    
                 data[countrycd] = []
-                data[countrycd].append((cityname, airportcd))
+                data[countrycd].append(cityname, airportcd)
             else:
-                data[countrycd].append((cityname, airportcd))
+                data[countrycd].append(cityname, airportcd)
 
+            
         # print(data)
 
         with open(saveFile, mode='a') as jsonfile:
