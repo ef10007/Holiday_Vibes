@@ -131,7 +131,30 @@ This endpoint error has been resolved by directing the right path of each static
 ```6. Copyright Issue- Risk point```
 
 * Weather - using API
- making it as a flask module 
+ making it as a single module 
+ 
+ (13.Mar.2019: We got an API key from [openweather.org](https://openweathermap.org) and requested weather information with city ID which can be found on the website as a JSON file. As a result, from what we have received, we figured out that the temperature is in K(Kelvin) so we have to subtract its value(273.15) to get it in Celcius.  We are going to store them as raw data for now and process the temperature value in server side before sending it to the screen. )
+ ```
+ sample data = 
+ {'clouds': {'all': 88},
+ 'dt': 1552510800,
+ 'dt_txt': '2019-03-13 21:00:00',
+ 'main': {'grnd_level': 1008.37,
+          'humidity': 97,
+          'pressure': 1014.49,
+          'sea_level': 1014.49,
+          'temp': 294.774,
+          'temp_kf': 0,
+          'temp_max': 294.774,
+          'temp_min': 294.774},
+ 'rain': {'3h': 0.345},
+ 'sys': {'pod': 'd'},
+ 'weather': [{'description': 'light rain',
+              'icon': '10d',
+              'id': 500,
+              'main': 'Rain'}],
+ 'wind': {'deg': 61.5019, 'speed': 2.38}})
+ ```
 
 * Flight -  inform them via email 
 
