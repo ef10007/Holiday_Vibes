@@ -117,6 +117,7 @@ A fluctuation of the ticket price will be graphed by using the interactive plot(
 * JQuery
 
 By using functions such as hover, on click, an interactive user interface/experience will be implemented by showing details on the selected day. Navbar on the top and 'My list' on the bottom-left/ sticky(float), will be having toggle function. 
+(17th.Mar.2019: Also will consider to use 'Handlebars' and Vue.js)
 
 * MDBootstrap
 
