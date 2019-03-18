@@ -59,8 +59,8 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
         ) - password store by using MDA256, password function
 
 * Country (id(Integer), 
-           name(String),
-           countrycd(String)
+           countrycd(String),
+           countryname(String)
            )
            
 * Airport (countrycode(String), 
@@ -92,6 +92,8 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 (8th.Mar.2019: Planning of creating GCP account for SQL)
 
 (14th.Mar.2019: We created another GCP account for SQL and successfully connected with MySQLWorkbench. We created table 'Airport' and inserted values straight from the URL. The connection details such as username and password have been exported in bash profile so that we can import them using os module. )
+
+(18th.Mar.2019: We created table 'Country' and inserted values from JSON file.)
 
 ----
 

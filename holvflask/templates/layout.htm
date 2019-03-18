@@ -19,11 +19,6 @@
     <!-- Your custom styles (optional) -->
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 
-    <link rel='stylesheet' href="{{ url_for('static', filename='fullcalendar/fullcalendar.css') }}" />
-    <link rel='stylesheet' href="{{ url_for('static', filename='fullcalendar/fullcalendar.print.css') }}" media="print"/>
-
-    <link href='static/css/fullcalendar.min.css' rel='stylesheet' />
-    <link href='static/css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 
     {% block style %}
     
@@ -159,13 +154,6 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/mdb.min.js') }}"></script>
     <!-- Initializations -->
-    <script src='static/js/moment.min.js'></script>
-    <script src='static/js/jquery.min.js'></script>
-    <script src='static/js/fullcalendar.min.js'></script>
-
-    <script src='static/js/jquery-3.3.1.min.js'></script>
-    <script src='static/js/jquery-ui.min.js'></script>
-
     {% block jsfunction %}
     {% endblock jsfunction %}
 
@@ -173,10 +161,6 @@
         // Animations initialization
         new WOW().init();
 
-        $('#calendar').fullCalendar({
-            schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives'
-          });
-    
         function send_ajax(url, method, data, dataType, fn) {
             $.ajax({
                 url: url,

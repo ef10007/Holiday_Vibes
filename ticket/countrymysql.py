@@ -14,6 +14,10 @@ def get_conn():
     db='projectdb',
     charset='utf8')
 
+
+sql_insert = "insert into Country(countrycd, countryname) values(%s, %s)"
+conn = get_conn()
+
 with open('../Countrycode.json', 'r') as jsonfile:
     data = json.loads(jsonfile.read())
 
@@ -21,18 +25,10 @@ with open('../Countrycode.json', 'r') as jsonfile:
         k = key
         v = value
 
-   
-
-
-
-# sql_insert = "insert into Country(countrycd, countryname) values(%s, %s)"
-# lst=[]
-
-# conn = get_conn()
-# with conn:
+        with conn:
+                    
+            cursor = conn.cursor()
+            sql = sql_insert
+            cursor.execute(sql, (k,v))
         
-#     cursor = conn.cursor()
-#     sql = sql_insert
-#     cursor.execute(sql, lst)
-    
-# print('success')
+print('success')
