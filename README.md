@@ -63,10 +63,15 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
            countryname(String)
            )
            
-* Airport (countrycode(String), 
+* Airport (id(Integer),
+           countrycode(String), 
            cityname(String),
            airportcode(String)
            )
+
+* City (citycode(Integer),
+        cityname(String),
+        countrycode(String))
 
 * Preference (uid(Integer),
               temperature(Integer), 
@@ -94,6 +99,8 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 (14th.Mar.2019: We created another GCP account for SQL and successfully connected with MySQLWorkbench. We created table 'Airport' and inserted values straight from the URL. The connection details such as username and password have been exported in bash profile so that we can import them using os module. )
 
 (18th.Mar.2019: We created table 'Country' and inserted values from JSON file.)
+
+(19th.Mar.2019: We created table 'City'. We used if clause to compare city names in the weather JSON file with the actual city names we need from the Airport table to decrease unnecessary data inserting.)
 
 ----
 

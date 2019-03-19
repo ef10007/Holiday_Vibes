@@ -22,7 +22,11 @@ app.config.update(
 def calendar():
     today = date.today()
     today = datetime.now()
-    return render_template('calendar.htm')
+    dt = datetime.strptime('2019-02-14 09:22', '%Y-%m-%d %H:%M')
+    
+    year = request.args.get('year', date.today().year, int)
+    month = request.args.get('month', date.today().month, int)
+    return render_template('calendar.htm', year=year, month=month, dt=dt)
 
 @app.route("/")
 def holiday():
@@ -31,10 +35,6 @@ def holiday():
 @app.route("/mymenu")
 def mymenu():
     return render_template('mymenu.htm')
-
-@app.route("/selectable")
-def selectable():
-    return render_template('selectable.htm')
 
 
 @app.route('/aboutus')
