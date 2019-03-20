@@ -154,12 +154,22 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/mdb.min.js') }}"></script>
     <!-- Initializations -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ko.js"></script>
+
+
     {% block jsfunction %}
     {% endblock jsfunction %}
 
     <script type="text/javascript">
-        // Animations initialization
-        new WOW().init();
+
+        function openModal(modalId) {
+            $('#' + modalId).modal('show');
+        }
+        function closeModal(modalId) {
+            $('#' + modalId).modal('hide');
+        }
 
         function send_ajax(url, method, data, dataType, fn) {
             $.ajax({
@@ -175,6 +185,14 @@
             }).always(function (xhr, status) {
                 console.log("The request is complete!");
             });
+        }
+
+
+        function hbs(sourceId, data, resultId) {
+            var source = document.getElementById(sourceId).innerHTML;
+            var template = Handlebars.compile(source);
+            var html = template(data);
+            document.getElementById(resultId).innerHTML = html;
         }
 
     </script>

@@ -2,26 +2,19 @@ from holvflask.pro_init_db import Base
 from sqlalchemy import Integer, String, Column, ForeignKey
 from sqlalchemy.orm import relationship, backref
 
-class London(Base):
-    __tablename__ = 'London'
+class Country(Base):
+    __tablename__ = 'Country'
+
+    def __init__(self, countrycd, countryname):
+        self.countrycd = countrycd
+        self.countryname = countryname
 
     id = Column(Integer, primary_key=True)
-    date = Column(String)
-    price = Column(Integer)
+    countrycd = Column(String)
+    countryname = Column(String)
 
-class Sydney(Base):
-    __tablename__ = 'Sydney'
-
-    id = Column(Integer, primary_key=True)
-    date = Column(String)
-    price = Column(Integer)
-
-class Newyork(Base):
-    __tablename__ = 'Newyork'
-
-    id = Column(Integer, primary_key=True)
-    date = Column(String)
-    price = Column(Integer)
+    def json(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
     
 class User(Base):
     __tablename__ = 'User'

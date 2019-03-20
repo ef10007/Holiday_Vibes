@@ -1,11 +1,10 @@
-from flask import Flask, g, request, Response, make_response, session, render_template, url_for, redirect, flash
+from flask import Flask, g, request, Response, make_response, session, render_template, url_for, redirect, flash, jsonify
 from datetime import timedelta, date, datetime
 import os
 from datetime import datetime, date, timedelta
 from dateutil.relativedelta import relativedelta
 from holvflask.pro_init_db import db_session
-
-from holvflask.pro_models import London, Sydney, Newyork, User
+from holvflask.pro_models import Country, User
 
 
 app = Flask(__name__)
@@ -17,6 +16,7 @@ app.config.update(
 	SESSION_COOKIE_NAME='pyweb_flask_session',
 	PERMANENT_SESSION_LIFETIME=timedelta(31)      # 31 days
 )
+
 
 @app.route('/calendar')
 def calendar():
@@ -32,9 +32,16 @@ def calendar():
 def holiday():
     return render_template('main.htm')
 
-@app.route("/mymenu")
+@app.route("/mymenu", methods=['GET'])
 def mymenu():
-    return render_template('mymenu.htm')
+
+    countries = Country.query.all()
+
+    if request.is_xhr:
+        return jsonify([c.json() for c in countries])
+
+    return render_template('mymenu.htm', countries=countries)
+
 
 
 @app.route('/aboutus')

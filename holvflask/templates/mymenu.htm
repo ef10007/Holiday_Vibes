@@ -1,126 +1,29 @@
-<!DOCTYPE html>
+{% extends "layout.htm" %}
+{% block title %} My Menu {% endblock title %}
 
-<html lang="en">
+{% block body %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link href="{{ url_for('static', filename='img/holidayicon.png') }}" rel="icon">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>My Menu</title>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-    
-    <!-- Bootstrap core CSS -->
-    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="{{ url_for('static', filename='css/mdb.css') }}" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
-    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-
-    <link rel='stylesheet' href="{{ url_for('static', filename='css/fullcalendar.css') }}" />
-    <link rel='stylesheet' href="{{ url_for('static', filename='css/fullcalendar.print.css') }}" media="print"/>
-
-    
-<style>
-
-  body {
-    margin: 40px 10px;
-    padding: 0;
-  }
-
-  #calendar {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-</style>
-</head>
-
-<body class="grey lighten-4">
-    <header>
-    
-        <!-- Navbar -->
-        <nav class="navbar fixed-top navbar-expand-lg navbar-light mdb-color darken-2 scrolling-navbar">
-            <div class="container">
-
-                <!-- Brand -->
-                <a class="navbar-brand waves-effect" href="/" target="_blank">
-                    <i class="fas fa-home white-text"></i>
-                </a>
-
-                <!-- Collapse -->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Links -->
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                    <!-- Left -->
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link waves-effect white-text" href="/">Home
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect white-text" href="/aboutus" target="_blank">
-                            About us
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect white-text" href="/mymenu" target="_blank">
-                            My menu
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect white-text" href="/login" 
-                            target="_blank">
-                            Sign in
-                        </a>
-                        </li>
-                    </ul>
-
-                    <!-- Right -->
-                        
-                    <ul class="navbar-nav nav-flex-icons">
-
-                        <li class="nav-item">
-                            <a href="/login" class="nav-link border border-light rounded waves-effect white-text" target="_blank" >
-                                <i class="fas fa-user-circle mr-2 white-text"></i>Sign in
-                            </a>
-                        </li>
-                    </ul>
-
-                </div>
-
-            </div>
-        </nav>
-        <!-- Navbar -->
-    </header>
-
-    <main class="mt-5 mx-5 pt-5 px-5">
+<main class="mt-5 mx-5 pt-5 px-5">
     <div class="row">
         <div class="col-md-8 mb-4"> 
 
         <div class="card text-center wow fadeIn">
 
             <div class="card-header">My calendar</div>
-
+            {% for c in countries %}
             <!--Card content-->
             <div class="card-body">
-                <form>
-                    <div class="calendar">
-            
-                    </div>
-                </form>
-            </div>
-        </div>
         
-        </div><!-- First Grid -->
+                    <script type="text/x-handlebars-template">
+
+                            {{c.countrycd}}
+                        </script>
+                        
+                    </div>
+                </div>
+    
+                
+            </div><!-- First Grid -->
 
         <div class="col-md-4 mb-4">
             <div class="card mb-4 text-center wow fadeIn">
@@ -182,69 +85,9 @@
                     </div>
     
                     </div>
+                {% endfor %}
         </div><!-- Second Grid -->
 
     </div>
-    </main>
- 
-    <!--Footer-->
-    <footer class="page-footer text-center font-medium mdb-color darken-2 wow fadeIn">
-
-        <!--Call to action-->
-        <div class="pt-4">
-            <a class="btn btn-outline-white" href="https://openweathermap.org/city" target="_blank" role="button">Weather    
-            <i class="fas fa-cloud-sun-rain"></i>
-            </a>
-
-            <a class="btn btn-outline-white" href="https://www.skyscanner.net/" target="_blank" role="button">Skyscanner 
-                <i class="fas fa-plane-departure"></i>
-            </a>
-            <a class="btn btn-outline-white" href="https://www.trivago.com/
-            " target="_blank" role="button">Trivago   
-            <i class="fas fa-bed"></i>
-            </a>
-        </div>
-        <!--/.Call to action-->
-
-
-        <!-- Social icons -->
-        <div class="pb-4">
-            <a href="https://github.com/mdbootstrap/bootstrap-material-design" target="_blank"> MDB
-                <i class="fab fa-github mr-3"></i>
-            </a>
-        </div>
-        <!-- Social icons -->
-
-        <!--Copyright-->
-        <div class="footer-copyright py-3">
-            © 2019 Copyright:
-            <a href="https://github.com/ef10007" target="_blank">
-            <i class="fab fa-github  white-text"></i> Jinny Han</a>
-        </div>
-        <!--/.Copyright-->
-
-    </footer>
-    <!--/.Footer-->
-
-    <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <script type="text/javascript" src= "{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src= "{{ url_for('static', filename='js/popper.min.js') }}"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="{{ url_for('static', filename='js/mdb.min.js') }}"></script>
-    <!-- Initializations -->
-
-
-<script type="text/javascript">
-    // Animations initialization
-    new WOW().init();
-
-    
-
-</script>
-</body>
-
-</html>
+</main>
+{% endblock body %}
