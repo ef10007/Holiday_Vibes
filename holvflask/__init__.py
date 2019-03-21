@@ -3,11 +3,16 @@ from datetime import timedelta, date, datetime
 import os
 from datetime import datetime, date, timedelta
 from dateutil.relativedelta import relativedelta
-from holvflask.pro_init_db import db_session
-from holvflask.pro_models import Country, User
 
 
 app = Flask(__name__)
+
+from holvflask.pro_filters import *
+
+# from holvflask.pro_init_db import init_database, db_session
+
+from holvflask.pro_models import Country, User, City
+
 app.debug = True
 app.config['SERVER_NAME'] = 'localhost:5000'
 
@@ -26,7 +31,9 @@ def calendar():
     
     year = request.args.get('year', date.today().year, int)
     month = request.args.get('month', date.today().month, int)
+
     return render_template('calendar.htm', year=year, month=month, dt=dt)
+
 
 @app.route("/")
 def holiday():
@@ -36,12 +43,12 @@ def holiday():
 def mymenu():
 
     countries = Country.query.all()
+    cities = City.query.all()
 
     if request.is_xhr:
-        return jsonify([c.json() for c in countries])
+        return jsonify([c.json() for c in cities])
 
-    return render_template('mymenu.htm', countries=countries)
-
+    return render_template('mymenu.htm', countries=countries, cities=cities)
 
 
 @app.route('/aboutus')

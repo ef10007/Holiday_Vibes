@@ -90,7 +90,6 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
            maxtemp(Integer),
            main(Integer),
            crondt(String)) # The Unix epoch is the time 00:00:00 UTC on 1 January 1970.
-      
 
 * Recommendation - ML, CRM(Customer-relationship management) sending email feature will be added
 

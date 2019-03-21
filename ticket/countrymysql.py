@@ -15,7 +15,7 @@ def get_conn():
     charset='utf8')
 
 
-sql_insert = "insert into Country(countrycd, countryname) values(%s, %s)"
+sql_insert = "insert into Country(countryname, countrycd) values(%s, %s)"
 conn = get_conn()
 
 with open('../Countrycode.json', 'r') as jsonfile:

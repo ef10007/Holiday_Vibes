@@ -10,15 +10,10 @@
         <div class="card text-center wow fadeIn">
 
             <div class="card-header">My calendar</div>
-            {% for c in countries %}
+    
             <!--Card content-->
             <div class="card-body">
-        
-                    <script type="text/x-handlebars-template">
-
-                            {{c.countrycd}}
-                        </script>
-                        
+    
                     </div>
                 </div>
     
@@ -58,35 +53,39 @@
 
                 <div class="card mb-4 text-center wow fadeIn">
 
-                    <div class="card-header">NULL</div>
+                    <div class="card-header">Set Your Favorite City</div>
     
                     <!--Card content-->
                     <div class="card-body">
+
+                    <select class="browser-default custom-select my-2">
+                        <option selected>Select Country</option>
+
+                        {% for c in cities %}
     
-                        <!-- Default form login -->
-                        <form>
+                            <option value="{{c.countrycd}}">{{c.countrycd}}</option>
+
+
+                    </select>
+
+                    <select class="browser-default custom-select my-3">
+                        <option selected>Select City</option>
     
-                            <!-- Default input email -->
-                            <label for="defaultFormEmailEx" class="grey-text">Your email</label>
-                            <input type="email" id="defaultFormLoginEmailEx" class="form-control">
-    
-                            <br>
-    
-                            <!-- Default input password -->
-                            <label for="defaultFormNameEx" class="grey-text">Your name</label>
-                            <input type="text" id="defaultFormNameEx" class="form-control">
-    
-                            <div class="text-center mt-4">
-                                <button class="btn btn-info btn-md" type="submit">Sign up</button>
-                            </div>
-                        </form>
-                        <!-- Default form login -->
-    
+                            <option value="{{c.cityname}}">{{c.cityname}}</option>
+
+                        {% endfor %}
+                        
+                    </select>
+
+                    <div class="text-center mt-4">
+                        <button class="btn btn-info btn-md" type="submit">Save</button>
                     </div>
     
                     </div>
-                {% endfor %}
-        </div><!-- Second Grid -->
+    
+                    </div>
+        
+                </div><!-- Second Grid -->
 
     </div>
 </main>
