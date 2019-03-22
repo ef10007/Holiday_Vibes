@@ -59,7 +59,7 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
         ) - password store by using MDA256, password function
 
 * Country (id(Integer), 
-           countrycd(String),
+           countrycode(String),
            countryname(String)
            )
            
@@ -72,6 +72,14 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 * City (citycode(Integer),
         cityname(String),
         countrycode(String))
+
+* Temp (mpt_citycode(Integer),
+        mpt_cityname(String),
+        mpt_countrycode(String))
+
+* CityMPT (mpt_citycode(Integer),
+           mpt_cityname(String),
+           mpt_countrycode(String))
 
 * Preference (uid(Integer),
               temperature(Integer), 
@@ -100,6 +108,8 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 (18th.Mar.2019: We created table 'Country' and inserted values from JSON file.)
 
 (19th.Mar.2019: We created table 'City'. We used if clause to compare city names in the weather JSON file with the actual city names we need from the Airport table to decrease unnecessary data inserting.)
+
+(21th.Mar.2019: We inner joined two tables Airport and City with the city name and country code to get matching cities. We then found that there are the same city names with different city codes obtain different coordinations. Hence, we created a mapping table CityMPT contains unsorted city names and table Temp that obtains a list of city names appeared more than once from the mapping table. We first deleted all the repeated city names from CityMPT and inserted city names from Temp table so that there is no redundancy of city names. Therefore, we are going to use CityMPT table from now to get weather information.)
 
 ----
 

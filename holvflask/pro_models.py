@@ -16,7 +16,21 @@ class Country(Base):
 
     def json(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+class CityMPT(Base):
+    __tablename__ = 'CityMPT'
 
+    def __init__(self, mpt_citycode, mpt_cityname, mpt_countrycode):
+        self.mpt_citycode = mpt_citycode
+        self.mpt_cityname = mpt_cityname
+        self.mpt_countrycode = mpt_countrycode
+
+    mpt_citycode = Column(String, primary_key=True)
+    mpt_cityname = Column(String)
+    mpt_countrycode = Column(String, ForeignKey('Country.countrycode'))
+    mpt_countrycd = relationship('Country')
+
+    def json(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class City(Base):
     __tablename__ = 'City'

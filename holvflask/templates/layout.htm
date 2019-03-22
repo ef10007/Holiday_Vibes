@@ -180,13 +180,16 @@
             }).done(function (res) {
                 if (fn)
                     fn(res)
+
+                console.log("The done function is complete!");
+
             }).fail(function (xhr, status, errorThrown) {
                 console.error("Sorry, there was a problem!", xhr, status, errorThrown);
+
             }).always(function (xhr, status) {
                 console.log("The request is complete!");
             });
         }
-
 
         function hbs(sourceId, data, resultId) {
             var source = document.getElementById(sourceId).innerHTML;

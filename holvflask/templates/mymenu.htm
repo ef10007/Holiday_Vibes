@@ -57,21 +57,27 @@
     
                     <!--Card content-->
                     <div class="card-body">
-
-                    <select class="browser-default custom-select my-2">
+                       
+                    <select class="browser-default custom-select my-2" onchange="mymenucity()">
                         <option selected>Select Country</option>
+                        <optgroup> 
 
-                        {% for c in cities %}
+                        {% for c in countries %}
     
-                            <option value="{{c.countrycd}}">{{c.countrycd}}</option>
+                            <option id="{{c.countryname}}" value="{{c.countryname}}">{{c.countryname}}</option>
 
+                        {% endfor %}
+
+                        </optgroup> 
 
                     </select>
 
                     <select class="browser-default custom-select my-3">
                         <option selected>Select City</option>
-    
-                            <option value="{{c.cityname}}">{{c.cityname}}</option>
+
+                        {% for c in cities %}
+
+                            <option id="{{c.mpt_cityname}}" value="{{c.mpt_cityname}}">{{c.mpt_cityname}}</option>
 
                         {% endfor %}
                         
@@ -90,3 +96,24 @@
     </div>
 </main>
 {% endblock body %}
+
+
+{% block jsfunction %}
+<script>    
+
+    function mymenucity() {
+        var url = "/mymenu";
+        console.log("url>>", URL)
+        // url, method, data, dataType, fn
+  
+        send_ajax(url, 'GET', {countrycode: countrycode}, 'json', function (res) {
+            console.log("res>>", res, res.result, res.result === 'OK')
+            if (res && res.result === 'OK') {
+                console.log("----------------")
+            }
+        }); 
+    }
+    
+
+</script>
+{% endblock jsfunction %}

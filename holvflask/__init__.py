@@ -9,9 +9,9 @@ app = Flask(__name__)
 
 from holvflask.pro_filters import *
 
-# from holvflask.pro_init_db import init_database, db_session
+from holvflask.pro_init_db import init_database, db_session
 
-from holvflask.pro_models import Country, User, City
+from holvflask.pro_models import Country, User, CityMPT
 
 app.debug = True
 app.config['SERVER_NAME'] = 'localhost:5000'
@@ -26,8 +26,8 @@ app.config.update(
 @app.route('/calendar')
 def calendar():
     today = date.today()
-    today = datetime.now()
-    dt = datetime.strptime('2019-02-14 09:22', '%Y-%m-%d %H:%M')
+  
+    dt = date.today().strftime("%Y-%m-%d")
     
     year = request.args.get('year', date.today().year, int)
     month = request.args.get('month', date.today().month, int)
@@ -42,8 +42,9 @@ def holiday():
 @app.route("/mymenu", methods=['GET'])
 def mymenu():
 
-    countries = Country.query.all()
-    cities = City.query.all()
+    countries = Country.query.order_by(Country.countryname).all()
+    cities = CityMPT.query.all()
+
 
     if request.is_xhr:
         return jsonify([c.json() for c in cities])
