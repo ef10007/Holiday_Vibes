@@ -2,9 +2,10 @@
 {% block title %} Registration page {% endblock title %}
 
 {% block body %}
-<div class="container mt-5 w-50">
+<div class="container mt-5 w-50 white">
     <div class="row mt-5">
-        <div class="col align-self-center">
+        <div class="col align-self-center ">
+
     <form action="/registration" method="POST" class="text-center border border-light p-5">
         
         {% for message in get_flashed_messages() %}
@@ -18,31 +19,36 @@
 
         <form class="border border-light p-5">
 
-                <p class="h4 mb-4 text-center">Sign up <img src="static/img/holidayicon.png" alt="holidayicon" width="32" height="32"></p>
+            <p class="h4 mb-4 text-center">Sign up <img src="static/img/holidayicon.png" alt="holidayicon" width="32" height="32"></p>
 
 
-            
-                <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
-            
-                <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
-            
-                <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">Minimal 8 characters length</small>
-
-                <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="User name">
+            <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Email" name="email" value="{{email}}" required>
         
-            
-                <small id="defaultRegisterFormEmailHelpBlock" class="form-text text-muted mb-4">Optional - for authentication</small>
-            
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="defaultRegisterFormNewsletter">
-                    <label class="custom-control-label" for="defaultRegisterFormNewsletter">Subscribe to our newsletter</label>
-                </div>
-            
-                <button class="btn btn-info my-4 btn-block" type="submit">Sign up</button>
+            <input type="password" id="defaultRegisterFormPassword" class="form-control mb-2" placeholder="Your password" aria-describedby="defaultRegisterFormPasswordHelpBlock" name="passwd" required>
 
-                    </p>
-                </div>
-            </form>
+            <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Confirm your password" aria-describedby="defaultRegisterFormPasswordHelpBlock"
+            name="passwd2" required>
+        
+            <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">Minimal 8 characters length</small>
+
+            <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="Username" name="username"  value="{{username}}">
+    
+            <small id="defaultRegisterFormEmailHelpBlock" class="form-text text-muted mb-4">Optional - for authentication</small>
+        
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="defaultRegisterFormNewsletter">
+                <label class="custom-control-label" for="defaultRegisterFormNewsletter">Subscribe to our newsletter</label>
+            </div>
+        
+            <button class="btn btn-info my-4 btn-block" type="submit">Sign up</button>
+
+            </div>
+
+                <!-- Register -->
+            <p>Not a member?
+                <a href="/registration">Register</a>
+            </p>
+        </form>
             
     
     </form>

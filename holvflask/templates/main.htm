@@ -2,7 +2,6 @@
 {% block title %} Jinny's holidays vibes {% endblock title %}
 
 {% block body %}
-<!-- <div class="view" style="background-image: url('static/img/background.jpg'); background-repeat: no-repeat; background-size: auto; background-position: center;"> -->
 
     <main class="mt-5 pt-5">
     <div class="container" style="opacity: 0.95;">
@@ -49,20 +48,21 @@
                     <!--/.Featured Image-->
 
                     <!--Card-->
-                    <div class="card mb-4 wow fadeIn">
+                    <div class="card wow fadeIn">
 
                         <!--Card content-->
                         <div class="card-body text-center">
 
                         <!-- Section: Blog v.2 -->
-                        <section class="text-center my-5">
+                        <section class="text-center">
 
                         <!-- Section heading -->
-                        <h2 class="h1-responsive font-weight-bold my-5" style="margin: 20px 5px;">Recommendations</h2>
+                        <div class="card-header font-weight-bold h2 mdb-color-text my-3">Recommendations</div>
                         <!-- Section description -->
-                        <p class="dark-grey-text w-responsive mx-auto mb-5" style="margin-bottom: 30px;">
-                            Holidaymakers wonder when and where is the ideal to book their 'routine-break'. If you are fed up with fully packed, peaked season getaways, this recommendation will help. This non-commercial website helps you planning the most suitable place for you and guides you packing up depending on its weather. 
-                        </p>
+                        <div class="dark-grey-text mx-2 mb-5 md">
+                            Holidaymakers wonder when and where is the ideal to book their 'routine-break'. <br>
+                            If you are fed up with fully packed, peaked season getaways, this recommendation will help. This non-commercial website helps you planning the most suitable place for you and guides you packing up depending on its weather. 
+                        </div>
 
                         <!-- Grid row -->
                         <div class="row">
@@ -168,10 +168,46 @@
                 <!--Grid column-->
                 <div class="col-md-4 mb-4">
 
+
+                    <div class="card mb-4 text-center wow fadeIn">
+                        <div class="card-header h4 mdb-color-text">Sign in <img src="static/img/holidayicon.png" alt="holidayicon" width="32" height="32"></div>
+    
+                        <!--Card content-->
+                        <div class="card-body">
+    
+                            <!-- Default form login -->
+                            <form>
+    
+                                <!-- Default input email -->
+                                <label for="defaultLoginFormEmail" class="grey-text">Your email</label>
+                                <input type="email" id="defaultLoginFormEmail" name="email" class="form-control mb-4" placeholder="E-mail" value="{{email}}" required>
+    
+                                <br>
+    
+                                <!-- Default input password -->
+                                <label for="defaultLoginFormPassword" class="grey-text">Your Password</label>
+                                <input type="password" id="defaultLoginFormPassword" name="passwd" class="form-control mb-4" placeholder="Password" required>
+    
+                                <div class="text-center mt-4">
+                                    <button class="btn btn-info btn-md" type="submit">Sign in</button>
+                                </div>
+
+                                <p class='mt-4 mdb-color-text'>Not a member?
+                                    <a href="/registration">Register</a>
+                                </p>
+                            </form>
+                            <!-- Default form login -->
+    
+                        </div>
+        
+                    </div>
+
                 <!--Card: Jumbotron-->
-                <div class="card blue-gradient mb-4 wow fadeIn">
+                <div class="card grey-gradient mb-4 wow fadeIn">
 
                     <!-- Content -->
+                    <div class="card-header h4 mdb-color-text text-center"> Skyscanner </div>
+                    
                     <div class="card-body white text-center">
 
                         <meta name="originLocation" content="Seoul" />
@@ -183,52 +219,21 @@
                 </div>
                 <!--Card: Jumbotron-->
 
-                <!--Card : Dynamic content wrapper-->
-                <div class="card mb-4 text-center wow fadeIn">
-
-                    <div class="card-header">Do you want to get informed about new articles?</div>
-
-                    <!--Card content-->
-                    <div class="card-body">
-
-                        <!-- Default form login -->
-                        <form>
-
-                            <!-- Default input email -->
-                            <label for="defaultFormEmailEx" class="grey-text">Your email</label>
-                            <input type="email" id="defaultFormLoginEmailEx" class="form-control">
-
-                            <br>
-
-                            <!-- Default input password -->
-                            <label for="defaultFormNameEx" class="grey-text">Your name</label>
-                            <input type="text" id="defaultFormNameEx" class="form-control">
-
-                            <div class="text-center mt-4">
-                                <button class="btn btn-info btn-md" type="submit">Sign up</button>
-                            </div>
-                        </form>
-                        <!-- Default form login -->
-
-                    </div>
-
-                </div>
-                <!--/.Card : Dynamic content wrapper-->
 
                 <!--Card-->
-                <div class="card mb-4 wow fadeIn">
+                <div class="card my-4 wow fadeIn">
 
-                    <div class="card-header"><strong>Related articles</strong></div>
+                    <div class="card-header h4 mdb-color-text text-center"> Related articles </div>
 
                     <!--Card content-->
-                    <div class="card-body">
+                    <div class="card-body my-3">
 
                         <ul class="list-unstyled">
                             <li class="media">
                                 <img class="d-flex mr-3" src="https://imgcy.trivago.com/c_lfill,f_auto,g_faces,h_320,q_auto:good,w_488/mag/2018/03/29093835/coolest-hotels-in-new-york-city-1024x683.jpg" width="90px" height="90px" alt="Trivago New York image">
                                 <div class="media-body">
                                     <a href="https://magazine.trivago.com/lower-east-side-hotels/">
-                                        <h5 class="mt-0 mb-1 font-weight-bold" style='margin: 5px 10px;'>New York City's Cauldron of Creativity</h5>
+                                        <h5 class="mx-2 my-2 font-weight-bold" style='margin: 5px 10px;'>New York City's Cauldron of Creativity</h5>
                                     </a>
                                     <p style="margin: 5px 10px;">10 Coolest Hotels in the Lower East Side</p>
                                 </div>

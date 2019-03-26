@@ -45,11 +45,23 @@ def mymenu():
     countries = Country.query.order_by(Country.countryname).all()
     cities = CityMPT.query.all()
 
-
     if request.is_xhr:
         return jsonify([c.json() for c in cities])
 
     return render_template('mymenu.htm', countries=countries, cities=cities)
+
+@app.route('/getcities?=<country_name>', methods=['GET'])
+def getcities(country_name):
+
+    cities = CityMPT.query.filter_by(mpt_contryname=country_name).all()
+
+    print(cities)
+
+    if request.is_xhr:
+        return jsonify([c.json() for c in cities])
+
+    return render_template('mymenu.htm', cities=cities)
+
 
 
 @app.route('/aboutus')
@@ -81,6 +93,7 @@ def registration_post():
         
         flash('Welcome, %s!' % username)
         return redirect('/login')
+
 
 @app.route('/login', methods=['GET'])
 def login_get():

@@ -107,7 +107,7 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 
 (18th.Mar.2019: We created table 'Country' and inserted values from JSON file.)
 
-(19th.Mar.2019: We created table 'City'. We used if clause to compare city names in the weather JSON file with the actual city names we need from the Airport table to decrease unnecessary data inserting.)
+(19th.Mar.2019: We created table 'City'. We used if clause to compare city names in the weather JSON file has city names we actually need for getting weather information from the Airport table to decrease unnecessary data inserting.)
 
 (21th.Mar.2019: We inner joined two tables Airport and City with the city name and country code to get matching cities. We then found that there are the same city names with different city codes obtain different coordinations. Hence, we created a mapping table CityMPT contains unsorted city names and table Temp that obtains a list of city names appeared more than once from the mapping table. We first deleted all the repeated city names from CityMPT and inserted city names from Temp table so that there is no redundancy of city names. Therefore, we are going to use CityMPT table from now to get weather information.)
 
@@ -118,6 +118,8 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 * Ajax( Asynchronous JavaScript And XML )
 
 Each data on the graph(calendar) that hovered/clicked by the user will be displayed, and by using ajax and D3.js, we will implement this. 
+
+(25.Mar.2019: We are going to find its dependent values (i. e. city names) with the country name. On 'mymenu' HTML file,  the selected country name has been successfully logged in the console and made URL for Ajax communication.)
 
 
 * Flask with python
@@ -174,6 +176,8 @@ This endpoint error has been resolved by directing the right path of each static
               'main': 'Rain'}],
  'wind': {'deg': 61.5019, 'speed': 2.38}})
  ```
+
+ (26.Mar.2019: With API, we received JSON providing five days of the weather forecast and processed data into what we are going to use to service the information.  We first selected time that 3 am and 3 pm which represents the minimum and maximum temperature of the day respectively. Then we changed the given temperature into Celcius since what we received were in Kelvin. We added the weather description as well. We haven't decided yet whether we are going to store them in the Database system or send them directly to the website through Ajax.)
 
 * Flight -  inform them via email 
 

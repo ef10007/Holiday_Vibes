@@ -3,19 +3,23 @@
 
 {% block body %}
 
-<div class="container mt-5 w-50">
-    <div class="row mt-5">
-        <div class="col align-self-center">
-            
-<form action="/login" method="POST" class="text-center border border-light p-5">
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>{{message}}</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="container mt-5 w-50">
+        <div class="row mt-5">
+            <div class="col align-self-center">
+                
+            <form action="/login" method="POST" class="text-center border border-light p-5">
+                {% for message in get_flashed_messages() %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>{{message}}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
     </div>
-    {% endfor %}
+
 
     
     <p class="h4 mb-4">Sign In <img src="static/img/holidayicon.png" alt="holidayicon" width="32" height="32"></p>
@@ -60,7 +64,6 @@
     <a type="button" class="light-blue-text mx-2">
         <i class="fab fa-github"></i>
     </a>
-</form>
 </div>
 </div>
 </div>

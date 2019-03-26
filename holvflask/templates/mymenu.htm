@@ -13,9 +13,39 @@
     
             <!--Card content-->
             <div class="card-body">
-    
-                    </div>
+
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-4">
+            
+                <div class="md-form">
+                    <!--The "from" Date Picker -->
+                    <input placeholder="Selected starting date" type="text" id="startingDate" class="form-control datepicker">
+                    <label for="startingDate">start</label>
                 </div>
+            
+                </div>
+                <!--Grid column-->
+            
+                <!--Grid column-->
+                <div class="col-md-6 mb-4">
+            
+                <div class="md-form">
+                    <!--The "to" Date Picker -->
+                    <input placeholder="Selected ending date" type="text" id="endingDate" class="form-control datepicker">
+                    <label for="endingDate">end</label>
+                </div>
+            
+                </div>
+                <!--Grid column-->
+            
+            </div>
+            
+                
+            </div>
+            </div>
     
                 
             </div><!-- First Grid -->
@@ -23,29 +53,22 @@
         <div class="col-md-4 mb-4">
             <div class="card mb-4 text-center wow fadeIn">
 
-                <div class="card-header">NULL</div>
+                <div class="card-header">Set Your Favorite Season</div>
 
                 <!--Card content-->
                 <div class="card-body">
+                    <select id="season" class="browser-default custom-select my-2">
+                        <option selected>Select Season</option>
+                    </select>
 
-                    <!-- Default form login -->
-                    <form>
+                    <select id="temperature" class="browser-default custom-select my-2">
+                        <option selected>Select Temperature</option>
+                        
+                        <optgroup> 
+                            <option id="" value="">25</option>
+                        </optgroup> 
 
-                        <!-- Default input email -->
-                        <label for="defaultFormEmailEx" class="grey-text">Your email</label>
-                        <input type="email" id="defaultFormLoginEmailEx" class="form-control">
-
-                        <br>
-
-                        <!-- Default input password -->
-                        <label for="defaultFormNameEx" class="grey-text">Your name</label>
-                        <input type="text" id="defaultFormNameEx" class="form-control">
-
-                        <div class="text-center mt-4">
-                            <button class="btn btn-info btn-md" type="submit">Sign up</button>
-                        </div>
-                    </form>
-                    <!-- Default form login -->
+                    </select>
 
                 </div>
 
@@ -54,30 +77,28 @@
                 <div class="card mb-4 text-center wow fadeIn">
 
                     <div class="card-header">Set Your Favorite City</div>
-    
-                    <!--Card content-->
+                            
                     <div class="card-body">
-                       
-                    <select class="browser-default custom-select my-2" onchange="mymenucity()">
-                        <option selected>Select Country</option>
-                        <optgroup> 
 
+                    <select class="browser-default custom-select my-2" name="country" id="country"  onchange="getCity(this)">
+     
+                        <option>Select Country</option>
+        
                         {% for c in countries %}
     
-                            <option id="{{c.countryname}}" value="{{c.countryname}}">{{c.countryname}}</option>
+                            <option id="{{c.countryname}}" class="{{c.countryname}}" value="{{c.countryname}}">{{c.countryname}}</option>
 
                         {% endfor %}
 
-                        </optgroup> 
-
                     </select>
 
-                    <select class="browser-default custom-select my-3">
-                        <option selected>Select City</option>
+                    <select class="browser-default custom-select my-2" name="city" id="city">
+                        <option>Select City</option>
+                        
 
                         {% for c in cities %}
 
-                            <option id="{{c.mpt_cityname}}" value="{{c.mpt_cityname}}">{{c.mpt_cityname}}</option>
+                            <option id="{{c.mpt_cityname}}" class="{{c.mpt_cityname}}" value="{{c.mpt_cityname}}">{{c.mpt_cityname}}</option>
 
                         {% endfor %}
                         
@@ -99,21 +120,40 @@
 
 
 {% block jsfunction %}
-<script>    
+    <script>  
 
-    function mymenucity() {
-        var url = "/mymenu";
-        console.log("url>>", URL)
-        // url, method, data, dataType, fn
-  
-        send_ajax(url, 'GET', {countrycode: countrycode}, 'json', function (res) {
-            console.log("res>>", res, res.result, res.result === 'OK')
-            if (res && res.result === 'OK') {
-                console.log("----------------")
-            }
-        }); 
-    }
+        const season = {'Spring': 'Spring', 
+                    'Summer': 'Summer', 
+                    'Autumn': 'Autumn', 
+                    'Winter': 'Winter'}
+
+        for (s in season){
+            $('#season').append($('<option />').val(season[s]).html(season[s]))
+            };
+        
+        function getCity(){
+            let country_select = document.getElementById("country");
+            
+            let country_name = country_select.options[country_select.selectedIndex].value;
     
+            console.log('Countryname: ' + country_name);
 
-</script>
+            let url = "/getcities?=" + country_name;
+            console.log("url>>", url)
+    
+            // url, method, data, dataType, fn
+            let $city = $('#' + city);
+
+            $('.city').append($('<option />'));
+
+            send_ajax(url, 'GET', '', 'json', function(res) {
+                console.log("res>>", res)
+                $city.html(res);
+                $city.append($('<option />')).val();
+            });
+        }
+                
+            
+    </script>
+
 {% endblock jsfunction %}

@@ -16,6 +16,7 @@ class Country(Base):
 
     def json(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class CityMPT(Base):
     __tablename__ = 'CityMPT'
 
@@ -51,9 +52,10 @@ class City(Base):
 class User(Base):
     __tablename__ = 'User'
     id = Column(Integer, primary_key=True)
+    username = Column(String)
     email = Column(String, unique=True)
     passwd = Column(String)
-    username = Column(String)
+    createdate = Column(TIMESTAMP)
 
     def __init__(self, email=None, passwd=None, username='Guest', makeSha=False):
 
