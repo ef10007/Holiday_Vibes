@@ -43,12 +43,13 @@
         </h1>
 
         <div class="row">
-        <!-- {% for m in range(1,13) %} -->
+
             <div class="col">
-            {% set dt = "%s-%s-01" % (year, m) %}
+            {% set dt = "%s-%s-01" % (year, month) %}
+
                 {{calendar(dt)}}
             </div>
-        <!-- {% endfor %} -->
+
         </div>
 
     </div>

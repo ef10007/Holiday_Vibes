@@ -24,6 +24,8 @@ It will display the main page including search and recommendation section.
 * Login
 We are going to emphasise the advantage of signing up such as users can personalise their preferences ( weather conditions, the range of ticket prices, create their holiday schedule, etc.). Once the user has logged in, session cookies will be set to maintain the session of the user.
 
+(27.Mar.2019: On login HTML,  the form tag wrapped a whole context with the method of post. When press the submit button, the given login detail goes to the action parameter.  On the 'User' table model, we encrypted passwords with making the default value of  'makeSha' parameter is true. And with database session, we successfully added a sign-up detail into MySQL. We encountered a few syntax errors such as excessive punctuation and giving an argument in db session commit function. Having the right eye for detail is necessary. )
+
 * About us
 A brief introduction of associated developers and the basic motto of the project.
 

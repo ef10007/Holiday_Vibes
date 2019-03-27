@@ -7,6 +7,7 @@ mysql_url = "mysql+pymysql://holiday_vibe:Holiday1028#@35.221.123.143/projectdb?
 
 engine = create_engine(mysql_url, echo=True, convert_unicode=True)
 
+
 # Declare & create Session
 db_session = scoped_session( sessionmaker(autocommit=False, autoflush=False, bind=engine) )
 

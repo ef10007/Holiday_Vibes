@@ -57,7 +57,7 @@ class User(Base):
     passwd = Column(String)
     createdate = Column(TIMESTAMP)
 
-    def __init__(self, email=None, passwd=None, username='Guest', makeSha=False):
+    def __init__(self, email, passwd, username='Guest', makeSha=True):
 
         self.email = email
 
@@ -68,5 +68,6 @@ class User(Base):
 
         self.username = username
 
+
     def __repr__(self):
-        return 'User %s, %r, %r' % (self.id, self.email, self.username)
+        return 'User %s, %r, %r' % (self.email, self.passwd, self.username)

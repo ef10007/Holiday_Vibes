@@ -42,8 +42,7 @@
                 <!--Grid column-->
             
             </div>
-            
-                
+        
             </div>
             </div>
     
@@ -80,27 +79,15 @@
                             
                     <div class="card-body">
 
-                    <select class="browser-default custom-select my-2" name="country" id="country"  onchange="getCity(this)">
+                    <select class="browser-default custom-select my-2" name="country" id="country">
      
                         <option>Select Country</option>
-        
-                        {% for c in countries %}
     
-                            <option id="{{c.countryname}}" class="{{c.countryname}}" value="{{c.countryname}}">{{c.countryname}}</option>
-
-                        {% endfor %}
-
                     </select>
 
                     <select class="browser-default custom-select my-2" name="city" id="city">
+
                         <option>Select City</option>
-                        
-
-                        {% for c in cities %}
-
-                            <option id="{{c.mpt_cityname}}" class="{{c.mpt_cityname}}" value="{{c.mpt_cityname}}">{{c.mpt_cityname}}</option>
-
-                        {% endfor %}
                         
                     </select>
 
@@ -118,9 +105,9 @@
 </main>
 {% endblock body %}
 
-
+<!-- <script type="text/javascript" src="/static/safescript.js"></script> -->
 {% block jsfunction %}
-    <script>  
+    <script type="text/javascript">  
 
         const season = {'Spring': 'Spring', 
                     'Summer': 'Summer', 
@@ -130,29 +117,36 @@
         for (s in season){
             $('#season').append($('<option />').val(season[s]).html(season[s]))
             };
+
         
+        const countrycitys = {}
+
+        for (cc in countrycity){
+            $('#country').append($('<option />').val(cc).html(cc))
+            };
+
+        for (cc in countrycity){
+            $('#city').append($('<option />').val(countrycity[cc][0][0]).html(countrycity[cc][0][0]))
+            };
+        
+        $('#country').change(function(){
+            getCity();
+        })
+            
         function getCity(){
+            $('#city').html('') //초기화
             let country_select = document.getElementById("country");
             
             let country_name = country_select.options[country_select.selectedIndex].value;
+
+            cts = countrycity[country_name]
     
             console.log('Countryname: ' + country_name);
 
-            let url = "/getcities?=" + country_name;
-            console.log("url>>", url)
-    
-            // url, method, data, dataType, fn
-            let $city = $('#' + city);
-
-            $('.city').append($('<option />'));
-
-            send_ajax(url, 'GET', '', 'json', function(res) {
-                console.log("res>>", res)
-                $city.html(res);
-                $city.append($('<option />')).val();
-            });
+            for (c in cts){
+                $('#city').append($('<option />').val(cts[c][0]).html(cts[c][0]));
+            }
         }
-                
             
     </script>
 
