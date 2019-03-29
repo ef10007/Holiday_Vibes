@@ -9,7 +9,7 @@
 
         <div class="card text-center wow fadeIn">
 
-            <div class="card-header">My calendar</div>
+            <div class="card-header h4 mdb-color-text ">My calendar</div>
     
             <!--Card content-->
             <div class="card-body">
@@ -40,113 +40,177 @@
             
                 </div>
                 <!--Grid column-->
+
+                <div class = "container mx-4 mdb-color-text">
+                    <h1 class="text-center ">
+                        <small><a href="/?year={{year - 1}}" class="text-muted">{{year - 1}}</a></small>
+                        {{year}}
+                        <small><a href="/?year={{year + 1}}" class="text-muted">{{year + 1}}</a></small>
+                    </h1>
+            
+                    <div class="row">
+            
+                        <div class="col">
+                            <div class="container-fluid white-skin text-center">
+                                <section class="container white pb-3 my-3">
+                                    <h1> {{namedmonth}} </h1>
+                        
+                                <table class="table table-bordered table-white">
+                                    <thead class="mdb-color lighten-1 white-text">
+            
+                                        {%- for days in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri ', 'Sat'] %}
+                                        <td><div>{{ days }}</div></td>
+                                        {% endfor -%}
+            
+                                    </thead>
+                                    <tbody class="grey lighten-5">
+                                        {% for row in range(dt | sdt, dt | edt) | batch(7, '&nbsp;') %}
+                                        <tr>
+                                            {% for col in row %}
+                                                <td>
+                                                    {% if ((col|int) <= 0) %}
+                                                        &nbsp;
+                                                    {%else%}
+                                                        {{col | safe}}
+                                                    {%endif%}
+                                                </td>
+                                            {% endfor %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
             
             </div>
         
             </div>
-            </div>
+        </div>
     
                 
-            </div><!-- First Grid -->
+        </div><!-- First Grid -->
 
         <div class="col-md-4 mb-4">
             <div class="card mb-4 text-center wow fadeIn">
 
-                <div class="card-header">Set Your Favorite Season</div>
+                <div class="card-header h4 mdb-color-text">Set Your Favorite Season</div>
 
                 <!--Card content-->
                 <div class="card-body">
+
                     <select id="season" class="browser-default custom-select my-2">
-                        <option selected>Select Season</option>
+                        <option>Select Season</option>
                     </select>
 
                     <select id="temperature" class="browser-default custom-select my-2">
-                        <option selected>Select Temperature</option>
-                        
-                        <optgroup> 
-                            <option id="" value="">25</option>
-                        </optgroup> 
-
-                    </select>
-
-                </div>
-
-                </div>
-
-                <div class="card mb-4 text-center wow fadeIn">
-
-                    <div class="card-header">Set Your Favorite City</div>
-                            
-                    <div class="card-body">
-
-                    <select class="browser-default custom-select my-2" name="country" id="country">
-     
-                        <option>Select Country</option>
-    
-                    </select>
-
-                    <select class="browser-default custom-select my-2" name="city" id="city">
-
-                        <option>Select City</option>
-                        
+                        <option>Select Temperature</option>
                     </select>
 
                     <div class="text-center mt-4">
                         <button class="btn btn-info btn-md" type="submit">Save</button>
                     </div>
+
+                </div>
+
+            </div>
+
+            <div class="card mb-4 text-center wow fadeIn">
+
+                <div class="card-header h4 mdb-color-text">Set Your Favorite City</div>
+                        
+                <div class="card-body">
+
+                <select class="browser-default custom-select my-2" name="country" id="country">
     
-                    </div>
-    
-                    </div>
+                    <option>Select Country</option>
+
+                </select>
+
+                <select class="browser-default custom-select my-2" name="city" id="city">
+
+                    <option>Select City</option>
+                    
+                </select>
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-info btn-md" type="submit">Save</button>
+                </div>
+
+                </div>
+
+            </div>
         
-                </div><!-- Second Grid -->
+        </div><!-- Second Grid -->
 
     </div>
 </main>
 {% endblock body %}
 
-<!-- <script type="text/javascript" src="/static/safescript.js"></script> -->
+
 {% block jsfunction %}
     <script type="text/javascript">  
 
         const season = {'Spring': 'Spring', 
                     'Summer': 'Summer', 
                     'Autumn': 'Autumn', 
-                    'Winter': 'Winter'}
+                    'Winter': 'Winter'};
 
         for (s in season){
             $('#season').append($('<option />').val(season[s]).html(season[s]))
             };
 
-        
-        const countrycitys = {}
+        const temperature = {
+            'Spring': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], 
+            'Summer': [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40], 
+            'Autumn': [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25], 
+            'Winter': [-15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4]
+        };
+                
+        $('#season').change(function(){
+            var $season = $('#season').val();
+            console.log('season: ' + $season );
+            getTemperature($season);
+        });
 
-        for (cc in countrycity){
-            $('#country').append($('<option />').val(cc).html(cc))
-            };
+        function getTemperature(season){
+            $('#temperature').html('') //초기화
 
-        for (cc in countrycity){
-            $('#city').append($('<option />').val(countrycity[cc][0][0]).html(countrycity[cc][0][0]))
-            };
-        
+            let temp = temperature[season]; 
+
+            for (t in temp){
+                $('#temperature').append($('<option />').val(temp[t]).html(temp[t]));
+            }    
+        };
+
+        $.getJSON( "static/json/getcity.json", function( data ) {
+           
+            $.each( data, function( key, val ) {
+              $('#country').append($('<option />').val(key).html(key))
+            });
+          });
+
         $('#country').change(function(){
-            getCity();
-        })
+            var $key = $('#country').val();
+            console.log('Countryname: ' + $key );
+            getCity($key);
+        });
             
-        function getCity(){
+        function getCity(keys){
             $('#city').html('') //초기화
-            let country_select = document.getElementById("country");
-            
-            let country_name = country_select.options[country_select.selectedIndex].value;
 
-            cts = countrycity[country_name]
-    
-            console.log('Countryname: ' + country_name);
-
-            for (c in cts){
-                $('#city').append($('<option />').val(cts[c][0]).html(cts[c][0]));
-            }
-        }
+            $.getJSON( "static/json/getcity.json", function( data ) {
+           
+                $.each( data, function( key, val ) {
+                    if(key == keys){
+                    for (c in val){
+                        $('#city').append($('<option />').val(val[c][0]).html(val[c][0]));
+                    }
+                }});
+              });
+        };
             
     </script>
 

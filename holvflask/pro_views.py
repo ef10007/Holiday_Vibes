@@ -13,7 +13,7 @@ from holvflask.pro_models import User, City, Country, CityMPT
 def calendar():
     today = date.today()
   
-    dt = date.today().strftime("%Y-%m-%d")
+    dt = today.strftime("%Y-%m-%d")
     
     year = request.args.get('year', date.today().year, int)
     month = request.args.get('month', date.today().month, int)
@@ -21,33 +21,30 @@ def calendar():
     return render_template('calendar.htm', year=year, month=month)
 
 
+@app.route("/mymenu", methods=['GET'])
+def mymenu():
+
+    today = date.today()
+  
+    dt = today.strftime("%Y-%m-%d")
+    
+    year = request.args.get('year', date.today().year, int)
+    month = request.args.get('month', date.today().month, int)
+
+    namedmonth = today.strftime("%B")
+
+    return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth)
+
+
 @app.route("/")
 def holiday():
     return render_template('main.htm')
 
-@app.route("/mymenu", methods=['GET'])
-def mymenu():
+@app.route("/mymenu", methods=['POST'])
+def mymenu_post():
+    return render_template('mymenu.htm')
 
-    countries = Country.query.order_by(Country.countryname).all()
-    cities = CityMPT.query.all()
-
-    if request.is_xhr:
-        return jsonify([c.json() for c in cities])
-
-    return render_template('mymenu.htm', countries=countries, cities=cities)
-
-@app.route('/getcities?=<country_name>', methods=['GET'])
-def getcities(country_name):
-
-    cities = CityMPT.query.filter_by(mpt_contryname=country_name).all()
-
-    print(cities)
-
-    if request.is_xhr:
-        return jsonify([c.json() for c in cities])
-
-    return render_template('mymenu.htm', cities=cities)
-
+    
 
 @app.route('/aboutus')
 def aboutus():
@@ -94,9 +91,11 @@ def login_post():
     email = request.form.get('email')
     passwd = request.form.get('passwd')
 
-    u = User.query.filter('email = :email and passwd = :passwd').params(email=email, passwd=passwd).first()
+    print("EMAIL", email, "PASSWD", passwd)
+
+    u = db_session.query(User).filter("email = :email and passwd = sha2(:passwd, 256)").params(email=email, passwd=passwd).first()
     
-    print("HIIIIIIIIIIIIIIIIIIIIIIII")
+    print(u)
 
     if u is not None:
         session['loginUser'] = { 'useremail': u.email, 'name': u.username }

@@ -26,11 +26,19 @@ We are going to emphasise the advantage of signing up such as users can personal
 
 (27.Mar.2019: On login HTML,  the form tag wrapped a whole context with the method of post. When press the submit button, the given login detail goes to the action parameter.  On the 'User' table model, we encrypted passwords with making the default value of  'makeSha' parameter is true. And with database session, we successfully added a sign-up detail into MySQL. We encountered a few syntax errors such as excessive punctuation and giving an argument in db session commit function. Having the right eye for detail is necessary. )
 
+(28.Mar.2019: ```The HyperText Transfer Protocol (HTTP) 500 Internal Server Error server error response code indicates that the server encountered an unexpected condition that prevented it from fulfilling the request.```,
+(https://docs.sqlalchemy.org/en/latest/orm/tutorial.html) 
+
+When we inserted passwords to the database, we encrypted them with function. Likewise, we realised we must encrypt the stored password to receive the right login details when we tried to select it.)
+
 * About us
 A brief introduction of associated developers and the basic motto of the project.
 
 * Register 
 It will provide a registration form, and the loaded data will be sent to DB. The username will be email and password will be hashed before the store. Signing up with social media(Facebook, Google, Github, etc.) is going to be also implemented.
+
+* Delete account
+This page is for the users who wish to withdraw their account from our service. There will be a few text area sections to get a brief reason for deleting their account. 
 
 * Calendar
 
@@ -39,9 +47,12 @@ Each cell of it has anchor tag leads to the search HTML displaying related infor
 
 (8th.Mar.2019 : script tag isn't working.)
 
-* My page
+* My menu
 
-The users can pick their journey and store them in a list. 
+The users can pick their journey and store them in a preference table.
+
+(28.Mar.2019: We stored a JSON file contains the Country names and their city names in the static folder and imported it with jQuery.getJSON() function. To display country name list on the select box first, we called JSON file and extracted keys that are country names. After that, the chosen country name was declared as a variable that used to invoke the function to get the city name.
+)
 
 * Search
 

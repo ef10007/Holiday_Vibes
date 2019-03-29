@@ -1,4 +1,5 @@
 {% extends "layout.htm" %}
+
 {% block title %} Jinny's holidays vibes {% endblock title %}
 
 {% block body %}
@@ -167,27 +168,39 @@
 
                 <!--Grid column-->
                 <div class="col-md-4 mb-4">
-
-
                     <div class="card mb-4 text-center wow fadeIn">
+
+                    {% if session.loginUser %}
+
+                        <div class="card-header h5 mdb-color-text ">
+                            <p class='my-3'>Welcome, {{session.loginUser.name}}! </p>
+                            <p class='my-3'>
+                                <a href="/mymenu"> Set or see your preference </a>
+                            </p>
+
+                        </div> 
+                    
+                    {% else %}
+                  
                         <div class="card-header h4 mdb-color-text">Sign in <img src="static/img/holidayicon.png" alt="holidayicon" width="32" height="32"></div>
-    
+        
                         <!--Card content-->
                         <div class="card-body">
-    
+
                             <!-- Default form login -->
-                            <form>
-    
+                            <form action="/login" method="POST">
+
                                 <!-- Default input email -->
                                 <label for="defaultLoginFormEmail" class="grey-text">Your email</label>
+
                                 <input type="email" id="defaultLoginFormEmail" name="email" class="form-control mb-4" placeholder="E-mail" value="{{email}}" required>
-    
+
                                 <br>
-    
+
                                 <!-- Default input password -->
                                 <label for="defaultLoginFormPassword" class="grey-text">Your Password</label>
                                 <input type="password" id="defaultLoginFormPassword" name="passwd" class="form-control mb-4" placeholder="Password" required>
-    
+
                                 <div class="text-center mt-4">
                                     <button class="btn btn-info btn-md" type="submit">Sign in</button>
                                 </div>
@@ -196,10 +209,9 @@
                                     <a href="/registration">Register</a>
                                 </p>
                             </form>
-                            <!-- Default form login -->
-    
-                        </div>
-        
+                        </div>    
+                    {% endif %}
+                
                     </div>
 
                 <!--Card: Jumbotron-->
