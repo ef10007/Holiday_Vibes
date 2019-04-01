@@ -55,8 +55,9 @@ for c in city:
 
         
         desc = w['weather'][0]['description']
+        main = w['weather'][0]['main']
 
-        print(date, temp, desc)
+        print(date, temp, desc, main)
                 
 
 

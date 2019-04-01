@@ -2,11 +2,15 @@
 {% block title %} Login page {% endblock title %}
 
 {% block body %}
-    <div class="container mt-5 w-50 white">
-        <div class="row mt-5">
-            <div class="col align-self-center">
+    <div class="container-fluid mt-5">
+
+        <div class="row my-5"></div>
+        <div class="col"></div>
+
+        <div class="row my-4">
+            <div class="col col-md-6 offset-md-3">
                 
-            <form action="/login" method="POST" class="text-center border border-light p-5">
+            <form action="/login" method="POST" class="text-center border border-light p-5 white">
                 {% for message in get_flashed_messages() %}
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         <strong>{{message}}</strong>
@@ -39,7 +43,7 @@
                 </div>
 
                 <!-- Sign in button -->
-                <button class="btn btn-info btn-lg my-3 mt-3" type="submit">Sign in</button>
+                <button class="btn btn-lg mt-3 mdb-color lighten-1" type="submit">Sign in</button>
 
                 <!-- Register -->
                 <p class='mt-4'>Not a member?
@@ -49,6 +53,10 @@
             </form>
         </div>
     </div>
+
+    <div class="row my-2"></div>
+    <div class="col"></div>
+
     </div>
 
 {% endblock body %}

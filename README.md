@@ -27,15 +27,16 @@ We are going to emphasise the advantage of signing up such as users can personal
 (27.Mar.2019: On login HTML,  the form tag wrapped a whole context with the method of post. When press the submit button, the given login detail goes to the action parameter.  On the 'User' table model, we encrypted passwords with making the default value of  'makeSha' parameter is true. And with database session, we successfully added a sign-up detail into MySQL. We encountered a few syntax errors such as excessive punctuation and giving an argument in db session commit function. Having the right eye for detail is necessary. )
 
 (28.Mar.2019: ```The HyperText Transfer Protocol (HTTP) 500 Internal Server Error server error response code indicates that the server encountered an unexpected condition that prevented it from fulfilling the request.```,
-(https://docs.sqlalchemy.org/en/latest/orm/tutorial.html) 
+[SQLAlchemy](https://docs.sqlalchemy.org/en/latest/orm/tutorial.html) 
 
-When we inserted passwords to the database, we encrypted them with function. Likewise, we realised we must encrypt the stored password to receive the right login details when we tried to select it.)
+When we inserted passwords to the database, we encrypted them with function. Likewise, we realised we must encrypt the stored password to receive the right login details when we tried to select it. )
 
 * About us
 A brief introduction of associated developers and the basic motto of the project.
 
 * Register 
 It will provide a registration form, and the loaded data will be sent to DB. The username will be email and password will be hashed before the store. Signing up with social media(Facebook, Google, Github, etc.) is going to be also implemented.
+
 
 * Delete account
 This page is for the users who wish to withdraw their account from our service. There will be a few text area sections to get a brief reason for deleting their account. 
@@ -45,7 +46,9 @@ This page is for the users who wish to withdraw their account from our service. 
 We will display the calendar each month as a default value that also the user can select a specific period.
 Each cell of it has anchor tag leads to the search HTML displaying related information.
 
-(8th.Mar.2019 : script tag isn't working.)
+(8th.Mar.2019 : The script tags aren't working.)
+
+(25th.Mar.2019: We have deprecated it.)
 
 * My menu
 
@@ -53,6 +56,9 @@ The users can pick their journey and store them in a preference table.
 
 (28.Mar.2019: We stored a JSON file contains the Country names and their city names in the static folder and imported it with jQuery.getJSON() function. To display country name list on the select box first, we called JSON file and extracted keys that are country names. After that, the chosen country name was declared as a variable that used to invoke the function to get the city name.
 )
+
+(1st.Apr.2019: We tried to receive the values from the query parameters that essential for displaying its calendar. It was simply implemented by 'request.args.get()' in the same route.)
+
 
 * Search
 
@@ -123,6 +129,8 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 (19th.Mar.2019: We created table 'City'. We used if clause to compare city names in the weather JSON file has city names we actually need for getting weather information from the Airport table to decrease unnecessary data inserting.)
 
 (21th.Mar.2019: We inner joined two tables Airport and City with the city name and country code to get matching cities. We then found that there are the same city names with different city codes obtain different coordinations. Hence, we created a mapping table CityMPT contains unsorted city names and table Temp that obtains a list of city names appeared more than once from the mapping table. We first deleted all the repeated city names from CityMPT and inserted city names from Temp table so that there is no redundancy of city names. Therefore, we are going to use CityMPT table from now to get weather information.)
+
+(1st.Apr.2019: For the synchronisation process,  NTP (network time protocol) relies on coordinated universal time (UTC), which is obtained from the individual clients and servers in a hierarchical system. Hence, we decided to use Moment.js that provides UTC for inserting the user's registration date to the database system.)
 
 ----
 

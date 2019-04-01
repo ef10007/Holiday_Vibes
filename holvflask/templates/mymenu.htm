@@ -42,10 +42,12 @@
                 <!--Grid column-->
 
                 <div class = "container mx-4 mdb-color-text">
-                    <h1 class="text-center ">
-                        <small><a href="/?year={{year - 1}}" class="text-muted">{{year - 1}}</a></small>
+                    <h1 class="text-center">
+                        <small><a href="/mymenu?selected_year={{year - 1}}&selected_month={{month}}" class="text-muted">{{year - 1}}</a></small>
+
                         {{year}}
-                        <small><a href="/?year={{year + 1}}" class="text-muted">{{year + 1}}</a></small>
+
+                        <small><a href="/mymenu?selected_year={{year + 1}}&selected_month={{month}}" class="text-muted">{{year + 1}}</a></small>
                     </h1>
             
                     <div class="row">
@@ -53,7 +55,21 @@
                         <div class="col">
                             <div class="container-fluid white-skin text-center">
                                 <section class="container white pb-3 my-3">
-                                    <h1> {{namedmonth}} </h1>
+
+                                    <h2 class="text-center mb-4">
+
+                                            <small><a href="/mymenu?selected_year={{year}}&selected_month={{month -1 }}" class="text-muted">
+                                                <i class="far fa-caret-square-left"></i>
+                                            </a></small>
+
+                                            {{namedmonth}}
+                                        
+
+                                            <small><a href="/mymenu?selected_year={{year}}&selected_month={{month + 1 }}" class="text-muted"> 
+                                                <i class="far fa-caret-square-right"></i>
+                                            </a></small>
+
+                                        </h1>
                         
                                 <table class="table table-bordered table-white">
                                     <thead class="mdb-color lighten-1 white-text">
@@ -67,12 +83,14 @@
                                         {% for row in range(dt | sdt, dt | edt) | batch(7, '&nbsp;') %}
                                         <tr>
                                             {% for col in row %}
-                                                <td>
+
+                                                <td id="{{col}}">
                                                     {% if ((col|int) <= 0) %}
                                                         &nbsp;
                                                     {%else%}
                                                         {{col | safe}}
                                                     {%endif%}
+                                                    
                                                 </td>
                                             {% endfor %}
                                         </tr>
@@ -96,31 +114,8 @@
         <div class="col-md-4 mb-4">
             <div class="card mb-4 text-center wow fadeIn">
 
-                <div class="card-header h4 mdb-color-text">Set Your Favorite Season</div>
-
-                <!--Card content-->
-                <div class="card-body">
-
-                    <select id="season" class="browser-default custom-select my-2">
-                        <option>Select Season</option>
-                    </select>
-
-                    <select id="temperature" class="browser-default custom-select my-2">
-                        <option>Select Temperature</option>
-                    </select>
-
-                    <div class="text-center mt-4">
-                        <button class="btn btn-info btn-md" type="submit">Save</button>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="card mb-4 text-center wow fadeIn">
-
                 <div class="card-header h4 mdb-color-text">Set Your Favorite City</div>
-                        
+                    
                 <div class="card-body">
 
                 <select class="browser-default custom-select my-2" name="country" id="country">
@@ -135,14 +130,58 @@
                     
                 </select>
 
-                <div class="text-center mt-4">
-                    <button class="btn btn-info btn-md" type="submit">Save</button>
+                <div class="text-center mt-4 ">
+                    <button class="btn btn-md mdb-color lighten-1" type="submit">Save</button>
                 </div>
 
                 </div>
+
 
             </div>
-        
+
+            <div class="card mb-4 text-center wow fadeIn">
+
+                <div class="card-header h4 mdb-color-text">Set Your Favorite Season</div>
+
+                <!--Card content-->
+                <div class="card-body">
+
+                    <select id="season" class="browser-default custom-select my-2">
+                        <option>Select Season</option>
+                    </select>
+
+                    <select id="temperature" class="browser-default custom-select my-2">
+                        <option>Select Temperature</option>
+                    </select>
+
+                    <div class="text-center mt-4">
+                        <button class="btn btn-md mdb-color lighten-1" type="submit">Save</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card mb-4 text-center wow fadeIn">
+
+                <div class="card-header h4 mdb-color-text">Set Your Favorite Season</div>
+
+                <!--Card content-->
+                <div class="card-body">
+
+                    <select id="season" class="browser-default custom-select my-2">
+                        <option>Select Season</option>
+                    </select>
+
+                    <select id="temperature" class="browser-default custom-select my-2">
+                        <option>Select Temperature</option>
+                    </select>
+
+                    <div class="text-center mt-4">
+                        <button class="btn btn-md mdb-color lighten-1" type="submit">Save</button>
+                    </div>
+
+                </div>
+            </div>
         </div><!-- Second Grid -->
 
     </div>
@@ -152,6 +191,17 @@
 
 {% block jsfunction %}
     <script type="text/javascript">  
+
+        $('#year').click(getYear);
+
+        function getYear(){
+            let yr = document.getElementById('year')
+
+            console.log(yr)
+            
+            //send_ajax(url, 'get', data=year, dataType, fn);
+
+        };
 
         const season = {'Spring': 'Spring', 
                     'Summer': 'Summer', 

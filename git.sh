@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DATE=`date +%dth.%b.%Y`
+DATE=`date +%d.%b.%Y`
 
 MSG="$DATE"
 

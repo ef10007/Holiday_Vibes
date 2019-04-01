@@ -25,7 +25,8 @@
     {% endblock style %}
 </head>
 	
-<body class="grey lighten-4">
+<!-- <body class="grey lighten-4"> -->
+<body class="mdb-color lighten-5">
 
     <!--Main Navigation-->
     <header>
@@ -175,7 +176,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ko.js"></script>
 
+    <script type="text/javascript" src="{{ url_for('static', filename='node_modules/moment/moment.js') }}"></script>
+
     <script type="text/javascript">
+
+        console.log(moment.utc()._d);
 
         function openModal(modalId) {
             $('#' + modalId).modal('show');
@@ -193,7 +198,6 @@
             }).done(function (res) {
                 if (fn)
                     fn(res)
-
                 console.log("The done function is complete!");
 
             }).fail(function (xhr, status, errorThrown) {

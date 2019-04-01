@@ -28,7 +28,7 @@
                 
                     <input type="password" id="defaultRegisterFormPassword" class="form-control mb-2" placeholder="Your password" aria-describedby="defaultRegisterFormPasswordHelpBlock" name="passwd" required>
 
-                    <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Confirm your password" aria-describedby="defaultRegisterFormPasswordHelpBlock"
+                    <input type="password" id="defaultRegisterFormPassword2" class="form-control" placeholder="Confirm your password" aria-describedby="defaultRegisterFormPasswordHelpBlock"
                     name="passwd2" required>
                 
                     <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">Minimal 8 characters length</small>
@@ -54,3 +54,15 @@
     </div>
     </div>
 {% endblock body %}
+
+
+{% block jsfunction %}
+<script>    
+    let registdt = moment.utc();
+
+    console.log(typeof registdt);
+
+    send_ajax('/registration', 'post', {registdt: registdt}, 'json');
+
+</script>
+{% endblock jsfunction %}

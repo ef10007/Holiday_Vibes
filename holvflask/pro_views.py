@@ -8,7 +8,6 @@ from holvflask.pro_init_db import db_session, init_database
 from holvflask.pro_models import User, City, Country, CityMPT
 
 
-
 @app.route('/calendar')
 def calendar():
     today = date.today()
@@ -33,6 +32,12 @@ def mymenu():
 
     namedmonth = today.strftime("%B")
 
+    selected_year = request.args.get('selected_year')
+    selected_month = request.args.get('selected_month')
+
+    print("------------------------------------", selected_year, selected_month)
+
+
     return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth)
 
 
@@ -40,11 +45,16 @@ def mymenu():
 def holiday():
     return render_template('main.htm')
 
-@app.route("/mymenu", methods=['POST'])
-def mymenu_post():
-    return render_template('mymenu.htm')
-
     
+@app.route("/mymenu?year=<year>&month=<month>", methods=['GET'])
+def myyear(year, month):
+
+    yr = request.args.get('year')
+
+    print(yr)
+
+
+    return render_template('mymenu.htm')
 
 @app.route('/aboutus')
 def aboutus():
@@ -62,12 +72,14 @@ def registration_post():
     passwd2 = request.form.get('passwd2')
     username = request.form.get('username')
 
+    registdate = request.args.get('username')
+
     if passwd != passwd2:
         flash('ERROR: Your password and confirmation password do not match.')
         return render_template('regist.htm', email=email, username=username)
     else:
        
-        u = User(email, passwd, username)
+        u = User(email, passwd, username, registdate)
         # print(u)
         try:
             db_session.add(u)
