@@ -64,6 +64,9 @@ The users can pick their journey and store them in a preference table.
 
 The input data will be split by space( .split(' ') ) and filtered with if/else phrases. Or perhaps we will be using text mining.
 
+(2nd.Apr.2019: ```ssl certificate_verify_failed``` encountered. Google search api can be an alternative.)
+
+
 ----
 
 ```3. DataBase (MySQL)```
@@ -73,8 +76,8 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 * User (id(Integer),
         email(String),
         passwd(String), 
-        username( default value is email address),
-        fblog(String)
+        username(String),
+        registdate(TIMESTAMP)
         ) - password store by using MDA256, password function
 
 * Country (id(Integer), 
@@ -91,10 +94,6 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 * City (citycode(Integer),
         cityname(String),
         countrycode(String))
-
-* Temp (mpt_citycode(Integer),
-        mpt_cityname(String),
-        mpt_countrycode(String))
 
 * CityMPT (mpt_citycode(Integer),
            mpt_cityname(String),
@@ -131,6 +130,10 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 (21th.Mar.2019: We inner joined two tables Airport and City with the city name and country code to get matching cities. We then found that there are the same city names with different city codes obtain different coordinations. Hence, we created a mapping table CityMPT contains unsorted city names and table Temp that obtains a list of city names appeared more than once from the mapping table. We first deleted all the repeated city names from CityMPT and inserted city names from Temp table so that there is no redundancy of city names. Therefore, we are going to use CityMPT table from now to get weather information.)
 
 (1st.Apr.2019: For the synchronisation process,  NTP (network time protocol) relies on coordinated universal time (UTC), which is obtained from the individual clients and servers in a hierarchical system. Hence, we decided to use Moment.js that provides UTC for inserting the user's registration date to the database system.)
+
+(2nd.Apr.2019:We got a piece of advice from a tutor that receiving time from the client side is not recommended. Hence, we stored the user's registration date in UTC with CURRENT_TIMESTAMP.)
+
+
 
 ----
 

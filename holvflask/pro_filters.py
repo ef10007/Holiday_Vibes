@@ -43,6 +43,18 @@ def month(dt, fmt='%Y-%m-%d'):
     return d.month
 
 
+@app.template_filter('year')
+def year(dt, fmt='%Y-%m-%d'):
+    d = make_date(dt, fmt)
+    return d.year
+
+@app.template_filter('namedmonth')
+def namedmth():
+    today = date.today()
+    namedmonth = today.strftime("%B")
+
+    return namedmonth
+
 @app.template_filter('edt')
 def edt(dt, fmt='%Y-%m-%d'):
     d = make_date(dt, fmt)

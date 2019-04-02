@@ -11,7 +11,9 @@
                 {% for message in get_flashed_messages() %}
 
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
+
                     <strong>{{message}}</strong>
+
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -40,7 +42,7 @@
                         <label class="custom-control-label" for="defaultRegisterFormNewsletter">Subscribe to our newsletter</label>
                     </div>
                 
-                    <button class="btn btn-info my-4 btn-block" type="submit">Sign up</button>
+                    <button id="submitbtn"class="btn btn-info my-4 btn-block" type="submit">Sign up</button>
 
                     </div>
 
@@ -58,11 +60,14 @@
 
 {% block jsfunction %}
 <script>    
-    let registdt = moment.utc();
-
-    console.log(typeof registdt);
-
-    send_ajax('/registration', 'post', {registdt: registdt}, 'json');
+    
+    //$('#submitbtn').click(getRegistdt);
+    
+    //function getRegistdt(){
+        
+     //   let registdt = moment.utc()._d;
+    //    send_ajax('/registration', 'post', {'registdate': registdt}, 'json');
+    //};
 
 </script>
 {% endblock jsfunction %}

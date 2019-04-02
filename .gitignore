@@ -1,3 +1,6 @@
 
 holvflask/static/json/*.json
+
 holvflask/static/node_modules
+
+./chromedriver

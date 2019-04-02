@@ -1,0 +1,48 @@
+{% macro calendar(dt) %}
+    <div class="container text-center">
+        <h1>{{dt | month}} </h1>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                 {%- for days in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri ', 'Sat'] %}
+                    <td><div>{{ days }}</div></td>
+                    {% endfor -%}
+            </thead>
+            <tbody>
+                {% for row in range(dt | sdt, dt | edt) | batch(7, '&nbsp;') %}
+                <tr>
+                    {% for col in row %}
+                        <td>
+                            {% if ((col|int) <= 0) %}
+                                &nbsp;
+                            {%else%}
+                                {{col | safe}}
+                            {%endif%}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endmacro %}
+
+<main class="mt-5 pt-5">
+    <div>
+        <h1 class="text-center text-danger">
+            <small><a href="/?year={{year - 1}}" class="text-muted">{{year - 1}}</a></small>
+            {{year}}년
+            <small><a href="/?year={{year + 1}}" class="text-muted">{{year + 1}}</a></small>
+        </h1>
+
+        <div class="row">
+        {% for m in range(1,13) %}
+
+            <div class="col">
+            {% set dt = "%s-%s-01" % (2020, 7) %}
+                {{calendar(dt)}}
+            </div>
+
+        {% endfor %}
+        </div>
+    </div>
+</main>

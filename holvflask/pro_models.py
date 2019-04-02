@@ -58,8 +58,8 @@ class User(Base):
     username = Column(String)
     registdate = Column(TIMESTAMP)
 
-    def __init__(self, email, passwd, registdate, username='Guest', makeSha=True):
-        print("ggggggggggggggggggg", username)
+    def __init__(self, email, passwd, username='Guest', makeSha=True):
+
 
         self.email = email
 
@@ -70,7 +70,7 @@ class User(Base):
 
         self.username = username
 
-        self.registdate = registdate
+        print("----------------------", email)
 
     def __repr__(self):
-        return 'User %s, %s, %s, %s' % (self.username, self.email, self.passwd,self.registdate)
+        return 'User %s, %s, %s' % (self.username, self.email, self.passwd)

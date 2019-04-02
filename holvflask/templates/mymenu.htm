@@ -1,6 +1,65 @@
 {% extends "layout.htm" %}
 {% block title %} My Menu {% endblock title %}
 
+
+{% macro calendar(dt) %}
+
+    <h1 class="text-center text-bold">
+        <small><a href="/mymenu?selected_year={{dt | year - 1}}&selected_month={{month}}" class="text-muted">{{dt | year - 1}}</a></small>
+
+        {{dt | year}}
+
+        <small><a href="/mymenu?selected_year={{dt | year + 1}}&selected_month={{month}}" class="text-muted">{{dt | year + 1}}</a></small>
+    </h1>
+
+    <div class="row">
+
+        <div class="col">
+            <div class="container-fluid white-skin text-center">
+            <section class="container white pb-3 my-3">
+
+
+                <h1 class="text-center text-bold">
+                    <small><a href="/mymenu?selected_year={{dt | year}}&selected_month={{dt | month - 1}}" class="text-muted">{{dt | month - 1}}</a></small>
+            
+                    {{dt | month}}
+            
+                    <small><a href="/mymenu?selected_year={{dt | year}}&selected_month={{dt | month + 1 }}" class="text-muted">{{dt | month + 1}}</a></small>
+                </h1>
+
+
+            <table class="table table-bordered table-white">
+
+                <thead class="mdb-color lighten-1 white-text">
+                    {%- for days in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri ', 'Sat'] %}
+                        <td><div>{{ days }}</div></td>
+                        {% endfor -%}
+                </thead>
+
+                <tbody class="grey lighten-5">
+                    {% for row in range(dt | sdt, dt | edt) | batch(7, '&nbsp;') %}
+                    <tr>
+                        {% for col in row %}
+                            <td>
+                                {% if ((col|int) <= 0) %}
+                                    &nbsp;
+                                {%else%}
+                                    {{col | safe}}
+                                {%endif%}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+        </section>
+        </div>
+        </div>
+    </div>
+{% endmacro %}
+
+
 {% block body %}
 
 <main class="mt-5 mx-5 pt-5 px-5">
@@ -42,65 +101,23 @@
                 <!--Grid column-->
 
                 <div class = "container mx-4 mdb-color-text">
-                    <h1 class="text-center">
-                        <small><a href="/mymenu?selected_year={{year - 1}}&selected_month={{month}}" class="text-muted">{{year - 1}}</a></small>
+                    
+                    {% if selected_year and selected_month %}
+                    {% set dt = "%s-%s-01" % (selected_year, selected_month) %}
 
-                        {{year}}
+                        {{calendar(dt)}}
 
-                        <small><a href="/mymenu?selected_year={{year + 1}}&selected_month={{month}}" class="text-muted">{{year + 1}}</a></small>
-                    </h1>
-            
-                    <div class="row">
-            
-                        <div class="col">
-                            <div class="container-fluid white-skin text-center">
-                                <section class="container white pb-3 my-3">
+                    {% else %}
+                    {% set dt = "%s-%s-01" % (year, month) %}
+                    
+                        {{calendar(dt)}}
 
-                                    <h2 class="text-center mb-4">
+                    {% endif %}
 
-                                            <small><a href="/mymenu?selected_year={{year}}&selected_month={{month -1 }}" class="text-muted">
-                                                <i class="far fa-caret-square-left"></i>
-                                            </a></small>
-
-                                            {{namedmonth}}
-                                        
-
-                                            <small><a href="/mymenu?selected_year={{year}}&selected_month={{month + 1 }}" class="text-muted"> 
-                                                <i class="far fa-caret-square-right"></i>
-                                            </a></small>
-
-                                        </h1>
-                        
-                                <table class="table table-bordered table-white">
-                                    <thead class="mdb-color lighten-1 white-text">
-            
-                                        {%- for days in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri ', 'Sat'] %}
-                                        <td><div>{{ days }}</div></td>
-                                        {% endfor -%}
-            
-                                    </thead>
-                                    <tbody class="grey lighten-5">
-                                        {% for row in range(dt | sdt, dt | edt) | batch(7, '&nbsp;') %}
-                                        <tr>
-                                            {% for col in row %}
-
-                                                <td id="{{col}}">
-                                                    {% if ((col|int) <= 0) %}
-                                                        &nbsp;
-                                                    {%else%}
-                                                        {{col | safe}}
-                                                    {%endif%}
-                                                    
-                                                </td>
-                                            {% endfor %}
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                                </section>
-                            </div>
-                        </div>
+                    <div class="text-right">
+                        <button class="btn btn-md mdb-color lighten-1" type="submit">Save</button>
                     </div>
+
                 </div>    
             
             </div>
@@ -112,11 +129,14 @@
         </div><!-- First Grid -->
 
         <div class="col-md-4 mb-4">
+
+        <form action="/login" method="POST" class="text-center border border-light p-5 white">
+
             <div class="card mb-4 text-center wow fadeIn">
 
-                <div class="card-header h4 mdb-color-text">Set Your Favorite City</div>
+                <div class="card-header h4 mdb-color-text">Favorite City</div>
                     
-                <div class="card-body">
+                <div class="card-body my-2">
 
                 <select class="browser-default custom-select my-2" name="country" id="country">
     
@@ -130,21 +150,12 @@
                     
                 </select>
 
-                <div class="text-center mt-4 ">
-                    <button class="btn btn-md mdb-color lighten-1" type="submit">Save</button>
-                </div>
-
-                </div>
-
-
             </div>
 
-            <div class="card mb-4 text-center wow fadeIn">
-
-                <div class="card-header h4 mdb-color-text">Set Your Favorite Season</div>
+                <div class="card-header h4 mdb-color-text">Favorite Season</div>
 
                 <!--Card content-->
-                <div class="card-body">
+                <div class="card-body my-2">
 
                     <select id="season" class="browser-default custom-select my-2">
                         <option>Select Season</option>
@@ -154,37 +165,32 @@
                         <option>Select Temperature</option>
                     </select>
 
-                    <div class="text-center mt-4">
-                        <button class="btn btn-md mdb-color lighten-1" type="submit">Save</button>
-                    </div>
-
                 </div>
-            </div>
 
-            <div class="card mb-4 text-center wow fadeIn">
-
-                <div class="card-header h4 mdb-color-text">Set Your Favorite Season</div>
+                <div class="card-header h4 mdb-color-text">Set Your budget</div>
 
                 <!--Card content-->
-                <div class="card-body">
+                <div class="card-body my-2">
 
-                    <select id="season" class="browser-default custom-select my-2">
-                        <option>Select Season</option>
+                    <select id="mininum" class="browser-default custom-select my-2">
+                        <option>Select minimum</option>
                     </select>
 
-                    <select id="temperature" class="browser-default custom-select my-2">
-                        <option>Select Temperature</option>
+                    <select id="maximum" class="browser-default custom-select my-2">
+                        <option>Select maximum</option>
                     </select>
 
-                    <div class="text-center mt-4">
+                    <div class="text-right my-2">
                         <button class="btn btn-md mdb-color lighten-1" type="submit">Save</button>
                     </div>
 
                 </div>
-            </div>
-        </div><!-- Second Grid -->
 
-    </div>
+            </div><!-- Second Grid -->
+        </form>
+
+        </div>
+
 </main>
 {% endblock body %}
 
