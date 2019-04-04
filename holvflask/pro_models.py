@@ -2,6 +2,30 @@ from holvflask.pro_init_db import Base
 from sqlalchemy import Column, Integer, Float, String, DateTime, TIMESTAMP, ForeignKey, PrimaryKeyConstraint, func
 from sqlalchemy.orm import relationship, backref
 
+class Preference(Base):
+    __tablename__ = 'Preference'
+    
+    def __init__(self, userid, cityname, temperature, minbud, maxbud):
+        self.userid = userid
+        self.cityname = cityname
+        self.temperature = temperature
+        self.minbud = minbud
+        self.maxbud = maxbud
+
+    id = Column(Integer, primary_key=True)
+    userid = Column(Integer, ForeignKey('User.id'))
+    cityname = Column(String)
+    temperature = Column(Integer)
+    minbud = Column(Integer)
+    maxbud = Column(Integer)
+    useridfk = relationship('User')
+
+    def __repr__(self):
+        return '%s, %s, %s, %s, %s, %s' % (self.userid, self.cityname, self.temperature, self.minbud, self.maxbud, self.useridfk.username)
+
+    def json(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class Country(Base):
     __tablename__ = 'Country'
     
@@ -12,7 +36,6 @@ class Country(Base):
     id = Column(Integer, primary_key=True)
     countryname = Column(String)
     countrycode = Column(String)
-
 
     def json(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -73,4 +96,4 @@ class User(Base):
         print("----------------------", email)
 
     def __repr__(self):
-        return 'User %s, %s, %s' % (self.username, self.email, self.passwd)
+        return 'User details : %s, %s, %s' % (self.username, self.email, self.passwd)

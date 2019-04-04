@@ -4,43 +4,51 @@
 
 {% macro calendar(dt) %}
 
-    <h1 class="text-center text-bold">
-        <small><a href="/mymenu?selected_year={{dt | year - 1}}&selected_month={{month}}" class="text-muted">{{dt | year - 1}}</a></small>
-
-        {{dt | year}}
-
-        <small><a href="/mymenu?selected_year={{dt | year + 1}}&selected_month={{month}}" class="text-muted">{{dt | year + 1}}</a></small>
-    </h1>
-
     <div class="row">
-
         <div class="col">
-            <div class="container-fluid white-skin text-center">
-            <section class="container white pb-3 my-3">
 
+            <div class="container-fluid white-skin text-center table-responsive">
+            <section class="container white">
 
-                <h1 class="text-center text-bold">
-                    <small><a href="/mymenu?selected_year={{dt | year}}&selected_month={{dt | month - 1}}" class="text-muted">{{dt | month - 1}}</a></small>
+                <div class="h2 text-bold text-right">
+
+                    <small><a href="/mymenu?selected_year={{dt | yearbf}}&selected_month={{month}}" class="text-muted"> <i class="fas fa-chevron-left"></i>
+                    </a></small>
             
-                    {{dt | month}}
+                    {{dt | year}}
             
-                    <small><a href="/mymenu?selected_year={{dt | year}}&selected_month={{dt | month + 1 }}" class="text-muted">{{dt | month + 1}}</a></small>
-                </h1>
+                    <small><a href="/mymenu?selected_year={{dt | yearaf}}&selected_month={{month}}" class="text-muted"> <i class="fas fa-chevron-right"></i>
+                    </a></small>
+
+                </div>
+
+                <div class="h2 text-bold my-3">
+    
+                    <small><a href="/mymenu?selected_year={{dt | year}}&selected_month={{dt | monthbf}}" class="text-muted"> <i class="fas fa-chevron-circle-left"></i> </a></small>
+            
+                    {{dt | namedmonth}}
+            
+                    <small><a href="/mymenu?selected_year={{dt | year}}&selected_month={{dt | monthaf}}" class="text-muted">  <i class="fas fa-chevron-circle-right"></i> </a></small>
+
+                </div>
 
 
             <table class="table table-bordered table-white">
 
                 <thead class="mdb-color lighten-1 white-text">
                     {%- for days in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri ', 'Sat'] %}
-                        <td><div>{{ days }}</div></td>
-                        {% endfor -%}
+                        <td>
+                            <div class="text-bold h6">{{ days }}</div>
+                        </td>
+                    {% endfor -%}
                 </thead>
 
-                <tbody class="grey lighten-5">
+                <tbody class="white">
                     {% for row in range(dt | sdt, dt | edt) | batch(7, '&nbsp;') %}
                     <tr>
+
                         {% for col in row %}
-                            <td>
+                            <td id="{{col}}" onclick="selectDay(this.id)">
                                 {% if ((col|int) <= 0) %}
                                     &nbsp;
                                 {%else%}
@@ -48,6 +56,7 @@
                                 {%endif%}
                             </td>
                         {% endfor %}
+
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -64,14 +73,18 @@
 
 <main class="mt-5 mx-5 pt-5 px-5">
     <div class="row">
+
         <div class="col-md-8 mb-4"> 
 
         <div class="card text-center wow fadeIn">
+            <h1> dddfdfd</h1>
 
-            <div class="card-header h4 mdb-color-text ">My calendar</div>
+            <form action="/mymenu" method="POST" class="text-center p-3 mdb-color lighten-4">
+            
+            <div class="card-header h4 mdb-color-text grey lighten-4">My calendar</div>
     
             <!--Card content-->
-            <div class="card-body">
+            <div class="card-body white">
 
             <!--Grid row-->
             <div class="row">
@@ -80,9 +93,11 @@
                 <div class="col-md-6 mb-4">
             
                 <div class="md-form">
+
                     <!--The "from" Date Picker -->
-                    <input placeholder="Selected starting date" type="text" id="startingDate" class="form-control datepicker">
+                    <input placeholder="Select Starting Date" type="text" id="startingDate" class="form-control">
                     <label for="startingDate">start</label>
+
                 </div>
             
                 </div>
@@ -93,14 +108,14 @@
             
                 <div class="md-form">
                     <!--The "to" Date Picker -->
-                    <input placeholder="Selected ending date" type="text" id="endingDate" class="form-control datepicker">
+                    <input placeholder="Select Ending Date" type="text" id="endingDate" class="form-control datepicker">
                     <label for="endingDate">end</label>
                 </div>
             
                 </div>
                 <!--Grid column-->
 
-                <div class = "container mx-4 mdb-color-text">
+                <div class = "container-fluid mdb-color-text">
                     
                     {% if selected_year and selected_month %}
                     {% set dt = "%s-%s-01" % (selected_year, selected_month) %}
@@ -108,14 +123,15 @@
                         {{calendar(dt)}}
 
                     {% else %}
+
                     {% set dt = "%s-%s-01" % (year, month) %}
                     
                         {{calendar(dt)}}
 
                     {% endif %}
 
-                    <div class="text-right">
-                        <button class="btn btn-md mdb-color lighten-1" type="submit">Save</button>
+                    <div class="text-right mt-3">
+                        <button class="btn btn-md mdb-color lighten-2 waves-effect" type="submit">Save</button>
                     </div>
 
                 </div>    
@@ -123,22 +139,73 @@
             </div>
         
             </div>
+
+        </form>
+
         </div>
     
                 
         </div><!-- First Grid -->
 
+        
+
         <div class="col-md-4 mb-4">
 
-        <form action="/login" method="POST" class="text-center border border-light p-5 white">
+        {% if p %}
 
-            <div class="card mb-4 text-center wow fadeIn">
+        <form action="/mymenu" method="POST" class="text-center p-3 mdb-color lighten-4">
 
-                <div class="card-header h4 mdb-color-text">Favorite City</div>
+            <div class="container border mdb-color darken-3 white-text my-2">
+                <h1 class="my-4" style="font-size: 40px;"> {{username}}</h1>
+            </div>
+            
+            <div class="card wow fadeIn mt-5">
+
+                <div class="card-header h4 mdb-color lighten-1 white-text mb-2">Your Favorite City</div>
                     
                 <div class="card-body my-2">
 
-                <select class="browser-default custom-select my-2" name="country" id="country">
+                    <h1 class="h2 mdb-color-text">{{cityname}}</h1>
+
+                </div>
+
+                <div class="card-header h4 mdb-color lighten-1 white-text my-2"> Your Favorite Season</div>
+
+                <!--Card content-->
+                <div class="card-body my-2">
+
+                    <h1 class="h2 mdb-color-text">{{temperature}}</h1>
+    
+                </div>
+
+                <div class="card-header h4 mdb-color lighten-1 white-text my-2">Your budget</div>
+
+                <!--Card content-->
+                <div class="card-body my-2">
+
+                    <h1 class="h2 mdb-color-text"> {{minbud}} to {{maxbud}} </h1>
+        
+                </div>
+
+            </div>
+            <!-- Second Grid -->
+
+            <div class="text-right mt-4">
+                <button class="btn btn-md mdb-color lighten-5 waves-effect mdb-color-text" type="submit">Edit</button>
+            </div>
+        </form>
+
+        {% else %}
+
+        <form action="/mymenu" method="POST" class="text-center p-3 mdb-color lighten-4">
+
+            <div class="card wow fadeIn">
+
+                <div class="card-header h4 mdb-color-text my-2">Favorite City</div>
+                    
+                <div class="card-body my-2">
+
+                <select class="browser-default custom-select my-2"  id="country">
     
                     <option>Select Country</option>
 
@@ -152,7 +219,7 @@
 
             </div>
 
-                <div class="card-header h4 mdb-color-text">Favorite Season</div>
+                <div class="card-header h4 mdb-color-text my-2">Favorite Season</div>
 
                 <!--Card content-->
                 <div class="card-body my-2">
@@ -161,53 +228,77 @@
                         <option>Select Season</option>
                     </select>
 
-                    <select id="temperature" class="browser-default custom-select my-2">
+                    <select id="temperature" name="temperature" class="browser-default custom-select my-2">
                         <option>Select Temperature</option>
                     </select>
 
                 </div>
 
-                <div class="card-header h4 mdb-color-text">Set Your budget</div>
+                <div class="card-header h4 mdb-color-text my-2">Set Your budget</div>
 
                 <!--Card content-->
                 <div class="card-body my-2">
 
-                    <select id="mininum" class="browser-default custom-select my-2">
+                    <select id="mininum" name="mininum" class="browser-default custom-select my-2" value="{{value}}" onchange="getMaximum(this.value)">
+
                         <option>Select minimum</option>
                     </select>
 
-                    <select id="maximum" class="browser-default custom-select my-2">
+                    <select id="maximum" name="maximum" class="browser-default custom-select my-2">
                         <option>Select maximum</option>
                     </select>
 
                     <div class="text-right my-2">
-                        <button class="btn btn-md mdb-color lighten-1" type="submit">Save</button>
+                        <button class="btn btn-md mdb-color lighten-2 waves-effect" type="submit">Save</button>
                     </div>
 
                 </div>
 
-            </div><!-- Second Grid -->
+            </div>
+            <!-- Second Grid -->
         </form>
 
-        </div>
+        {% endif %}
 
+        </div>
+        </div>
 </main>
 {% endblock body %}
 
 
 {% block jsfunction %}
-    <script type="text/javascript">  
+    <script type="text/javascript">
 
-        $('#year').click(getYear);
+        $.getJSON( "static/json/weathercode.json", function( data ) {
+           
+            $.each( data, function( key, val ) {
+                console.log(key, val);
+              //$('#country').append($('<option />').val(key).html(key))
+            });
+          });
 
-        function getYear(){
-            let yr = document.getElementById('year')
 
-            console.log(yr)
-            
-            //send_ajax(url, 'get', data=year, dataType, fn);
-
+        function selectDay(value){
+            let id = '#' + value;
+            $(id).toggleClass('grey lighten-3');
         };
+
+        const budget = [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600]
+
+        for (b in budget){
+            $('#mininum').append($('<option />').val(budget[b]).html(budget[b]) )
+        };
+
+        function getMaximum(value){
+
+            for (b in budget){
+                if (budget[b] > value) {
+
+                    $('#maximum').append($('<option />').val(budget[b]).html(budget[b]) )
+                }
+            };
+        };
+
 
         const season = {'Spring': 'Spring', 
                     'Summer': 'Summer', 
@@ -226,7 +317,7 @@
         };
                 
         $('#season').change(function(){
-            var $season = $('#season').val();
+            let $season = $('#season').val();
             console.log('season: ' + $season );
             getTemperature($season);
         });
@@ -249,7 +340,7 @@
           });
 
         $('#country').change(function(){
-            var $key = $('#country').val();
+            let $key = $('#country').val();
             console.log('Countryname: ' + $key );
             getCity($key);
         });

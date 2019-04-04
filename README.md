@@ -2,6 +2,8 @@
 
 [Presentation Resource - Strategy](https://docs.google.com/presentation/d/1AvII3M6TztcOlt1fVw902jkoczVbgYWZzz-IWcQg1-Y/edit?usp=sharing)
 
+[Trello - teamwork](https://trello.com/b/oyM55CWZ/project-team)
+
 ---
 ```1. Collecting data```
 
@@ -58,6 +60,8 @@ The users can pick their journey and store them in a preference table.
 )
 
 (1st.Apr.2019: We tried to receive the values from the query parameters that essential for displaying its calendar. It was simply implemented by 'request.args.get()' in the same route.)
+
+(3rd.Apr.2019: We implemented 'toggleClass' on each day has been selected.)
 
 
 * Search
@@ -132,6 +136,8 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
 (1st.Apr.2019: For the synchronisation process,  NTP (network time protocol) relies on coordinated universal time (UTC), which is obtained from the individual clients and servers in a hierarchical system. Hence, we decided to use Moment.js that provides UTC for inserting the user's registration date to the database system.)
 
 (2nd.Apr.2019:We got a piece of advice from a tutor that receiving time from the client side is not recommended. Hence, we stored the user's registration date in UTC with CURRENT_TIMESTAMP.)
+
+(4th.Apr.2019: ```local variable referenced before assignment```)
 
 
 

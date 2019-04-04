@@ -2,18 +2,52 @@ import os
 import requests
 from pprint import pprint
 import json
-import pymysql
 
-# def get_conn():
-#     return pymysql.connect(
-#     host=os.getenv('mysql_host'),
-#     user=os.getenv('mysql_user'),
-#     password=os.getenv('mysql_pw'),
-#     port=3306,
-#     db='projectdb',
-#     charset='utf8')
 
-# sql_select = 'select mpt_citycode, mpt_cityname from CityMPT'
+    # mintemp = ''
+    # maxtemp = ''
+
+apikey = os.getenv('WeatherAPI')
+
+for c in city:
+
+    url = "http://api.openweathermap.org/data/2.5/forecast?id={}&APPID={}".format(c, apikey)
+
+    res = requests.get(url).text
+
+    weather = json.loads(res)
+
+
+    for w in weather['list']:
+        
+        dt = w['dt_txt']
+
+        if dt[11:19] not in ('15:00:00', '03:00:00'):
+            continue
+
+        desc = w['weather'][0]['description']
+        main = w['weather'][0]['main']
+
+        date = dt[0:10]
+
+        tp = w['main']['temp']
+        temp = round(tp - 273.15)
+
+        if dt[11:19] == '15:00:00':
+            mintemp = temp
+
+        else:
+            maxtemp = temp
+
+    print(date, mintemp, maxtemp, main, desc)
+
+city = [1835848]
+weather(city)
+
+
+
+sql_select = 'select mpt_citycode, mpt_cityname from CityMPT'
+sql_insert = 'insert into Weather(cityname, date, mintemp, maxtemp, main, desc) values(%s, %s, %s, %s, %s, %s)'
 
 # conn = get_conn()
 
@@ -23,41 +57,26 @@ import pymysql
 #     cur.execute(sql_select)
 #     rows = cur.fetchall()
 
-#     city = [row[0] for row in rows]
+    # citycode = [1835848]
+    # cityname = ['seoul']
 
- 
-city = [1835848]
-apikey = os.getenv('WeatherAPI')
+    # citycode = [row[0] for row in rows]
+    # cityname = [row[1] for row in rows] 
 
-for c in city:
+    # w = weather(citycode)
 
-    url = "http://api.openweathermap.org/data/2.5/forecast?id={}&APPID={}".format(c, apikey)
+    # print(w)
+
+    # cur = conn.cursor()
+
+    # cur.execute(sql_insert, w)
+
+# print("The weather data have been successfully stored")
 
 
-    res = requests.get(url).text
 
-    weather = json.loads(res)
 
-#   print(weather)
 
-    for w in weather['list']:
-
-        dt = w['dt_txt']
-
-        if dt[11:19] not in ('15:00:00', '03:00:00'):
-            continue
-
-        date = dt[0:10]
-
-        tp = w['main']['temp']
-
-        temp = round(tp - 273.15)
-
-        
-        desc = w['weather'][0]['description']
-        main = w['weather'][0]['main']
-
-        print(date, temp, desc, main)
                 
 
 

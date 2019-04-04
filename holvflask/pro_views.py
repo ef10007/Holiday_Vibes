@@ -5,7 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql import func
 from holvflask import app
 from holvflask.pro_init_db import db_session, init_database
-from holvflask.pro_models import User, City, Country, CityMPT
+from holvflask.pro_models import User, City, Country, CityMPT, Preference
 
 
 @app.route('/calendar')
@@ -24,8 +24,6 @@ def calendar():
 def mymenu():
 
     today = date.today()
-    # print(type(today)) datetime.date
-  
     dt = today.strftime("%Y-%m-%d")
     
     year = request.args.get('year', date.today().year, int)
@@ -38,7 +36,44 @@ def mymenu():
 
 
 
-    return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month)
+    userid = session['loginUser']['id']
+
+    p = db_session.query(Preference).filter("userid = :userid").params(userid=userid).first()
+
+    if p is not None:
+    
+        username = p.useridfk.username
+        cityname = p.cityname
+        temperature = p.temperature
+        minbud = p.minbud
+        maxbud = p.maxbud
+
+        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, p=p, username=username, cityname=cityname, temperature=temperature, minbud=minbud, maxbud=maxbud)
+    
+    else:
+    
+        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month)
+
+
+@app.route("/mymenu", methods=['POST'])
+def preference():
+    
+    userid = session['loginUser']['id']
+    cityname = request.form.get('city')
+    temperature = request.form.get('temperature')
+    minbud = request.form.get('mininum')
+    maxbud = request.form.get('maximum')
+
+    p = Preference(userid, cityname, temperature, minbud, maxbud)
+
+    try:
+        db_session.add(p)
+        db_session.commit()
+
+    except:
+        db_session.rollback()
+    
+    return redirect('/mymenu')
 
 
 @app.route("/")
@@ -53,14 +88,13 @@ def aboutus():
 def registration_get():
     return render_template('regist.htm')
 
-
 @app.route("/registration", methods=['POST'])
 def registration_post():
+
     email = request.form.get('email')
     passwd = request.form.get('passwd')
     passwd2 = request.form.get('passwd2')
     username = request.form.get('username')
-
 
     if passwd != passwd2:
         flash('ERROR: Your password and confirmation password do not match.')
@@ -68,17 +102,15 @@ def registration_post():
     else:
        
         u = User(email, passwd, username)
-        print("UUUUUUUUUUU", u)
     
         try:
             db_session.add(u)
             db_session.commit()
 
-        
         except:
             db_session.rollback()
         
-        flash('Welcome, %s!' % username)
+        flash('Welcome, %s! You have successfully signed up.' % username)
         return redirect('/login')
 
 
@@ -91,14 +123,11 @@ def login_post():
     email = request.form.get('email')
     passwd = request.form.get('passwd')
 
-    print("EMAIL", email, "PASSWD", passwd)
-
     u = db_session.query(User).filter("email = :email and passwd = sha2(:passwd, 256)").params(email=email, passwd=passwd).first()
-    
-    print(u)
+
 
     if u is not None:
-        session['loginUser'] = { 'useremail': u.email, 'name': u.username }
+        session['loginUser'] = { 'id': u.id, 'name': u.username }
 
         if session.get('next'):
             next = session.get('next')

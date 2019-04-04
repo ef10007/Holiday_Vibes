@@ -36,6 +36,11 @@ def sdt(dt, fmt='%Y-%m-%d'):
     wd = d.weekday()
     return (1 if wd == 6 else wd) * -1
 
+@app.template_filter('edt')
+def edt(dt, fmt='%Y-%m-%d'):
+    d = make_date(dt, fmt)
+    nextMonth = d + relativedelta(months=1)
+    return (nextMonth - timedelta(1)).day + 1
 
 @app.template_filter('month')
 def month(dt, fmt='%Y-%m-%d'):
@@ -43,20 +48,58 @@ def month(dt, fmt='%Y-%m-%d'):
     return d.month
 
 
+@app.template_filter('monthbf')
+def bmonth(dt, fmt='%Y-%m-%d'):
+    d = make_date(dt, fmt)
+    lastm = d - relativedelta(months=1)
+
+    return lastm.month
+
+@app.template_filter('monthaf')
+def amonth(dt, fmt='%Y-%m-%d'):
+    d = make_date(dt, fmt)
+    nextm = d + relativedelta(months=1)
+
+    return nextm.month
+
+
 @app.template_filter('year')
 def year(dt, fmt='%Y-%m-%d'):
     d = make_date(dt, fmt)
     return d.year
 
-@app.template_filter('namedmonth')
-def namedmth():
-    today = date.today()
-    namedmonth = today.strftime("%B")
-
-    return namedmonth
-
-@app.template_filter('edt')
-def edt(dt, fmt='%Y-%m-%d'):
+@app.template_filter('yearbf')
+def byear(dt, fmt='%Y-%m-%d'):
     d = make_date(dt, fmt)
-    nextMonth = d + relativedelta(months=1)
-    return (nextMonth - timedelta(1)).day + 1
+    lasty = d - relativedelta(years=1)
+
+    return lasty.year
+
+@app.template_filter('yearaf')
+def ayear(dt, fmt='%Y-%m-%d'):
+    d = make_date(dt, fmt)
+    nexty = d + relativedelta(years=1)
+    
+    return nexty.year
+
+
+@app.template_filter('namedmonth')
+def namedmth(dt, fmt='%Y-%m-%d'):
+    d = make_date(dt, fmt)
+    return d.strftime("%B")
+
+@app.template_filter('namedmonthbf')
+def bnamedmonth(dt, fmt='%Y-%m-%d'):
+    d = make_date(dt, fmt)
+    lastm = d - relativedelta(months=1)
+
+    return lastm.strftime("%B")
+
+@app.template_filter('namedmonthaf')
+def anamedmonth(dt, fmt='%Y-%m-%d'):
+    d = make_date(dt, fmt)
+    nextm = d + relativedelta(months=1)
+
+    return nextm.strftime("%B")
+
+
