@@ -13,72 +13,69 @@ def get_conn():
     db='projectdb',
     charset='utf8')
 
+sql_list = []
 
-# with open('../weathercode.json') as json_file:  
-#     codes = json.load(json_file)
-
-# citycode = [code for code in codes]
-# cityname = [code for code in codes.values()]
-
-citycode = [1835848, 1835848]
-cityname = 'seoul'
-
-mintemp = ''
+date = ''
+main = ''
+desc = ''
 maxtemp = ''
+mintemp = ''
+
+with open('weathercode.json') as json_file:  
+    codes = json.load(json_file)
+
 
 apikey = os.getenv('WeatherAPI')
 
-sql_insert = 'insert into Weather(cityname, date, mintemp, maxtemp, main, desc) values(%s, %s, %s, %s, %s, %s)'
-
-conn = get_conn()
-
-for code in citycode:
-    url = "http://api.openweathermap.org/data/2.5/forecast?id={}&APPID={}".format(code, apikey)
+for citycode, cityname in codes.items():
+    url = "http://api.openweathermap.org/data/2.5/forecast?id={}&APPID={}".format(citycode, apikey)
 
     res = requests.get(url).text
 
     weather = json.loads(res)
 
-    cityname = weather['city']['name']
 
-    
-pprint(w)
+    for w in weather['list']:
+        
+        dt = w['dt_txt']
 
-exit()
-for w in weather['list']:
-    
-    
-    
-    dt = w['dt_txt']
-    if dt[11:19] not in ('15:00:00', '03:00:00'):
-        continue
+        if dt[11:19] not in ('15:00:00', '03:00:00'):
+            continue
+        else:
+            desc = w['weather'][0]['description']
+            main = w['weather'][0]['main']
 
-    desc = w['weather'][0]['description']
-    main = w['weather'][0]['main']
+            date = dt[0:10]
 
-    date = dt[0:10]
+            tp = w['main']['temp']
+            temp = round(tp - 273.15)
+
+            if (dt[11:19] == '03:00:00'):
+                maxtemp = temp
+
+                continue
+
+            else:
+                if maxtemp == "":
+                    maxtemp = 100
+
+                mintemp = temp
+
+                tupledata = (citycode, cityname, date, main, desc, mintemp, maxtemp)
+
+                print(tupledata)
+                
+                sql_list.append(tupledata)
 
 
-    tp = w['main']['temp']
-    print(tp)    
+sql_insert = 'insert into Weather(citycode, cityname, dt, main, description, mintemp, maxtemp) values(%s, %s, %s, %s, %s, %s, %s)'
 
-    
+conn = get_conn()
 
-    if tp != 0:
-        temp = round(tp - 273.15)
+with conn:
+    cur = conn.cursor()
+    cur.executemany(sql_insert, sql_list)
 
-    if dt[11:19] == '15:00:00':
-        temp = mintemp
-
-    else:
-        temp = maxtemp
-
-        print(date, mintemp, maxtemp, main, desc)
-
-        with conn:
-
-            cur = conn.cursor()
-            cur.execute(sql_insert, (cityname, date, mintemp, maxtemp, main, desc))
 
 print("The weather data have been successfully stored")
 

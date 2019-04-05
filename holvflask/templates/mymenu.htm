@@ -76,8 +76,9 @@
 
         <div class="col-md-8 mb-4"> 
 
+            <h1>{{selected_date}}</h1>
+
         <div class="card text-center wow fadeIn">
-            <h1> dddfdfd</h1>
 
             <form action="/mymenu" method="POST" class="text-center p-3 mdb-color lighten-4">
             
@@ -160,6 +161,14 @@
             </div>
             
             <div class="card wow fadeIn mt-5">
+
+                <div class="card-header h4 mdb-color lighten-1 white-text mb-2">Your Availability</div>
+                
+                <div class="card-body my-2">
+
+                    <h1 class="h2 mdb-color-text">Holiday Period</h1>
+
+                </div>
 
                 <div class="card-header h4 mdb-color lighten-1 white-text mb-2">Your Favorite City</div>
                     
@@ -272,15 +281,19 @@
         $.getJSON( "static/json/weathercode.json", function( data ) {
            
             $.each( data, function( key, val ) {
-                console.log(key, val);
+               // console.log(key, val);
               //$('#country').append($('<option />').val(key).html(key))
             });
           });
 
-
+        //url, method, data, dataType, fn
         function selectDay(value){
             let id = '#' + value;
             $(id).toggleClass('grey lighten-3');
+
+            console.log(value);
+
+            send_ajax('/mymenu', 'POST', {'selected_date': value }, 'json')
         };
 
         const budget = [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600]
@@ -291,9 +304,11 @@
 
         function getMaximum(value){
 
+            $('#maximum').html('');
+            
             for (b in budget){
-                if (budget[b] > value) {
 
+                if (budget[b] > value) {
                     $('#maximum').append($('<option />').val(budget[b]).html(budget[b]) )
                 }
             };

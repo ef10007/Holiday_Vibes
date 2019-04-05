@@ -34,7 +34,9 @@ def mymenu():
     selected_year = request.args.get('selected_year')
     selected_month = request.args.get('selected_month')
 
+    selected_date = request.args.get('selected_date')
 
+    print(selected_date)
 
     userid = session['loginUser']['id']
 
@@ -48,11 +50,11 @@ def mymenu():
         minbud = p.minbud
         maxbud = p.maxbud
 
-        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, p=p, username=username, cityname=cityname, temperature=temperature, minbud=minbud, maxbud=maxbud)
+        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, selected_date=selected_date, p=p, username=username, cityname=cityname, temperature=temperature, minbud=minbud, maxbud=maxbud)
     
     else:
     
-        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month)
+        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, selected_date=selected_date)
 
 
 @app.route("/mymenu", methods=['POST'])

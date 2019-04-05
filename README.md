@@ -114,12 +114,20 @@ The input data will be split by space( .split(' ') ) and filtered with if/else p
           price(Integer),
           crondt(String)) - Direct Flights Only
           
-* Weather (cityname(String),
-           date(String),
+* Weather (id(Integer),
+           citycode(Interger),
+           cityname(String),
+           dt(String),
+           main(String),
+           description(String),
            mintemp(Integer),
-           maxtemp(Integer),
-           main(Integer),
-           crondt(String)) # The Unix epoch is the time 00:00:00 UTC on 1 January 1970.
+           maxtemp(Integer) ) # The Unix epoch is the time 00:00:00 UTC on 1 January 1970.
+
+(5.Apr.2019: To store the weather forecast data, we first refined given data received from API. There were two temperatures, minimum and maximum. We distinguished them with their time of the day.
+
+To increase performance, we used 'executemany' to minimise the connection between server and database. Each data in the SQL list is consist of a tuple to make the process effective.
+
+However, we encountered a problem - ```1366, "Incorrect integer value: '' for column 'maxtemp' at row 1```. We intentionally assigned a blank temperature value to 100 which will be updated in SQL to a null value with where condition. After that, we successfully stored weather data length of 1615 rows into MySQL. )
 
 * Recommendation - ML, CRM(Customer-relationship management) sending email feature will be added
 
