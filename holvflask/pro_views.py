@@ -10,6 +10,7 @@ from holvflask.pro_models import User, City, Country, CityMPT, Preference
 
 @app.route('/calendar')
 def calendar():
+
     today = date.today()
   
     dt = today.strftime("%Y-%m-%d")
@@ -34,39 +35,43 @@ def mymenu():
     selected_year = request.args.get('selected_year')
     selected_month = request.args.get('selected_month')
 
-    selected_date = request.args.get('selected_date')
-
-    print(selected_date)
+    
 
     userid = session['loginUser']['id']
-
     p = db_session.query(Preference).filter("userid = :userid").params(userid=userid).first()
 
     if p is not None:
-    
+        
         username = p.useridfk.username
         cityname = p.cityname
         temperature = p.temperature
         minbud = p.minbud
         maxbud = p.maxbud
 
-        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, selected_date=selected_date, p=p, username=username, cityname=cityname, temperature=temperature, minbud=minbud, maxbud=maxbud)
+        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, p=p, username=username, cityname=cityname, temperature=temperature, minbud=minbud, maxbud=maxbud)
     
     else:
-    
-        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, selected_date=selected_date)
+        
+        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month)
 
 
 @app.route("/mymenu", methods=['POST'])
 def preference():
     
+
     userid = session['loginUser']['id']
+    
+    start_date = request.form.get('start_date')
+    end_date = '2019-12-04'
+    # end_date = request.form.get('end_date')
+
     cityname = request.form.get('city')
     temperature = request.form.get('temperature')
     minbud = request.form.get('mininum')
     maxbud = request.form.get('maximum')
 
-    p = Preference(userid, cityname, temperature, minbud, maxbud)
+
+    p = Preference(userid, start_date, end_date, cityname, temperature, minbud, maxbud)
 
     try:
         db_session.add(p)

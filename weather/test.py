@@ -1,4 +1,10 @@
 import json
+from datetime import date
+
+d = date.today()
+print(d)
+
+exit()
 
 with open('weathersample.json', 'r') as json_file:  
     weather = json.load(json_file)

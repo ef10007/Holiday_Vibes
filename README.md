@@ -159,6 +159,8 @@ Each data on the graph(calendar) that hovered/clicked by the user will be displa
 
 (25.Mar.2019: We are going to find its dependent values (i. e. city names) with the country name. On 'mymenu' HTML file,  the selected country name has been successfully logged in the console and made URL for Ajax communication.)
 
+(8th.Apr.2019: We successfully implemented ```send_ajax``` function sending start date to url ```/mymenu```. It has been posted with the method 'POST', so the method that receives it must have the same.)
+
 
 * Flask with python
 

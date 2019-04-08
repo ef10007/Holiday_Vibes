@@ -5,8 +5,10 @@ from sqlalchemy.orm import relationship, backref
 class Preference(Base):
     __tablename__ = 'Preference'
     
-    def __init__(self, userid, cityname, temperature, minbud, maxbud):
+    def __init__(self, userid, start_date, end_date, cityname, temperature, minbud, maxbud):
         self.userid = userid
+        self.start_date = start_date
+        self.end_date = end_date
         self.cityname = cityname
         self.temperature = temperature
         self.minbud = minbud
@@ -14,6 +16,8 @@ class Preference(Base):
 
     id = Column(Integer, primary_key=True)
     userid = Column(Integer, ForeignKey('User.id'))
+    start_date = Column(String)
+    end_date = Column(String)
     cityname = Column(String)
     temperature = Column(Integer)
     minbud = Column(Integer)
@@ -21,7 +25,7 @@ class Preference(Base):
     useridfk = relationship('User')
 
     def __repr__(self):
-        return '%s, %s, %s, %s, %s, %s' % (self.userid, self.cityname, self.temperature, self.minbud, self.maxbud, self.useridfk.username)
+        return '%s, %s, %s, %s, %s, %s, %s, %s' % (self.userid, self.start_date, self.end_date, self.cityname, self.temperature, self.minbud, self.maxbud, self.useridfk.username)
 
     def json(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}

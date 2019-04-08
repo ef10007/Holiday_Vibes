@@ -48,11 +48,14 @@
                     <tr>
 
                         {% for col in row %}
-                            <td id="{{col}}" onclick="selectDay(this.id)">
+                            <td class="text-left h5 whitey" id="{{col}}" onclick="startDate(this.id)">
                                 {% if ((col|int) <= 0) %}
                                     &nbsp;
                                 {%else%}
-                                    {{col | safe}}
+                                    {{col | safe}} 
+                                    
+                                    <p id="weatherdata" style="font-size: 17px; color: grey;"></p>
+
                                 {%endif%}
                             </td>
                         {% endfor %}
@@ -76,8 +79,6 @@
 
         <div class="col-md-8 mb-4"> 
 
-            <h1>{{selected_date}}</h1>
-
         <div class="card text-center wow fadeIn">
 
             <form action="/mymenu" method="POST" class="text-center p-3 mdb-color lighten-4">
@@ -91,27 +92,18 @@
             <div class="row">
 
                 <!--Grid column-->
-                <div class="col-md-6 mb-4">
-            
-                <div class="md-form">
-
-                    <!--The "from" Date Picker -->
-                    <input placeholder="Select Starting Date" type="text" id="startingDate" class="form-control">
-                    <label for="startingDate">start</label>
-
-                </div>
-            
+                <div class="col-md-6 mb-4" onchange="endDate()">
+              
+                    <span id="startdate" onchange="displayEndDate()"></span>
+    
                 </div>
                 <!--Grid column-->
             
                 <!--Grid column-->
                 <div class="col-md-6 mb-4">
-            
-                <div class="md-form">
-                    <!--The "to" Date Picker -->
-                    <input placeholder="Select Ending Date" type="text" id="endingDate" class="form-control datepicker">
-                    <label for="endingDate">end</label>
-                </div>
+
+                    <span id="enddate"></span>
+
             
                 </div>
                 <!--Grid column-->
@@ -166,7 +158,7 @@
                 
                 <div class="card-body my-2">
 
-                    <h1 class="h2 mdb-color-text">Holiday Period</h1>
+                    <h1 id="period" class="h2 mdb-color-text">Holiday Period</h1>
 
                 </div>
 
@@ -174,7 +166,7 @@
                     
                 <div class="card-body my-2">
 
-                    <h1 class="h2 mdb-color-text">{{cityname}}</h1>
+                    <h1 id="cityname" class="h2 mdb-color-text">{{cityname}}</h1>
 
                 </div>
 
@@ -278,23 +270,75 @@
 {% block jsfunction %}
     <script type="text/javascript">
 
+        let cityname = $('#cityname').text();
+
+        //console.log("HIHIHI", cityname);
+
+        //send_ajax('/mymenu', 'POST', {cn: cityname}, '');
+        
         $.getJSON( "static/json/weathercode.json", function( data ) {
            
             $.each( data, function( key, val ) {
-               // console.log(key, val);
-              //$('#country').append($('<option />').val(key).html(key))
+
+                if (val == cityname) {
+                    //console.log(key, val);
+                    //$('#weatherdata').append(<p>val);
+                };
             });
           });
 
         //url, method, data, dataType, fn
-        function selectDay(value){
+        function startDate(value){
             let id = '#' + value;
             $(id).toggleClass('grey lighten-3');
 
-            console.log(value);
+            let start = "{{year}}-{{month}}-" + value;
+            $('#startdate').html("{{year}}-{{month}}-" + value);
 
-            send_ajax('/mymenu', 'POST', {'selected_date': value }, 'json')
+
+            let start_value = $('#startdate').text();
+
+            console.log("--------------------", start_value);
+    
+            //send_ajax('/mymenu', 'POST', {start_date: start_value}, '');
+
+            endDate(value);
         };
+
+        function endDate(value){
+
+            dayarr = []
+            $("td").each(function(){
+                let dayValue = $(this).text().trim();
+
+                if (dayValue.length < 3 & dayValue.length > 0){
+                    numday = parseInt(dayValue);
+
+                    dayarr.push(numday);
+
+                }
+            });
+
+            for (da in dayarr){
+                if (value < dayarr[da]){
+                    
+                    let id2 = '#' + dayarr[da];
+                    $(id2).toggleClass('white');
+
+                    let end = "{{year}}-{{month}}-" + dayarr[da];
+                    //console.log(end);
+            
+                } else {
+                    let id3 = '#' + dayarr[da];
+                    $(id3).toggleClass('grey darken-3');
+                };
+            };
+        };
+
+        function submitBtn() {
+            send_ajax('/mymenu', 'POST', {start_date: start_value}, '');
+        }
+
 
         const budget = [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600]
 
