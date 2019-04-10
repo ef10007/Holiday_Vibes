@@ -63,6 +63,8 @@ The users can pick their journey and store them in a preference table.
 
 (3rd.Apr.2019: We implemented 'toggleClass' on each day has been selected.)
 
+(9.Apr.2019: We managed to handle selected dates - starting date and ending date with the class name, onclick function and conditional statement. )
+
 
 * Search
 

@@ -10,7 +10,7 @@
             <div class="container-fluid white-skin text-center table-responsive">
             <section class="container white">
 
-                <div class="h2 text-bold text-right my-3">
+                <div class="h2 text-bold text-right">
 
                     <small><a href="/mymenu?selected_year={{dt | yearbf}}&selected_month={{month}}" class="text-muted"> <i class="fas fa-chevron-left"></i>
                     </a></small>
@@ -77,11 +77,77 @@
 <main class="mt-5 mx-5 pt-5 px-5">
     <div class="row">
 
+        <div class="col-md-8 mb-4"> 
+
+        <div class="card text-center wow fadeIn">
+
+            <form action="/mymenu" method="POST" class="text-center p-3 mdb-color lighten-4">
+            
+            <div class="card-header h4 mdb-color-text grey lighten-4">My calendar</div>
+    
+            <!--Card content-->
+            <div class="card-body white">
+
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-4">
+              
+                    <span id="startdate"></span>
+    
+                </div>
+                <!--Grid column-->
+            
+                <!--Grid column-->
+                <div class="col-md-6 mb-4">
+
+                    <span id="enddate"></span>
+
+            
+                </div>
+                <!--Grid column-->
+
+                <div class = "container-fluid mdb-color-text">
+                    
+                    {% if selected_year and selected_month %}
+                    {% set dt = "%s-%s-01" % (selected_year, selected_month) %}
+
+                        {{calendar(dt)}}
+
+                    {% else %}
+
+                    {% set dt = "%s-%s-01" % (year, month) %}
+                    
+                        {{calendar(dt)}}
+
+                    {% endif %}
+
+                    <div class="text-right mt-3">
+                        <button class="btn btn-md mdb-color lighten-2 waves-effect" type="submit">Save</button>
+                    </div>
+
+                </div>    
+            
+            </div>
+        
+            </div>
+
+        </form>
+
+        </div>
+    
+                
+        </div><!-- First Grid -->
+
+
+        
+
+        <div class="col-md-4 mb-4">
+
         {% if p %}
 
-        <div class="col-md-12 mb-4"> 
-
-        <form action="/mymenu" method="POST" class="text-center p-1 mdb-color lighten-4">
+        <form action="/mymenu" method="POST" class="text-center p-3 mdb-color lighten-4">
 
             <div class="container border mdb-color darken-3 white-text my-2">
                 <h1 class="my-4" style="font-size: 40px;"> {{username}}</h1>
@@ -131,58 +197,11 @@
             </div>
         </form>
 
-        </div>
-
         {% else %}
 
-        <div class="col-md-12 mb-4"> 
+        <form action="/mymenu" method="POST" class="text-center p-3 mdb-color lighten-4">
 
-            <form action="/mymenu" method="POST" class="text-center p-1 mdb-color lighten-4">
-            
-    
-            <!--Card content-->
-            <div class="card-body white">
-        
-                <!--Grid column-->
-
-                <div class="row">
-
-                <div class="col-md-8 mb-4">
-                    <div class="card-header h4 mdb-color-text grey lighten-4 mb-4">My calendar</div>
-
-                    <span class="ml-4" style="font-size: 25px"> from </span>
-
-                    <span class="border border-white my-1 mx-5 px-4 mdb-color-text" id="startdate" name="startdate" style="font-size: 30px"> Start Date </span >
-                    
-                    <span style="font-size: 25px"> to </span>
-
-                    <span class="border border-white mx-5 px-4 mdb-color-text" id="enddate" name="enddate" style="font-size: 30px"> End Date</span>
-                    
-                <div class = "container-fluid mdb-color-text">
-                    
-                    {% if selected_year and selected_month %}
-                    {% set dt = "%s-%s-01" % (selected_year, selected_month) %}
-
-                        {{calendar(dt)}}
-
-                    {% else %}
-
-                    {% set dt = "%s-%s-01" % (year, month) %}
-                    
-                        {{calendar(dt)}}
-
-                    {% endif %}
-
-                    <div class="my-2" style="float: right;">
-                        <button class="btn btn-lg mdb-color lighten-2 waves-effect" type="submit">Save</button>
-                    </div>
-
-                </div> 
-                </div>
-
-                <div class="col-md-4 mb-4">
-
-                <div class="card wow fadeIn">
+            <div class="card wow fadeIn">
 
                 <div class="card-header h4 mdb-color-text my-2">Favorite City</div>
                     
@@ -231,27 +250,26 @@
                         <option>Select maximum</option>
                     </select>
 
+                    <div class="text-right my-2">
+                        <button class="btn btn-md mdb-color lighten-2 waves-effect" type="submit">Save</button>
+                    </div>
+
                 </div>
+
             </div>
-        </div>
-   
-            </div>
-        </div><!-- First Grid -->
+            <!-- Second Grid -->
         </form>
-    </div>
-</div>
-</main>
+
         {% endif %}
 
-  
+        </div>
+        </div>
+</main>
 {% endblock body %}
 
 
 {% block jsfunction %}
     <script type="text/javascript">
-
-        //url, method, data, dataType, fn
-        //send_ajax('/mymenu', 'POST', {start_date: start_value}, '');
 
         let cityname = $('#cityname').text();
         
@@ -265,6 +283,10 @@
                 };
             });
           });
+
+        //url, method, data, dataType, fn
+        //send_ajax('/mymenu', 'POST', {start_date: start_value}, '');
+
 
 
         const dayarr = []
@@ -287,7 +309,6 @@
 
                 isSelecteds = true;
                 $(sid).addClass('grey lighten-3');
-
                 $('#startdate').html("{{year}}-{{month}}-" + value);
 
                 for (da in dayarr){
@@ -295,6 +316,7 @@
                         
                         let id2 = '#' + dayarr[da];
                         $(id2).addClass('white').attr('onclick','');
+
                         
                     } else {
                         let id3 = '#' + dayarr[da];

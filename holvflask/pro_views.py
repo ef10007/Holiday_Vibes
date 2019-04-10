@@ -34,10 +34,10 @@ def mymenu():
 
     selected_year = request.args.get('selected_year')
     selected_month = request.args.get('selected_month')
-
     
 
     userid = session['loginUser']['id']
+
     p = db_session.query(Preference).filter("userid = :userid").params(userid=userid).first()
 
     if p is not None:
@@ -61,9 +61,10 @@ def preference():
 
     userid = session['loginUser']['id']
     
-    start_date = request.form.get('start_date')
-    end_date = '2019-12-04'
-    # end_date = request.form.get('end_date')
+    start_date = request.forms.get('startdate')
+    end_date = request.args.get('enddate')
+
+    print("SSSSSSSSSSSSS",start_date, "EEEEEEEEEEEEEEE", end_date)
 
     cityname = request.form.get('city')
     temperature = request.form.get('temperature')
