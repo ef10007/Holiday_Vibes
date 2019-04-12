@@ -2,6 +2,27 @@ from holvflask.pro_init_db import Base
 from sqlalchemy import Column, Integer, Float, String, DateTime, TIMESTAMP, ForeignKey, PrimaryKeyConstraint, func
 from sqlalchemy.orm import relationship, backref
 
+class Ticket(Base):
+    __tablename__ = 'Ticket'
+    
+    def __init__(self, countryname, cityname, date, price):
+        self.countryname = countryname
+        self.cityname = cityname
+        self.date = date
+        self.price = price
+
+    id = Column(Integer, primary_key=True)
+    countryname = Column(String)
+    cityname = Column(String)
+    date = Column(String)
+    price = Column(Integer)
+
+    def __repr__(self):
+        return '%s, %s, %s, %s' % (self.countryname, self.cityname, self.date, self.price)
+
+    def json(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class Preference(Base):
     __tablename__ = 'Preference'
     

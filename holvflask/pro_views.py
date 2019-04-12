@@ -5,7 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql import func
 from holvflask import app
 from holvflask.pro_init_db import db_session, init_database
-from holvflask.pro_models import User, City, Country, CityMPT, Preference
+from holvflask.pro_models import User, City, Country, CityMPT, Preference, Ticket
 
 
 @app.route('/calendar')
@@ -43,12 +43,14 @@ def mymenu():
     if p is not None:
         
         username = p.useridfk.username
+        start_date = p.start_date
+        end_date = p.end_date
         cityname = p.cityname
         temperature = p.temperature
         minbud = p.minbud
         maxbud = p.maxbud
 
-        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, p=p, username=username, cityname=cityname, temperature=temperature, minbud=minbud, maxbud=maxbud)
+        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, p=p, username=username, start_date=start_date, end_date=end_date, cityname=cityname, temperature=temperature, minbud=minbud, maxbud=maxbud)
     
     else:
         
@@ -58,13 +60,10 @@ def mymenu():
 @app.route("/mymenu", methods=['POST'])
 def preference():
     
-
     userid = session['loginUser']['id']
     
-    start_date = request.forms.get('startdate')
-    end_date = request.args.get('enddate')
-
-    print("SSSSSSSSSSSSS",start_date, "EEEEEEEEEEEEEEE", end_date)
+    start_date = request.form.get('startdate')
+    end_date = request.form.get('enddate')
 
     cityname = request.form.get('city')
     temperature = request.form.get('temperature')

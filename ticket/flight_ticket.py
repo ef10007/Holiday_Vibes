@@ -30,31 +30,66 @@ def curfetchall(listname):
 
 def ticketprocess(num):
 
-    with open('../Ticketprice{}.json'.format(num), 'r') as jsonfile:
+    with open('Ticketprice{}.json'.format(num), 'r') as jsonfile:
 
         jsondata = json.load(jsonfile)
+        # print(len(jsondata['PlacePrices'])) # 197
 
-        for data in jsondata['PlacePrices']:
-        
+        dprice = ''
+        idprice = ''
+
+        length = len(jsondata['PlacePrices'])
+
+        lst = []
+
+        for i in range(1, length):
+
+            data = jsondata['PlacePrices'][i]
             countrynames = data['Name']
 
-            if countrynames not in curfetchall('dbcountryname'):
+            countrynames_inuse = curfetchall('dbcountryname')
+
+            if countrynames not in countrynames_inuse:
+                # print(countrynames) North Macedonia, Liberia, Tuvalu, Guyana
                 continue
 
             keylist = data.keys()
  
             if 'DirectPrice' in keylist:
+
                 price = data['DirectPrice']
 
                 if price == 0:
-                    price = random.randint(700, 1200)
+                    dprice = random.randint(500, 1100)
 
-            else:
+                    continue
+                
+                else:
+                    dprice = price
+
+                direct = (countrynames, dprice)
+
+        
+                lst.append(direct)
+
+
+            elif 'IndirectPrice' in keylist:
+    
                 price = data['IndirectPrice']
-
+            
                 if price == 0:
-                    price = random.randint(700, 1100)
                     
-            print("{} -----".format(num), countrynames, price)
+                    idprice = random.randint(500, 1400)
 
-            return countrynames, price
+                    continue
+
+                else:
+                    idprice = price
+
+                    indirect = (countrynames, idprice)
+
+                lst.append(indirect)
+                
+
+        return lst
+

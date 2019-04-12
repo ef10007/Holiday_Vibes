@@ -48,7 +48,7 @@
                     <tr>
 
                         {% for col in row %}
-                            <td class="text-left h5" id="{{col}}" onclick="startDate(this.id)">
+                            <td class="text-left h5" id="{{col}}" onclick="startDate(this.id)" value="{{col}}">
                                 {% if ((col|int) <= 0) %}
                                     &nbsp;
                                 {%else%}
@@ -79,7 +79,57 @@
 
         {% if p %}
 
-        <div class="col-md-12 mb-4"> 
+        <div class="col-md-8 mb-4">
+            <form action="/mymenu" method="POST" class="text-center p-1 mdb-color lighten-4">
+            
+    
+                <!--Card content-->
+            <div class="card-body white">
+        
+                <!--Grid column-->
+
+                <div class="row">
+
+                <div class="col-md-8 mb-4">
+                    <div class="card-header h4 mdb-color-text grey lighten-4 mb-4">My calendar</div>
+
+
+                    <span id="startdate" class="border border-white my-1 mx-3 px-4 mdb-color-text"  style="font-size: 30px"> Starting date</span>
+
+                    <input type="text" id="formstartdate" name="startdate" style="visibility: hidden;">
+
+                    <span id="enddate" class="border border-white my-1 mx-3 px-4 mdb-color-text"  style="font-size: 30px"> Ending date</span>
+
+                    <input type="text" id="formenddate" name="enddate" style="visibility: hidden;">
+
+                    
+
+                <div class = "container-fluid mdb-color-text">
+                    
+                    {% if selected_year and selected_month %}
+                    {% set dt = "%s-%s-01" % (selected_year, selected_month) %}
+
+                        {{calendar(dt)}}
+
+                    {% else %}
+
+                    {% set dt = "%s-%s-01" % (year, month) %}
+                    
+                        {{calendar(dt)}}
+
+                    {% endif %}
+
+                    <div class="my-2" style="float: right;">
+                        <button class="btn btn-lg mdb-color lighten-2 waves-effect" type="submit">Save</button>
+                    </div>
+
+                </div>
+                
+                
+                </div>
+        </div>
+
+        <div class="col-md-4 mb-4"> 
 
         <form action="/mymenu" method="POST" class="text-center p-1 mdb-color lighten-4">
 
@@ -93,7 +143,7 @@
                 
                 <div class="card-body my-2">
 
-                    <h1 id="period" class="h2 mdb-color-text">Holiday Period</h1>
+                    <h1 id="period" class="h2 mdb-color-text">{{start_date}} To {{end_date}} </h1>
 
                 </div>
 
@@ -132,6 +182,10 @@
         </form>
 
         </div>
+    </div>
+    </div>
+    </main>
+
 
         {% else %}
 
@@ -150,14 +204,17 @@
                 <div class="col-md-8 mb-4">
                     <div class="card-header h4 mdb-color-text grey lighten-4 mb-4">My calendar</div>
 
-                    <span class="ml-4" style="font-size: 25px"> from </span>
 
-                    <span class="border border-white my-1 mx-5 px-4 mdb-color-text" id="startdate" name="startdate" style="font-size: 30px"> Start Date </span >
-                    
-                    <span style="font-size: 25px"> to </span>
+                    <span id="startdate" class="border border-white my-1 mx-3 px-4 mdb-color-text"  style="font-size: 30px"> Starting date</span>
 
-                    <span class="border border-white mx-5 px-4 mdb-color-text" id="enddate" name="enddate" style="font-size: 30px"> End Date</span>
+                    <input type="text" id="formstartdate" name="startdate" style="visibility: hidden;">
+
+                    <span id="enddate" class="border border-white my-1 mx-3 px-4 mdb-color-text"  style="font-size: 30px"> Ending date</span>
+
+                    <input type="text" id="formenddate" name="enddate" style="visibility: hidden;">
+
                     
+
                 <div class = "container-fluid mdb-color-text">
                     
                     {% if selected_year and selected_month %}
@@ -177,7 +234,9 @@
                         <button class="btn btn-lg mdb-color lighten-2 waves-effect" type="submit">Save</button>
                     </div>
 
-                </div> 
+                </div>
+             
+                
                 </div>
 
                 <div class="col-md-4 mb-4">
@@ -211,7 +270,7 @@
                         <option>Select Season</option>
                     </select>
 
-                    <select id="temperature" name="temperature" class="browser-default custom-select my-2">
+                    <select id="temperature" name="temperature" class="browser-default custom-select my-2" value="{{value}}" onchange="getTemp(this.value)">
                         <option>Select Temperature</option>
                     </select>
 
@@ -237,10 +296,12 @@
    
             </div>
         </div><!-- First Grid -->
+
+
         </form>
     </div>
-</div>
-</main>
+    </div>
+    </main>
         {% endif %}
 
   
@@ -278,6 +339,8 @@
         });
 
         let isSelecteds = false; 
+        let sid = ''
+        let eid = ''
 
         function startDate(value){
 
@@ -328,7 +391,11 @@
 
             let start_value = $('#startdate').text();
 
-            console.log("--------------------", start_value);
+            let form_start_value = document.getElementById('formstartdate')
+
+            form_start_value.value = start_value
+            
+            console.log("--------------------", form_start_value.value);
 
             $('td.white').each(function(){
 
@@ -340,7 +407,7 @@
 
                 $(sid).attr('onclick','startDate(this.id)');
                 
-                console.log(abled);
+                //console.log(abled);
 
             });
 
@@ -404,14 +471,18 @@
 
                 $(eid).attr('onclick','endDate(this.id)');
                 
-                console.log(abled);
+                //console.log(abled);
 
             });
 
 
             let end_value = $('#enddate').text();
 
-            console.log("--------------------", end_value);
+            let form_end_value = document.getElementById('formenddate')
+
+            form_end_value.value = end_value
+            
+            console.log("------------end--------", form_end_value.value);
 
         };
 
@@ -465,6 +536,22 @@
                 $('#temperature').append($('<option />').val(temp[t]).html(temp[t]));
             }    
         };
+
+        //onchange="getTemp(this.value)
+
+        function getTemp(value){
+
+            $('#maximum').html('');
+        
+            for (b in budget){
+
+                if (budget[b] > value) {
+                    $('#maximum').append($('<option />').val(budget[b]).html(budget[b]) )
+                }
+            };
+        };
+
+        
 
         $.getJSON( "static/json/getcity.json", function( data ) {
            

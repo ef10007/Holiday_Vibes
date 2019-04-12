@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from pprint import pprint
+import random
 
 import flight_ticket as ft
 
@@ -19,14 +20,23 @@ def get_conn():
     db='projectdb',
     charset='utf8')
 
+countrynames = [('United Kingdom', 'London'), ('Australia', 'Sydney'), ('United States', 'New York')]
 
 
-def makedate():
 
+ukprice_sample = ('United Kingdom', 639)
+auprice_sample = ('Australia', 619)
+usprice_sample = ('United States', 430)
+
+
+def ticket(countryname, cityname, price_sample):
+    
     today = datetime.datetime.now()
 
     i = 0
     datelst = []
+    ticketlst = []
+
     while(i < 366):
 
         today = today + datetime.timedelta(days=1)
@@ -34,29 +44,30 @@ def makedate():
         datelst.append(day)
         i += 1
 
-    return datelst
+    for i in range(len(datelst)):
+
+        price = random.randint((price_sample[1] - 200), (price_sample[1] + 200))
+
+        tupledata = (countryname, cityname, price, datelst[i])
+
+        print(tupledata)
+        
+        ticketlst.append(tupledata)
+
+    sql_insert = "insert into Ticket(countryname, cityname, price,  date) values(%s, %s, %s, %s)"
 
 
-ticket56 = ft.ticketprocess(56) # tuple
-ticket1112 = ft.ticketprocess(1112)
+    conn = get_conn()
+    with conn:
+                        
+        cur = conn.cursor()
+        cur.executemany(sql_insert, ticketlst)
 
-sql_insert = "insert into Temp1(countryname, price, countryname, price) values(%s, %s, %s, %s)"
-
-ticket = ticket56 + ticket1112
-# print(ticket)
-
-conn = get_conn()
-with conn:
-                    
-    cur = conn.cursor()
-    cur.execute(sql_insert, ticket)
-
-print('---- Success!! ----')
+    print('---- Success to create ticket prices for {}!! ----'.format(cityname))
 
 
 
-
-
+ticket('United States', 'New York', usprice_sample)
 
 
 

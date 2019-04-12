@@ -163,6 +163,8 @@ Each data on the graph(calendar) that hovered/clicked by the user will be displa
 
 (8th.Apr.2019: We successfully implemented ```send_ajax``` function sending start date to url ```/mymenu```. It has been posted with the method 'POST', so the method that receives it must have the same.)
 
+(12th.Apr.2019: We completed preference data commit to DB. We created additional input box with visibility of hidden so that we can receive the data from the span tags above.)
+
 
 * Flask with python
 
