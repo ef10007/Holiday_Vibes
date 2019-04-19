@@ -23,7 +23,6 @@ def get_conn():
 countrynames = [('United Kingdom', 'London'), ('Australia', 'Sydney'), ('United States', 'New York')]
 
 
-
 ukprice_sample = ('United Kingdom', 639)
 auprice_sample = ('Australia', 619)
 usprice_sample = ('United States', 430)
@@ -54,7 +53,7 @@ def ticket(countryname, cityname, price_sample):
         
         ticketlst.append(tupledata)
 
-    sql_insert = "insert into Ticket(countryname, cityname, price,  date) values(%s, %s, %s, %s)"
+    sql_insert = "insert into Ticket(countryname, cityname, price, dt) values(%s, %s, %s, %s)"
 
 
     conn = get_conn()

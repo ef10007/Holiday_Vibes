@@ -3,71 +3,296 @@
 
 {% block body %}
 
-{% macro calendar(dt) %}
+<style>
+    ul li {
+    display: inline;
+    padding-right: 25px;
+    };
 
-    <h1 class="text-center text-bold">
-        <small><a href="/?year={{year - 1}}" class="text-muted">{{dt | year - 1}}</a></small>
-        {{dt | year}}
-        <small><a href="/?year={{year + 1}}" class="text-muted">{{dt | year + 1}}</a></small>
-    </h1>
+    th {
+        padding: 0 0.5em;
+        text-align: center;
+        background-color:gray;
+        color:white;
+        }
 
-    <div class="row">
+    td  {     
+        font-size: medium;
+        padding: 0.25em 0.25em;   
+        width: 14%; 
+        height: 80px;
+        text-align: left;
+        vertical-align: top;
+        }
 
-        <div class="col">
-        <div class="container-fluid white-skin text-center">
-            <section class="container white pb-3 my-3">
-                <h1>{{dt | month}} </h1>
+    table {
+        font: 100% Verdana, Arial, Helvetica, sans-serif;
+        table-layout: fixed;
+        border-collapse: collapse;
+        width: 100%;
+        }
+      
+</style>
 
-            <table class="table table-bordered table-white">
 
-                <thead class="mdb-color lighten-1 white-text">
-                    {%- for days in ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri ', 'Sat'] %}
-                        <td><div>{{ days }}</div></td>
-                        {% endfor -%}
-                </thead>
+<script id="dates_template" type="text/x-handlebars-template">
+    {% raw %}
 
-                <tbody class="grey lighten-5">
-                    {% for row in range(dt | sdt, dt | edt) | batch(7, '&nbsp;') %}
-                    <tr>
-                        {% for col in row %}
-                            <td>
-                                {% if ((col|int) <= 0) %}
-                                    &nbsp;
-                                {%else%}
-                                    {{col | safe}}
-                                {%endif%}
-                            </td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
+    <thead>
+        <tr id="weekdays">
+            <td>Sun</td>
+            <td>Mon</td>
+            <td>Tue</td>
+            <td>Wed</td>
+            <td>Thu</td>
+            <td>Fri</td>
+            <td>Sat</td>
+        </tr>
+    </thead>
 
-                
-            </table>
-        </section>
-        </div>
-    </div>
-    </div>
-{% endmacro %}
+    <tbody>
+        {{#each week}}
+        <tr>
+            <td id="{{sun}}">{{sun}}</td>
+            <td id="{{mon}}">{{mon}}</td>
+            <td id="{{tue}}">{{tue}}</td>
+            <td id="{{wed}}">{{wed}}</td>
+            <td id="{{thu}}">{{thu}}</td>
+            <td id="{{fri}}">{{fri}}</td>
+            <td id="{{sat}}">{{sat}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
 
-<main class="mt-5 pt-5">
-    <div>
     
-            {% set dt = "%s-%s-01" % (2020, 7) %}
+    {% endraw %}
+</script>
 
-                {{calendar(dt)}}
-            </div>
-        </div>
+<main class="my-5 py-5">
+    <div class="my-5 py-5">
+        <h1 class="red text-center" id="prey" onclick="aftCalendar(this.id)">preyear</h1>
+        <h1 class="red text-center" id ="current_year"></h1>
+        <h1 class="red text-center" id="afty" onclick="aftCalendar(this.id)">aftyear</h1>
+
+        <h1 class="text-center" id="prem" onclick="monthCalendar(this.id)">pre</h1>
+        <h1 class="text-center" id ="current_month"></h1>
+        <h1 class="text-center" id="aftm" onclick="monthCalendar(this.id)">aft</h1>
+        <table id="calendar" class="table table-bordered table-white">
+
+    
+        </table>
+    </div>
+</main>
+
 
         
 {% endblock body %}
 
 
 {% block jsfunction %}
+
+
 <script>
 
+    let today  = moment();
+
+    let lastYear = moment().subtract(1, 'year')
+                            .isoWeek(today.isoWeek())
+                            .isoWeekday(today.isoWeekday());
+
+    let currentYear = moment().isoWeek(today.isoWeek())
+                        .isoWeekday(today.isoWeekday());
+
+    let nextYear = moment().add(1, 'year')
+                    .isoWeek(today.isoWeek())
+                    .isoWeekday(today.isoWeekday());
+
+    console.log("LASTYEAR", lastYear,currentYear, nextYear);
+
+
+    let year = moment().get('year');    // 2019
+
+    let month = moment().get('month');  // 4
+    let startYMD = moment().startOf('month');   // 2019-04-01
+    let endYMD = moment().endOf('month');       // 2019-04-30
+    let startWeek = moment().startOf('isoWeek').day(0); // x
+    let date = moment().get('date');    // 19
+    
+
+
+    let startyear; let startmonth; let startday; let endday;   // 201
+
+    let startweek; let endweek; 
+
+    let calendar = { week : []}
+    
+    function makeDays(){
+
+        calendar = { week : []}
+
+        if (startweek > endweek){
+            endweek = 53
+
+            console.log("Reassigned__--------", startweek, endweek)
+        }
+
+        for(a = parseInt(startweek); a <= parseInt(endweek); a++){
+
+            console.log("WEEK CHECK", startweek, endweek, a)
+            
+            let getDates = moment().day("Sunday").year(startyear).week(a).format("L");
+            
+            console.log("GGGGEEEET", getDates)
+
+            let data = {"sun": moment(getDates).format("D"),
+                "mon": moment(getDates).add(1, 'days').format("D"),
+                "tue": moment(getDates).add(2, 'days').format("D"),
+                "wed": moment(getDates).add(3, 'days').format("D"),
+                "thu": moment(getDates).add(4, 'days').format("D"),
+                "fri": moment(getDates).add(5, 'days').format("D"),
+                "sat": moment(getDates).add(6, 'days').format("D")}
+
+            calendar.week.push(data)
+
+        }
+
+        console.log(calendar);
+    };
+
+
+    function displayCalendar(){   
+        
+        startmonth = moment(today).format("MMMM") 
+        $('#current_month').html(startmonth);
+
+        
+        startyear = moment(today).format("YYYY")
+        $('#current_year').html(startyear);
+        
+        // 4월
+        //console.log(startmonth); //string
+
+        startday = moment().isoWeek(today.isoWeek()).isoWeekday(today.isoWeekday()).startOf('month');
+
+        endday = moment().isoWeek(today.isoWeek()).isoWeekday(today.isoWeekday()).endOf('month');
+        
+        startweek = moment(startday).isoWeek()
+        
+        endweek = moment(endday).isoWeek()
+        
+        console.log("#######DAY####", startyear, startweek, endweek)
+
+        makeDays();
+    
+        hbs("dates_template", calendar, "calendar");
+
+    };
+
+    displayCalendar();
+
+    function monthCalendar(id){
+        
+        if (id == "prem"){
+
+            today = moment(today).subtract(1, 'month');
+
+            startmonth = moment(today).format("MMMM") 
+            $('#current_month').html(startmonth);
+
+            startyear = moment(today).format("YYYY")
+
+            if (startyear != currentYear.year()){
+                startyear = moment(startyear).year()
+                a = 0
+                console.log("CURRENT", currentYear.year())
+                console.log("STARTYEAR", startyear)
+            }
+
+            $('#current_year').html(startyear);
+
+            // 4월
+            //console.log(startmonth); //string
+
+            startday = moment().isoWeek(today.isoWeek()).isoWeekday(today.isoWeekday()).startOf('month');
+
+            endday = moment().isoWeek(today.isoWeek()).isoWeekday(today.isoWeekday()).endOf('month');
+            
+            startweek = moment(startday).isoWeek()
+            
+            endweek = moment(endday).isoWeek()
+            
+            console.log("#######DAY####", startyear, startweek, endweek)
+
+            makeDays();
+        
+            hbs("dates_template", calendar, "calendar");
+
+            
+            
+        } else {
+
+            today = moment(today).add(1, 'month');
+
+            startmonth = moment(today).format("MMMM") 
+            $('#current_month').html(startmonth);
+
+            startyear = moment(today).format("YYYY")
+
+            if (startyear != currentYear.year()){
+                startyear = moment(startyear).year()
+                a = 0
+                console.log("CURRENT", currentYear.year())
+                console.log("STARTYEAR", startyear)
+            }
+
+            $('#current_year').html(startyear);
+
+            // 4월
+            //console.log(startmonth); //string
+
+            startday = moment().isoWeek(today.isoWeek()).isoWeekday(today.isoWeekday()).startOf('month');
+
+            endday = moment().isoWeek(today.isoWeek()).isoWeekday(today.isoWeekday()).endOf('month');
+            
+            startweek = moment(startday).isoWeek()
+            
+            endweek = moment(endday).isoWeek()
+            
+            console.log("#######DAY####", startyear, startweek, endweek)
+
+            makeDays();
+        
+            hbs("dates_template", calendar, "calendar");
+            
+            
+        } 
+    };
+     
+        
+
+
+
+    const weekDays =  [ 
+        {day: "Sun"},
+        {day: "Mon"}, 
+        {day: "Tue"},
+        {day: "Wed"}, 
+        {day: "Thu"},
+        {day: "Fri"}, 
+        {day: "Sat"} ]
+        moment().isoWeekday(1); // Monday
+        moment().isoWeekday(7)
+    
+    //send_ajax('/calendar/iso','GET', '', 'json', function(res){
+    //    let now = moment(res['result']);
+    //});
+
+        //d = make_date(dt, fmt)
+        //wd = d.weekday()
+        //return (1 if wd == 6 else wd) * -1
+
+    //hbs("weekdays_template", {weekDays: weekDays}, "weekdays");
 
 </script>
     
 {% endblock jsfunction %}
-    

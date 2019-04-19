@@ -1,24 +1,89 @@
 from flask import render_template, request, Response, session, jsonify, make_response, redirect, flash, url_for
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
+import datetime
 from sqlalchemy.orm import subqueryload, joinedload
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql import func
 from holvflask import app
 from holvflask.pro_init_db import db_session, init_database
-from holvflask.pro_models import User, City, Country, CityMPT, Preference, Ticket
+from holvflask.pro_models import User, City, Country, CityMPT, Preference, Ticket, Weather
+
+
+@app.route('/calendar/iso')
+def calendar_iso():
+
+    # today = date.today()
+
+    # day = datetime.datetime.isocalendar(today)
+
+    day = '2019-4-17'
+
+    return jsonify( {"result": day} )
 
 
 @app.route('/calendar')
 def calendar():
 
+
     today = date.today()
+
+    day = datetime.datetime.isocalendar(today)
   
     dt = today.strftime("%Y-%m-%d")
     
     year = request.args.get('year', date.today().year, int)
     month = request.args.get('month', date.today().month, int)
 
-    return render_template('calendar.htm', year=year, month=month)
+    return render_template('calendar.htm', year=year, month=month, day=day)
+
+
+def daterange(sdate, edate):
+    for n in range(int ((edate - sdate).days ) + 1):
+        yield sdate + timedelta(n)
+
+
+@app.route("/mymenu/<userid>", methods=['GET'])
+def mymenu_user(userid):
+
+    p = db_session.query(Preference).filter("userid = :userid").params(userid=userid).first()
+    print(p.json())
+
+    return jsonify( p.json() )
+
+@app.route('/mymenu/<start_date>&<end_date>&<cityname>', methods=['GET'])
+
+def mymenu_user_calendar(start_date, end_date, cityname):
+
+    start_date_datetime = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
+    end_date_datetime = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
+
+    data = {}
+    data['result'] = []
+
+    for d in daterange(start_date_datetime, end_date_datetime):
+        datalist = []
+        data1 = {}
+
+        days = d.strftime("%Y-%m-%d")
+
+        dwt = db_session.query(Weather).filter("dt = :dt and cityname=:cityname").params(dt=days, cityname=cityname).first()
+
+        dtk = db_session.query(Ticket).filter("dt = :dt and cityname=:cityname").params(dt=days, cityname=cityname).first()
+
+
+        description = dwt.description
+        dmintemp = dwt.mintemp
+        dmaxtemp = dwt.maxtemp
+        price = dtk.price
+
+        datalist = (description, dmintemp, dmaxtemp, price)
+
+        data1['days'] = days
+        data1['desc'] = datalist
+
+        data['result'].append(data1)
+
+    return jsonify( data )
 
 
 @app.route("/mymenu", methods=['GET'])
@@ -26,9 +91,10 @@ def mymenu():
 
     today = date.today()
     dt = today.strftime("%Y-%m-%d")
-    
+        
     year = request.args.get('year', date.today().year, int)
     month = request.args.get('month', date.today().month, int)
+
 
     namedmonth = today.strftime("%B")
 
@@ -43,17 +109,12 @@ def mymenu():
     if p is not None:
         
         username = p.useridfk.username
-        start_date = p.start_date
-        end_date = p.end_date
-        cityname = p.cityname
-        temperature = p.temperature
-        minbud = p.minbud
-        maxbud = p.maxbud
 
-        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, p=p, username=username, start_date=start_date, end_date=end_date, cityname=cityname, temperature=temperature, minbud=minbud, maxbud=maxbud)
+        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, p=p, userid=userid, username=username)
+
     
     else:
-        
+            
         return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month)
 
 

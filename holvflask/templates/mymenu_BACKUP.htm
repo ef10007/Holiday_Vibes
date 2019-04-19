@@ -73,82 +73,65 @@
 
 
 {% block body %}
-
-<main class="mt-5 mx-5 pt-5 px-5">
-    <div class="row">
-
-        <div class="col-md-8 mb-4"> 
-
-        <div class="card text-center wow fadeIn">
-
-            <form action="/mymenu" method="POST" class="text-center p-3 mdb-color lighten-4">
-            
-            <div class="card-header h4 mdb-color-text grey lighten-4">My calendar</div>
     
-            <!--Card content-->
-            <div class="card-body white">
-
-            <!--Grid row-->
-            <div class="row">
-
-                <!--Grid column-->
-                <div class="col-md-6 mb-4">
-              
-                    <span id="startdate"></span>
+    {% if p %}
     
-                </div>
-                <!--Grid column-->
-            
-                <!--Grid column-->
-                <div class="col-md-6 mb-4">
+    <form action="/mymenu" method="POST" class="text-center p-3 mdb-color lighten-4">
 
-                    <span id="enddate"></span>
+        <div class="row">
 
-            
-                </div>
-                <!--Grid column-->
-
-                <div class = "container-fluid mdb-color-text">
-                    
-                    {% if selected_year and selected_month %}
-                    {% set dt = "%s-%s-01" % (selected_year, selected_month) %}
-
-                        {{calendar(dt)}}
-
-                    {% else %}
-
-                    {% set dt = "%s-%s-01" % (year, month) %}
-                    
-                        {{calendar(dt)}}
-
-                    {% endif %}
-
-                    <div class="text-right mt-3">
-                        <button class="btn btn-md mdb-color lighten-2 waves-effect" type="submit">Save</button>
-                    </div>
-
-                </div>    
-            
-            </div>
-        
-            </div>
-
-        </form>
-
-        </div>
+            <div class="col-md-12 mb-4"> 
     
+                <div class="card text-center wow fadeIn">
                 
-        </div><!-- First Grid -->
-
+                <div class="card-header h4 mdb-color-text grey lighten-4">My calendar</div>
+        
+                <!--Card content-->
+                <div class="card-body white">
+                    <div class="row">
+                    <!--Grid column-->
+                    <div class="col-md-6 mb-4">
+                    
+                        <span id="startdate"></span>
+        
+                    </div>
+                    <!--Grid column-->
+                
+                    <!--Grid column-->
+                    <div class="col-md-6 mb-4">
+                        <span id="enddate"></span>
+                    </div>
+                    <!--Grid column-->
+                    </div>
+    
+                    <div class = "container-fluid mdb-color-text">
+                        
+                        {% if selected_year and selected_month %}
+                        {% set dt = "%s-%s-01" % (selected_year, selected_month) %}
+    
+                            {{calendar(dt)}}
+    
+                        {% else %}
+    
+                        {% set dt = "%s-%s-01" % (year, month) %}
+                        
+                            {{calendar(dt)}}
+    
+                        {% endif %}
+    
+                        <div class="text-right mt-3">
+                            <button class="btn btn-md mdb-color lighten-2 waves-effect" type="submit">Save</button>
+                        </div>
+    
+                    </div>    
+                
+                </div>
+            </div>
+            </div>
 
         
-
-        <div class="col-md-4 mb-4">
-
-        {% if p %}
-
-        <form action="/mymenu" method="POST" class="text-center p-3 mdb-color lighten-4">
-
+            <div class="col-md-4 mb-4">
+                
             <div class="container border mdb-color darken-3 white-text my-2">
                 <h1 class="my-4" style="font-size: 40px;"> {{username}}</h1>
             </div>
@@ -177,7 +160,7 @@
                 <div class="card-body my-2">
 
                     <h1 class="h2 mdb-color-text">{{temperature}}</h1>
-    
+
                 </div>
 
                 <div class="card-header h4 mdb-color lighten-1 white-text my-2">Your budget</div>
@@ -190,14 +173,20 @@
                 </div>
 
             </div>
-            <!-- Second Grid -->
+        <!-- Second Grid -->
 
-            <div class="text-right mt-4">
-                <button class="btn btn-md mdb-color lighten-5 waves-effect mdb-color-text" type="submit">Edit</button>
-            </div>
-        </form>
+        <div class="text-right mt-4">
+            <button class="btn btn-md mdb-color lighten-5 waves-effect mdb-color-text" type="submit">Edit</button>
+        </div>
 
-        {% else %}
+        </div>
+
+    </div>
+        
+    </div>
+    </form>
+
+    {% else %}
 
         <form action="/mymenu" method="POST" class="text-center p-3 mdb-color lighten-4">
 
@@ -263,8 +252,8 @@
         {% endif %}
 
         </div>
-        </div>
-</main>
+            </div>
+
 {% endblock body %}
 
 

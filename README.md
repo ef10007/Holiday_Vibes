@@ -50,7 +50,9 @@ Each cell of it has anchor tag leads to the search HTML displaying related infor
 
 (8th.Mar.2019 : The script tags aren't working.)
 
-(25th.Mar.2019: We have deprecated it.)
+(25th.Mar.2019: We have deprecated fullcalendar.io.)
+
+(19th.Apr.2019: We tried to display calendar with week numbers and currently working on the previous year.)
 
 * My menu
 
@@ -63,7 +65,11 @@ The users can pick their journey and store them in a preference table.
 
 (3rd.Apr.2019: We implemented 'toggleClass' on each day has been selected.)
 
-(9.Apr.2019: We managed to handle selected dates - starting date and ending date with the class name, onclick function and conditional statement. )
+(9th.Apr.2019: We managed to handle selected dates - starting date and ending date with the class name, onclick function and conditional statement. )
+
+(16th.Apr.2019: I encountered a problem that declared start id and end id twice with using 'let' twice hence the value of the ids have not been saved. As a result, I could not use the values to toggle the class and add an attribute. It was easily solved by removing the redundant variable declarations. )
+
+(17th.Apr.2019: We accomplished displaying the chosen data of the user on the calendar by using JQuery and Ajax.)
 
 
 * Search
@@ -159,11 +165,11 @@ However, we encountered a problem - ```1366, "Incorrect integer value: '' for co
 
 Each data on the graph(calendar) that hovered/clicked by the user will be displayed, and by using ajax and D3.js, we will implement this. 
 
-(25.Mar.2019: We are going to find its dependent values (i. e. city names) with the country name. On 'mymenu' HTML file,  the selected country name has been successfully logged in the console and made URL for Ajax communication.)
+(25.Mar.2019: We are gfoing to find its dependent values (i. e. city names) with the country name. On 'mymenu' HTML file,  the selected country name has been successfully logged in the console and made URL for Ajax communication.)
 
 (8th.Apr.2019: We successfully implemented ```send_ajax``` function sending start date to url ```/mymenu```. It has been posted with the method 'POST', so the method that receives it must have the same.)
 
-(12th.Apr.2019: We completed preference data commit to DB. We created additional input box with visibility of hidden so that we can receive the data from the span tags above.)
+(12th.Apr.2019: We completed preference data commit to DB. We created additional input box with visibility of hidden so that we can receive the data from the span tags above. iso.datetime object)
 
 
 * Flask with python

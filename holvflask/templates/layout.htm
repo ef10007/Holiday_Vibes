@@ -172,12 +172,12 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/mdb.min.js') }}"></script>
-    <!-- Initializations -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/ko.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/handlebars.js') }}"></script>
 
     <script type="text/javascript" src="{{ url_for('static', filename='node_modules/moment/moment.js') }}"></script>
+   
+
 
     <script type="text/javascript">
         
@@ -208,9 +208,12 @@
         }
 
         function hbs(sourceId, data, resultId) {
+            console.log("arguments", ...arguments)
             var source = document.getElementById(sourceId).innerHTML;
+            console.log("source", source)
             var template = Handlebars.compile(source);
             var html = template(data);
+            console.log("html template", html)
             document.getElementById(resultId).innerHTML = html;
         }
 
