@@ -4,33 +4,40 @@
 
 {% macro calendar(dt) %}
 
+    <style>
+        ul li {
+        display: inline;
+
+        };
+    </style>
+
     <div class="row">
         <div class="col">
 
             <div class="container-fluid white-skin text-center table-responsive">
             <section class="container white">
 
-                <div class="h2 text-bold text-right my-3">
+                <ul class="h2 text-bold text-right my-3">
 
-                    <small><a href="/mymenu?selected_year={{dt | yearbf}}&selected_month={{month}}" class="text-muted"> <i class="fas fa-chevron-left"></i>
-                    </a></small>
+                    <li><small><a href="/mymenu?selected_year={{dt | yearbf}}&selected_month={{month}}" class="text-muted"> <i class="fas fa-chevron-left"></i>
+                    </a></small></li>
             
-                    {{dt | year}}
+                    <li>{{dt | year}}</li>
             
-                    <small><a href="/mymenu?selected_year={{dt | yearaf}}&selected_month={{month}}" class="text-muted"> <i class="fas fa-chevron-right"></i>
-                    </a></small>
+                    <li><small><a href="/mymenu?selected_year={{dt | yearaf}}&selected_month={{month}}" class="text-muted"> <i class="fas fa-chevron-right"></i>
+                    </a></small></li>
 
-                </div>
+                </ul>
 
-                <div class="h2 text-bold my-3">
+                <ul class="h2 text-bold my-3" >
     
-                    <small><a href="/mymenu?selected_year={{dt | year}}&selected_month={{dt | monthbf}}" class="text-muted"> <i class="fas fa-chevron-circle-left"></i> </a></small>
+                    <li><small><a href="/mymenu?selected_year={{dt | year}}&selected_month={{dt | monthbf}}" class="text-muted"> <i class="fas fa-chevron-circle-left"></i> </a></small></li>
             
-                    {{dt | namedmonth}}
+                    <li id="named_month">{{dt | namedmonth}}</li>
             
-                    <small><a href="/mymenu?selected_year={{dt | year}}&selected_month={{dt | monthaf}}" class="text-muted">  <i class="fas fa-chevron-circle-right"></i> </a></small>
+                    <li><small><a href="/mymenu?selected_year={{dt | year}}&selected_month={{dt | monthaf}}" class="text-muted">  <i class="fas fa-chevron-circle-right"></i> </a></small></li>
 
-                </div>
+                </ul>
 
 
             <table class="table table-bordered table-white">
@@ -159,10 +166,13 @@
 
                 <div class="card-header h4 mdb-color lighten-1 white-text my-2">Your budget</div>
 
-                 <div class="card-body my-2">
+                 <div class="card-body my-2"> 
 
-                    <h1 id="minbud" class="h2 mdb-color-text"></h1> to
-                    <h1 id="maxbud" class="h2 mdb-color-text"></h1>
+                    <ul>
+                    <li id="minbud" class="h2 mdb-color-text"></li> to
+                    <li id="maxbud" class="h2 mdb-color-text"></li>
+                    </ul> 
+
         
                 </div>
 
@@ -300,6 +310,7 @@
 {% block jsfunction %}
  
 
+
     <script type="text/javascript">
 
     
@@ -310,13 +321,36 @@
 
         const userid = $('#userid').attr('value');
 
-        send_ajax('/mymenu/' + userid, 'GET', '', '', function(res){
-            console.log(res)
-            Preference(res);
-        });
+
+        let sm = {{month}};
+        let sy = {{year}};
+
+        if (!sm & sy){
+            sm = {{month}};
+            sy = {{selected_year}};
+        } else if (sm & !sy){
+            sm = {{selected_month}};
+            sy = {{year}};
+        } else if (!sm & !sy){
+            sm = {{selected_month}};
+            sy = {{selected_year}};
+        } else {
+            sm = {{month}};
+            sy = {{year}};
+        }
+
+        if ($('#ifp')){
+
+            send_ajax('/mymenu/' + userid, 'GET', '', '', function(res){
+                console.log(res)
+                Preference(res);
+            });
+        };
 
 
         function Preference(res){
+
+
             let cityname = res['cityname']
             let start_date = res['start_date']
             let end_date = res['end_date']
@@ -324,15 +358,14 @@
             let minbud = res['minbud']
             let maxbud = res['maxbud']
 
-
             $('#cityname').html(cityname);
             $('#start_date').html(start_date);
             $('#end_date').html(end_date);
             $('#startdate').html(start_date);
             $('#enddate').html(end_date);
-            $('#temperature').html(temp + '°C');
-            $('#minbud').html(minbud);
-            $('#maxbud').html(maxbud);
+            $('#temperature').html(temp + ' °C');
+            $('#minbud').html("£ " + minbud);
+            $('#maxbud').html("£ " + maxbud);
 
 
             start_value = start_date.split('-')
@@ -340,35 +373,50 @@
 
             if ($('#ifp')){
 
+                
                 let sd = parseInt(start_value[2])
                 let ed = parseInt(end_value[2])
+                
+                let smm = parseInt(start_value[1])
+                let emm = parseInt(end_value[1])
+                
+                if (smm !=  sm) {
+                    for (da in dayarr){
 
-                for (da in dayarr){
-                    if (sd > dayarr[da]){
-                        
-                        let id2 = '#' + dayarr[da];
-                        $(id2).addClass('white').attr('onclick','');
-                        
-                    }  else if (ed < dayarr[da] ){
-                        let id4 = '#' + dayarr[da];
-
-                        $(id4).addClass('white').attr('onclick','');
-
-                    } else if (sd < dayarr[da]) {
-                        let id3 = '#' + dayarr[da];
-
-                        $(id3).addClass('indigo lighten-5').attr('onclick','');
-
-                    } else if (ed > dayarr[da]) {
-                        let id3 = '#' + dayarr[da];
-
-                        $(id3).addClass('indigo lighten-5').attr('onclick','');
+                        let id22 = '#' + dayarr[da]
+                        $(id22).addClass('white').attr('onclick','');
                     }
+                } else {
 
-                };
+                    for (da in dayarr){
+                        if (sd > dayarr[da]){
+                            
+                            let id2 = '#' + dayarr[da];
+                            $(id2).addClass('white').attr('onclick','');
+                            
+                        }  else if (ed < dayarr[da] ){
+                            let id4 = '#' + dayarr[da];
 
-                let keydata = $('#keydata').attr('value');
-                console.log("KEYDATA", keydata);
+                            $(id4).addClass('white').attr('onclick','');
+
+                        } else if (sd < dayarr[da]) {
+                            let id3 = '#' + dayarr[da];
+
+                            $(id3).addClass('indigo lighten-5').attr('onclick','');
+
+                        } else if (ed > dayarr[da]) {
+                            let id3 = '#' + dayarr[da];
+
+                            $(id3).addClass('indigo lighten-5').attr('onclick','');
+                        }
+
+                    };
+                }
+            
+
+                //let keydata = $('#keydata').attr('value');
+
+               // console.log("KEYDATA", keydata);
 
                 send_ajax('/mymenu/' + start_date + '&' + end_date + '&' + cityname, 'GET', '', 'json', function(resp){
 
@@ -383,8 +431,7 @@
                         let maxt = resp['result'][i]['desc'][2];
                         let price = resp['result'][i]['desc'][3];
                         
-                        $('#data' + days[2]).append('<p class="mt-3"> £ ' + price + '</p>',
-                        '<p>' + mint +  ' - ' + maxt+ '°C</p>', '<p>' + desc + '</p>');
+                        $('#data' + days[2]).append('<div class="my-3"> £ ' + price + '<div>', '<div>' + maxt +  '°C - ' + mint+ '°C</div>', '<span>' + desc + '</span>');
                         
 
                         $('#' + days[2]).addClass('indigo');
@@ -415,16 +462,27 @@
         let sid = ''
         let eid = ''
 
+        
         function startDate(value){
-
+            
             sid = '#' + value;
-          
+            
+            
             if (isSelecteds == false){
-
+                
                 isSelecteds = true;
                 $(sid).addClass('grey lighten-3');
+                
+                if (sm & !sy){
+                    $('#startdate').html("{{year}}-{{selected_month}}-" + value);
+                } else if (sy & !sm){
+                    $('#startdate').html("{{selected_year}}-{{month}}-" + value);
+                } else if (sm & sy){
+                    $('#startdate').html("{{selected_year}}-{{selected_month}}-" + value);
+                } else {
+                    $('#startdate').html("{{year}}-{{month}}-" + value);
+                }
 
-                $('#startdate').html("{{year}}-{{month}}-" + value);
 
                 for (da in dayarr){
                     if (value <= dayarr[da]){
@@ -494,7 +552,18 @@
 
                 isSelectede = true;
                 $(eid).addClass('grey lighten-3');
-                $('#enddate').html("{{year}}-{{month}}-" + value);
+
+
+                if (sm & !sy){
+                    $('#enddate').html("{{year}}-{{selected_month}}-" + value);
+                } else if (sy & !sm){
+                    $('#enddate').html("{{selected_year}}-{{month}}-" + value);
+                } else if (sm & sy){
+                    $('#enddate').html("{{selected_year}}-{{selected_month}}-" + value);
+                } else {
+                    $('#enddate').html("{{year}}-{{month}}-" + value);
+                }
+
 
                 for (da in dayarr){
                     if (value >= dayarr[da]){

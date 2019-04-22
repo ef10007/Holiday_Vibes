@@ -21,22 +21,6 @@ def calendar_iso():
     return jsonify( {"result": day} )
 
 
-@app.route('/calendar')
-def calendar():
-
-
-    today = date.today()
-
-    day = datetime.datetime.isocalendar(today)
-  
-    dt = today.strftime("%Y-%m-%d")
-    
-    year = request.args.get('year', date.today().year, int)
-    month = request.args.get('month', date.today().month, int)
-
-    return render_template('calendar.htm', year=year, month=month, day=day)
-
-
 def daterange(sdate, edate):
     for n in range(int ((edate - sdate).days ) + 1):
         yield sdate + timedelta(n)
@@ -68,6 +52,8 @@ def mymenu_user_calendar(start_date, end_date, cityname):
 
         dwt = db_session.query(Weather).filter("dt = :dt and cityname=:cityname").params(dt=days, cityname=cityname).first()
 
+        print(dwt)
+
         dtk = db_session.query(Ticket).filter("dt = :dt and cityname=:cityname").params(dt=days, cityname=cityname).first()
 
 
@@ -86,6 +72,8 @@ def mymenu_user_calendar(start_date, end_date, cityname):
     return jsonify( data )
 
 
+
+
 @app.route("/mymenu", methods=['GET'])
 def mymenu():
 
@@ -101,7 +89,6 @@ def mymenu():
     selected_year = request.args.get('selected_year')
     selected_month = request.args.get('selected_month')
     
-
     userid = session['loginUser']['id']
 
     p = db_session.query(Preference).filter("userid = :userid").params(userid=userid).first()
@@ -213,3 +200,21 @@ def logout():
     if session.get('loginUser'):
         del session['loginUser']
     return redirect('/')
+
+
+
+
+@app.route('/calendar')
+def calendar():
+
+
+    today = date.today()
+
+    day = datetime.datetime.isocalendar(today)
+  
+    dt = today.strftime("%Y-%m-%d")
+    
+    year = request.args.get('year', date.today().year, int)
+    month = request.args.get('month', date.today().month, int)
+
+    return render_template('calendar.htm', year=year, month=month, day=day)

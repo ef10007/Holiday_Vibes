@@ -70,14 +70,24 @@
 
 <main class="my-5 py-5">
     <div class="my-5 py-5">
-        <h1 class="red text-center" id="prey" onclick="aftCalendar(this.id)">preyear</h1>
-        <h1 class="red text-center" id ="current_year"></h1>
-        <h1 class="red text-center" id="afty" onclick="aftCalendar(this.id)">aftyear</h1>
 
-        <h1 class="text-center" id="prem" onclick="monthCalendar(this.id)">pre</h1>
-        <h1 class="text-center" id ="current_month"></h1>
-        <h1 class="text-center" id="aftm" onclick="monthCalendar(this.id)">aft</h1>
-        <table id="calendar" class="table table-bordered table-white">
+        
+        <ul id="horizontal-list" style="text-align: center;">
+            <li class="text-center h1 white" id="prey" onclick="aftCalendar(this.id)"><i class="fas fa-chevron-circle-left"></i> </li>
+            <li class="text-center h1 white" id ="current_year"></li>
+            <li class="text-center h1 white" id="afty" onclick="aftCalendar(this.id)"><i class="fas fa-chevron-circle-right"></i></li>
+        </ul>
+
+        <ul id="horizontal-list" style="text-align: center;">
+            <li class="text-center h1 white" id="prem" onclick="monthCalendar(this.id)"><i class="fas fa-chevron-circle-left"></i> </li>
+
+            <li class="text-center h1 white" id ="current_month"></li>
+
+            <li class="text-center h1 white" id="aftm" onclick="monthCalendar(this.id)"><i class="fas fa-chevron-circle-right"></i></li>
+        </ul>
+
+   
+        <table id="calendar" class="table table-bordered white container">
 
     
         </table>
@@ -130,8 +140,13 @@
 
         calendar = { week : []}
 
-        if (startweek > endweek){
+        console.log("STARTYEAR", startyear);
+
+        if (startyear != year){
+
             endweek = 53
+
+        
 
             console.log("Reassigned__--------", startweek, endweek)
         }
@@ -155,7 +170,6 @@
             calendar.week.push(data)
 
         }
-
         console.log(calendar);
     };
 

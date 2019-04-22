@@ -4,6 +4,30 @@
 
 {% block body %}
 
+    <!-- <style>
+        ul li {
+        display: inline;
+        padding-right: 25px;
+        };
+    </style> -->
+
+    <script id="preference_template" type="text/x-handlebars-template">
+        {% raw %}
+
+        <ul class="container" style="list-style: none;">
+            <li class="my-2">Your city is <strong>{{cityname}}</strong></li>
+            <br>
+            <li class="my-2">From <strong>{{start_date}}</strong></li>
+            <li class="my-2">to <strong>{{end_date}}</strong></li>
+            <br>
+            <li class="my-2"> Your preferred temperature is <strong> {{temperature}} °C </strong></li>
+            <br>
+            <li class="my-2"> Your budget is between <strong>£ {{minbud}}</strong> and <strong>£ {{maxbud}}</strong></li>
+        </ul>
+
+        {% endraw %}
+    </script>
+
     <main class="mt-5 pt-5">
     <div class="container" style="opacity: 0.95;">
 
@@ -55,10 +79,10 @@
                         <div class="card-body text-center">
 
                         <!-- Section: Blog v.2 -->
-                        <section class="text-center">
+                        <section id="default_recom" class="text-center">
 
                         <!-- Section heading -->
-                        <div class="card-header font-weight-bold h2 mdb-color-text my-3">Recommendations</div>
+                        <div class="card-header font-weight-bold h2 mdb-color-text mb-3">Recommendations</div>
                         <!-- Section description -->
                         <div class="dark-grey-text mx-2 mb-5 md">
                             Holidaymakers wonder when and where is the ideal to book their 'routine-break'. <br>
@@ -88,9 +112,9 @@
                             <!-- Post datfa -->
                       
                             <!-- Excerpt -->
-                            <p class="dark-grey-text">London is one of most popular destinations in Europe, luring travelers year round.  Steeped in history, this enormous capital city has so much to offer with its world-class galleries, phenomenal shopping and an amazing culinary scene.</p>
+                            <p class="dark-grey-text">London is one of most popular destinations in Europe, luring travelers year round. It has so much to offer with its world-class galleries, phenomenal shopping and an amazing culinary scene.</p>
                             <!-- Read more button -->
-                            <a class="btn mdb-color white-text btn-rounded btn-md">Read more</a>
+                            <!-- <a href="" class="btn mdb-color white-text btn-rounded btn-md">Read more</a> -->
 
                         </div>
                         <!-- Grid column -->
@@ -117,7 +141,7 @@
                             <!-- Excerpt -->
                             <p class="dark-grey-text">New York City is one of the world’s most popular travel destinations. There’s nothing better than returning to your hotel to be pampered in the spa after a day of pounding the pavement.</p>
                             <!-- Read more button -->
-                            <a class="btn mdb-color white-text btn-rounded btn-md">Read more</a>
+                      
 
                         </div>
                         <!-- Grid column -->
@@ -134,17 +158,16 @@
                             </div>
 
                             <!-- Category -->
-                            <a href="#!" class="blue-text">
-                            <h6 class="font-weight-bold mb-3"><i class="fas fa-map-marked-alt"></i></i> Oceania</h6>
+                            <a href="#!" class="mdb-color-text">
+                            <h6 class="font-weight-bold mb-3 mdb-color-text"><i class="fas fa-map-marked-alt"></i></i> Oceania</h6>
                             </a>
                             <!-- Post title -->
-                            <h4 class="font-weight-bold mb-3"><strong>Sydney</strong></h4>
-                            <p>by <a class="font-weight-bold">magazine.trivago.com</a></p>
+                            <h4 class="font-weight-bold mb-3 mdb-color-text"><strong>Sydney</strong></h4>
                             
                             <!-- Excerpt -->
-                            <p class="dark-grey-text">Whether you're after breezy vistas, a peaceful oasis or country comforts, these New South Wales South Coast accommodation options are perfect for your next escape from the city.</p>
+                            <p class="dark-grey-text">Whether you're after breezy vistas, a peaceful oasis or country comforts, these New South Wales South accommodation options are perfect for your next escape from the city.</p>
                             <!-- Read more button -->
-                            <a class="btn btn-info btn-rounded btn-md">Read more</a>
+                
 
                         </div>
                         <!-- Grid column -->
@@ -156,7 +179,7 @@
                         <!-- Section: Blog v.2 -->
                         <hr>
 
-                        <a class="btn btn-outline-primary" href="/calendar" role="button" target="_blank">Find your own journey <i class="far fa-calendar-alt"></i></a>
+                        <a class="btn btn-outline-primary" href="/mymenu" role="button" target="_blank">Find your own journey <i class="far fa-calendar-alt"></i></a>
 
                         </div>
 
@@ -173,25 +196,22 @@
                     {% if session.loginUser %}
 
                         <div class="card-header h5 mdb-color-text ">
-                            <h1 class='my-2 mdb-color darken-4 white-text text-bold'> Welcome, {{session.loginUser.name}}! </h1>
+                            <h1 class='my-2 mdb-color darken-1 white-text text-bold'> Welcome, <strong> {{session.loginUser.name}}! </strong> </h1>
                             
                             <div class="class-body my-4">
                                 <div class="card mb-4 text-center wow fadeIn">
 
-                                    <div class="card-header h4 mdb-color-text ">My Preferences</div>
+                                    <div class="card-header h4 mdb-color darken-3 white-text ">My Preferences</div>
                     
                                     <!--Card content-->
-                                    <div class="card-body">
-
-                                        The user's preference list is going to be displayed here
+                                    <div id="pref_list"class="card-body">
             
                                     </div>
                                 </div>
                             </div>
 
-                            <p class='my-3'>
-                                <a href="/mymenu"> Set or see your preference </a>
-                            </p>
+                            <a class="btn btn-outline-primary my-3" href="/mymenu" role="button" target="_blank">Set or see your preference  <i class="fab fa-gulp"></i> </a>
+
 
                         </div> 
                     
@@ -229,22 +249,6 @@
                 
                     </div>
 
-                <!--Card: Jumbotron-->
-                <div class="card grey-gradient mb-4 wow fadeIn">
-
-                    <!-- Content -->
-                    <div class="card-header h4 mdb-color-text text-center"> Skyscanner </div>
-                    
-                    <div class="card-body white text-center">
-
-                        <meta name="originLocation" content="Seoul" />
-                        <div data-skyscanner-widget="SearchWidget" data-origin-name="document.querySelector('meta[name=originLocation]').content" ></div>
-                        <script src="https://widgets.skyscanner.net/widget-server/js/loader.js" async></script>
-
-                    </div>
-                    <!-- Content -->
-                </div>
-                <!--Card: Jumbotron-->
 
 
                 <!--Card-->
@@ -304,3 +308,34 @@
 <!-- </div> -->
 
 {% endblock body %}
+
+{% block jsfunction %}
+    <script>
+
+        const userid = {{session.loginUser.id}};
+        
+        if (userid){
+
+            send_ajax('/mymenu/' + userid, 'GET', '', '', function(res){
+                console.log(res)
+
+                let pref_data = {
+                    cityname: res.cityname,
+                    end_date: res.end_date,
+                    maxbud: res.maxbud,
+                    minbud: res.minbud,
+                    start_date: res.start_date,
+                    temperature: res.temperature,
+                    userid: res.userid
+                };
+
+                hbs("preference_template", pref_data, 'pref_list');
+            })
+        };
+
+
+
+        
+    </script>
+
+{% endblock jsfunction %}
