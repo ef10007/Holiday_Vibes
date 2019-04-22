@@ -6,4 +6,4 @@ holvflask/static/node_modules
 ./chromedriver
 
 
-Holiday_Vibes/weather/weathercode.json
+./weather/weathercode.json
