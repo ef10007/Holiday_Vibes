@@ -21,7 +21,7 @@ This HTML file will be declaring a default HTML/CSS structure that consists of H
 
 * Main 
 It will display the main page including search and recommendation section. 
-(10.Mar.2019: Skyscanner Widget has been loaded on the right-top card.)
+(10.Mar.2019: [Skyscanner](https://skyscanner.net) Widget has been loaded on the right-top card.)
 
 * Login
 We are going to emphasise the advantage of signing up such as users can personalise their preferences ( weather conditions, the range of ticket prices, create their holiday schedule, etc.). Once the user has logged in, session cookies will be set to maintain the session of the user.
