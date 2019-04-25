@@ -52,15 +52,6 @@ class Ticket(Base):
 class Preference(Base):
     __tablename__ = 'Preference'
     
-    def __init__(self, userid, start_date, end_date, cityname, temperature, minbud, maxbud):
-        self.userid = userid
-        self.start_date = start_date
-        self.end_date = end_date
-        self.cityname = cityname
-        self.temperature = temperature
-        self.minbud = minbud
-        self.maxbud = maxbud
-
     id = Column(Integer, primary_key=True)
     userid = Column(Integer, ForeignKey('User.id'))
     start_date = Column(String)
@@ -70,6 +61,15 @@ class Preference(Base):
     minbud = Column(Integer)
     maxbud = Column(Integer)
     useridfk = relationship('User')
+
+    def __init__(self, userid, start_date, end_date, cityname, temperature, minbud, maxbud):
+        self.userid = userid
+        self.start_date = start_date
+        self.end_date = end_date
+        self.cityname = cityname
+        self.temperature = temperature
+        self.minbud = minbud
+        self.maxbud = maxbud
 
     def __repr__(self):
         return '%s, %s, %s, %s, %s, %s, %s, %s' % (self.userid, self.start_date, self.end_date, self.cityname, self.temperature, self.minbud, self.maxbud, self.useridfk.username)

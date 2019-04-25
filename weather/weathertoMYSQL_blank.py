@@ -64,6 +64,7 @@ for citycode, cityname in codes.items():
 
     tupledata = (citycode, cityname, date, main, desc, mintemp, maxtemp)
     print(tupledata)
+    
     sql_list.append(tupledata)
 
 

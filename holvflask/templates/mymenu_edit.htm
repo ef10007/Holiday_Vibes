@@ -82,114 +82,10 @@
 {% block body %}
 
     <main class="mt-5 mx-5 pt-5 px-5">
-    
-    {% if p %}
-        
-        <div class="card-body white" id="ifp">
-            <div class="row">
-        
-            <div class="col-lg-8 my-3">
-                <div class="card-header h4 mdb-color-text grey lighten-4 mb-4">My calendar</div>
-
-
-                <span id="startdate" class="border border-white my-1 mx-3 px-4 mdb-color-text"  style="font-size: 30px"></span>
-
-                <input type="text" id="formstartdate" name="startdate" style="visibility: hidden;">
-
-                <span id="enddate" class="border border-white my-1 mx-3 px-4 mdb-color-text"  style="font-size: 30px"></span>
-
-                <input type="text" id="formenddate" name="enddate" style="visibility: hidden;">
-
-                
-            <div class = "container-fluid mdb-color-text">
-                
-                {% if selected_year and selected_month %}
-                {% set dt = "%s-%s-01" % (selected_year, selected_month) %}
-
-                    {{calendar(dt)}}
-
-                {% else %}
-
-                {% set dt = "%s-%s-01" % (year, month) %}
-                
-                    {{calendar(dt)}}
-
-                {% endif %}
-
-                <div class="my-2" style="float: right;">
-
-                    <a class="btn btn-lg mdb-color lighten-2 waves-effect" href="/mymenu/edit">Edit</a>
-                </div>
-
-            </div>
-            
-            
-            </div>
-
-            <div class="col-lg-4 my-3 text-center"> 
-
-            <div class="container border mdb-color darken-3 white-text my-2 p-1" id="userid" value="{{userid}}">
-                <h1 class="my-4" style="font-size: 40px;"> {{username}}</h1>
-                
-                <span id="keydata" style="visibility: block;"></span>
-
-            </div>
-            
-            <div class="card wow fadeIn mt-5 p-1">
-
-                <div class="card-header h4 mdb-color lighten-1 white-text mb-2">Your Availability</div>
-                
-                <div class="card-body my-2 ">
-
-                    <h1 id="start_date" class="h2 mdb-color-text"></h1>
-                    to <h1 id="end_date" class="h2 mdb-color-text"></h1>
-
-
-                </div>
-
-                <div class="card-header h4 mdb-color lighten-1 white-text mb-2">Your Favorite City</div>
-                    
-                <div class="card-body my-2">
-
-                    <h1 id="cityname" class="h2 mdb-color-text"></h1>
-
-                </div>
-
-                <div class="card-header h4 mdb-color lighten-1 white-text my-2"> Your Favorite Season</div>
-
-                <div class="card-body my-2"> 
-
-                    <h1 id="temperature" class="h2 mdb-color-text"></h1>
-    
-                </div>
-
-                <div class="card-header h4 mdb-color lighten-1 white-text my-2">Your budget</div>
-
-                 <div class="card-body my-2"> 
-
-                    <ul>
-                        <li id="minbud" class="h2 mdb-color-text"></li> to
-                        <li id="maxbud" class="h2 mdb-color-text"></li>
-                    </ul> 
-
-        
-                </div>
-
-            </div>
-
-            </div>
-            
-            </div>
-        </div>
-    </main>  
-
-    {% else %}
-
         <div class="col-md-12 mb-4"> 
 
-            <form id="formDefalut" action="/mymenu" method="POST" class="text-center p-1 mdb-color lighten-4">
+            <form id="formDefalut" action="/mymenu/edit" method="POST" class="text-center p-1 mdb-color lighten-4">
             
-    
             <!--Card content-->
             <div class="card-body white">
         
@@ -289,15 +185,15 @@
             </div>
         </div>
    
-            </div>
+        </div>
         </div><!-- First Grid -->
 
         </form>
         </div>
         
         </div>
-        </main>
-    {% endif %}
+    </main>
+
 
   
 {% endblock body %}
@@ -308,9 +204,10 @@
 
 
     <script type="text/javascript">
-       
+
+        
         const userid = $('#userid').attr('value');
-        console.log(userid)
+
 
         let sm = {{month}};
         let sy = {{year}};
@@ -328,113 +225,6 @@
             sm = {{month}};
             sy = {{year}};
         }
-
-        if ($('#ifp')){
-
-            send_ajax('/mymenu/' + userid, 'GET', '', '', function(res){
-                console.log(res)
-                Preference(res);
-            });
-        };
-
-
-        function Preference(res){
-
-
-            let cityname = res['cityname']
-            let start_date = res['start_date']
-            let end_date = res['end_date']
-            let temp = res['temperature']
-            let minbud = res['minbud']
-            let maxbud = res['maxbud']
-
-            $('#cityname').html(cityname);
-            $('#start_date').html(start_date);
-            $('#end_date').html(end_date);
-            $('#startdate').html(start_date);
-            $('#enddate').html(end_date);
-            $('#temperature').html(temp + ' °C');
-            $('#minbud').html("£ " + minbud);
-            $('#maxbud').html("£ " + maxbud);
-
-
-            start_value = start_date.split('-')
-            end_value = end_date.split('-')
-
-            if ($('#ifp')){
-
-                
-                let sd = parseInt(start_value[2])
-                let ed = parseInt(end_value[2])
-                
-                let smm = parseInt(start_value[1])
-                let emm = parseInt(end_value[1])
-                
-                if (smm !=  sm) {
-                    for (da in dayarr){
-
-                        let id22 = '#' + dayarr[da]
-                        $(id22).addClass('white').attr('onclick','');
-                    }
-                } else {
-
-                    for (da in dayarr){
-                        if (sd > dayarr[da]){
-                            
-                            let id2 = '#' + dayarr[da];
-                            $(id2).addClass('white').attr('onclick','');
-                            
-                        }  else if (ed < dayarr[da] ){
-                            let id4 = '#' + dayarr[da];
-
-                            $(id4).addClass('white').attr('onclick','');
-
-                        } else if (sd < dayarr[da]) {
-                            let id3 = '#' + dayarr[da];
-
-                            $(id3).addClass('indigo lighten-5').attr('onclick','');
-
-                        } else if (ed > dayarr[da]) {
-                            let id3 = '#' + dayarr[da];
-
-                            $(id3).addClass('indigo lighten-5').attr('onclick','');
-                        }
-
-                    };
-                }
-            
-
-                //let keydata = $('#keydata').attr('value');
-
-               // console.log("KEYDATA", keydata);
-
-                send_ajax('/mymenu/' + start_date + '&' + end_date + '&' + cityname, 'GET', '', 'json', function(resp){
-
-                    for (i in resp['result']){
-
-                        let days = resp['result'][i]['days'];
-
-                        days = days.split('-')
-
-                        let desc = resp['result'][i]['desc'][0];
-                        let mint = resp['result'][i]['desc'][1];
-                        let maxt = resp['result'][i]['desc'][2];
-                        let price = resp['result'][i]['desc'][3];
-                        
-                        $('#data' + days[2]).append('<div class="my-3"> £ ' + price + '<div>', '<div>' + maxt +  '°C - ' + mint+ '°C</div>', '<span>' + desc + '</span>');
-                        
-
-                        $('#' + days[2]).addClass('indigo');
-                        
-                    }
-
-
-                });
-            };
-
-        };
-
-
 
         const dayarr = []
         $("td").each(function(){
@@ -700,9 +490,10 @@
         function getCity(keys){
             $('#city').html('') //초기화
 
-            $.getJSON( "static/json/getcity.json", function( data ) {
+            $.getJSON( "./static/json/getcity.json", function( data ) {
            
                 $.each( data, function( key, val ) {
+                    console.log(key, val)
                     if(key == keys){
                     for (c in val){
                         $('#city').append($('<option />').val(val[c][0]).html(val[c][0]));

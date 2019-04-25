@@ -1,0 +1,125 @@
+<!DOCTYPE html> 
+<html> 
+  <head>
+    <meta charset="utf-8">
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <style>
+        .myCircle:hover {
+            stroke: red;
+        }
+    </style>
+
+  </head>
+
+  <body>
+    <div id="my_dataviz"></div>
+  </body>
+
+      
+  <script>
+
+    let margin = {top: 10, right: 30, bottom: 30, left: 60},
+                 width = 460 - margin.left - margin.right,
+                 height = 400 - margin.top - margin.bottom;
+    
+
+    let svg = d3.select("#my_dataviz")
+                .append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                    .attr("transform",
+                        "translate(" + margin.left + "," + margin.top + ")");
+                
+
+    d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/connectedscatter.csv",
+    
+    function(d){
+        return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value }
+    },
+    
+    function(data) {
+    
+        // Add X axis --> it is a date format
+        let x = d3.scaleTime()
+                  .domain(d3.extent(data, function(d) { return d.date; }))
+                  .range([ 0, width ]);
+
+        svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+    
+        let y = d3.scaleLinear()
+                  .domain( [8000, 9200])
+                  .range([ height, 0 ]);
+
+        svg.append("g")
+           .call(d3.axisLeft(y));
+    
+        svg.append("path")
+           .datum(data)
+           .attr("fill", "none")
+           .attr("stroke", "black")
+           .attr("stroke-width", 1.5)
+           .attr("d", d3.line()
+             .curve(d3.curveBasis)
+             .x(function(d) { return x(d.date) })
+             .y(function(d) { return y(d.value) })
+            )
+    
+        let Tooltip = d3.select("#my_dataviz")
+                        .append("div")
+                        .style("opacity", 0)
+                        .attr("class", "tooltip")
+                        .style("background-color", "white")
+                        .style("border", "solid")
+                        .style("border-width", "2px")
+                        .style("border-radius", "5px")
+                        .style("padding", "5px")
+    
+       
+        let mouseover = function(d) {
+            Tooltip
+              .style("opacity", 1)
+        };
+
+        let mousemove = function(d) {
+            Tooltip
+              .html("Exact value is " + d.value)
+              .style("left", (d3.mouse(this)[0]+70) + "px")
+              .style("top", (d3.mouse(this)[1]) + "px")
+        };
+
+        let mouseleave = function(d) {
+            Tooltip
+              .style("opacity", 0)
+        };
+    
+    
+        svg
+          .append("g")
+          .selectAll("dot")
+          .data(data)
+          .enter()
+          .append("circle")
+            .attr("class", "myCircle")
+            .attr("cx", function(d) { return x(d.date) } )
+            .attr("cy", function(d) { return y(d.value) } )
+            .attr("r", 8)
+            .attr("stroke", "#69b3a2")
+            .attr("stroke-width", 3)
+            .attr("fill", "white")
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseleave", mouseleave)
+    });
+      
+    </script>
+
+</html>
+
+
+
+       

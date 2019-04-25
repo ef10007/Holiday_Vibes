@@ -9,6 +9,8 @@ from holvflask.pro_init_db import db_session, init_database
 from holvflask.pro_models import User, City, Country, CityMPT, Preference, Ticket, Weather
 
 
+
+
 @app.route('/calendar/iso')
 def calendar_iso():
 
@@ -82,10 +84,7 @@ def mymenu():
         
     year = request.args.get('year', date.today().year, int)
     month = request.args.get('month', date.today().month, int)
-
-
     namedmonth = today.strftime("%B")
-
     selected_year = request.args.get('selected_year')
     selected_month = request.args.get('selected_month')
     
@@ -102,11 +101,64 @@ def mymenu():
     
     else:
             
-        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month)
+        return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, userid=userid)
 
 
 @app.route("/mymenu", methods=['POST'])
 def preference():
+
+    error = None
+    userid = session['loginUser']['id']
+    
+    start_date = request.form.get('startdate')
+    end_date = request.form.get('enddate')
+    cityname = request.form.get('city')
+    temperature = request.form.get('temperature')
+    minbud = request.form.get('mininum')
+    maxbud = request.form.get('maximum')
+
+    if not start_date:
+        error = 'Please select your Start Date.'
+    elif not end_date:
+        error = 'Please select your End Date.'
+    elif not cityname:
+        error = 'Please set up your Favorite City.'
+
+    if error is not None:
+        flash(error)
+
+
+    p = Preference(userid, start_date, end_date, cityname, temperature, minbud, maxbud)
+
+    try:
+        db_session.add(p)
+        db_session.commit()
+
+    except:
+        db_session.rollback()
+    
+    return redirect('/mymenu')
+
+
+@app.route("/mymenu/edit", methods=['GET'])
+def preference_edit_get():
+    today = date.today()
+    dt = today.strftime("%Y-%m-%d")
+        
+    year = request.args.get('year', date.today().year, int)
+    month = request.args.get('month', date.today().month, int)
+
+    namedmonth = today.strftime("%B")
+
+    selected_year = request.args.get('selected_year')
+    selected_month = request.args.get('selected_month')
+    
+    userid = session['loginUser']['id']
+    
+    return render_template('mymenu_edit.htm',  year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, userid=userid)
+
+@app.route("/mymenu/edit", methods=['POST'])
+def preference_edit():
     
     userid = session['loginUser']['id']
     
@@ -122,13 +174,14 @@ def preference():
     p = Preference(userid, start_date, end_date, cityname, temperature, minbud, maxbud)
 
     try:
-        db_session.add(p)
+        db_session.merge(p)
         db_session.commit()
 
     except:
         db_session.rollback()
     
     return redirect('/mymenu')
+    
 
 
 @app.route("/")
@@ -151,11 +204,17 @@ def registration_post():
     passwd2 = request.form.get('passwd2')
     username = request.form.get('username')
 
-    if passwd != passwd2:
+    if db_session.query(User).filter("email = :email").params(email=email).first() is not None:
+    
+        flash('ERROR: The email is already registered.')
+        return render_template('regist.htm', email=email, username=username)
+
+    elif passwd != passwd2:
         flash('ERROR: Your password and confirmation password do not match.')
         return render_template('regist.htm', email=email, username=username)
+
     else:
-       
+
         u = User(email, passwd, username)
     
         try:
@@ -180,7 +239,6 @@ def login_post():
 
     u = db_session.query(User).filter("email = :email and passwd = sha2(:passwd, 256)").params(email=email, passwd=passwd).first()
 
-
     if u is not None:
         session['loginUser'] = { 'id': u.id, 'name': u.username }
 
@@ -202,8 +260,6 @@ def logout():
     return redirect('/')
 
 
-
-
 @app.route('/calendar')
 def calendar():
 
@@ -218,3 +274,10 @@ def calendar():
     month = request.args.get('month', date.today().month, int)
 
     return render_template('calendar.htm', year=year, month=month, day=day)
+
+
+@app.route('/linechart')
+def d3():
+
+    return render_template('linechart.htm')
+

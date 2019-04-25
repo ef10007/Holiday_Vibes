@@ -34,6 +34,74 @@
         <!--Section: Post-->
         <section class="mt-4">
 
+            {% if session.loginUser %}
+            <div class="row">
+
+                <div class="col-md-8 mb-4">
+
+                    <div class="card mb-4 wow fadeIn">
+                        <div id="linechart">
+dfdf
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card mb-4 text-center wow fadeIn">
+    
+    
+                            <div id="session_user" class="card-header h5 mdb-color-text ">
+                                <h1 class='my-2 mdb-color darken-1 white-text text-bold'> Welcome, <strong> {{session.loginUser.name}}! </strong> </h1>
+                                
+                                <div class="class-body my-4">
+                                    <div class="card mb-4 text-center wow fadeIn">
+    
+                                        <div class="card-header h4 mdb-color darken-3 white-text ">My Preferences</div>
+                        
+                                        <!--Card content-->
+                                        <div id="pref_list"class="card-body">
+                                            Please select all the preference choices.
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <a class="btn btn-outline-primary my-3" href="/mymenu" role="button" target="_blank">Set or see your preference  <i class="fab fa-gulp"></i> </a>
+    
+    
+                            </div> 
+                        </div>
+                    
+
+                      <!--Card-->
+                <div class="card my-4 wow fadeIn">
+
+                    <div class="card-header h4 mdb-color-text text-center"> Related articles </div>
+    
+                        <!--Card content-->
+                        <div class="card-body my-3">
+    
+                            <ul class="list-unstyled">
+                                <li class="media">
+                                    <img class="d-flex mr-3" src="https://imgcy.trivago.com/c_lfill,f_auto,g_faces,h_320,q_auto:good,w_488/mag/2018/03/29093835/coolest-hotels-in-new-york-city-1024x683.jpg" width="90px" height="90px" alt="Trivago New York image">
+                                    <div class="media-body">
+                                        <a href="https://magazine.trivago.com/lower-east-side-hotels/">
+                                            <h5 class="mx-3 my-1 mdb-color-text font-weight-bold" >New York City's Cauldron of Creativity</h5>
+                                        </a>
+                                        <p class="mx-3 my-1">10 Coolest Hotels in the Lower East Side</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--/.Card-->
+    
+                    </div>
+                    <!--Grid column-->
+            </div>
+
+
+
+
+            {% else %}
             <!--Grid row-->
             <div class="row">
 
@@ -42,6 +110,7 @@
 
                     <!--Featured Image-->
                     <div class="card mb-4 wow fadeIn">
+
                       <!-- carousel -->
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -184,6 +253,7 @@
                         </div>
 
                     </div>
+
                     <!--/.Card-->
 
                 </div>
@@ -193,30 +263,6 @@
                 <div class="col-md-4 mb-4 ">
                     <div class="card mb-4 text-center wow fadeIn">
 
-                    {% if session.loginUser %}
-
-                        <div class="card-header h5 mdb-color-text ">
-                            <h1 class='my-2 mdb-color darken-1 white-text text-bold'> Welcome, <strong> {{session.loginUser.name}}! </strong> </h1>
-                            
-                            <div class="class-body my-4">
-                                <div class="card mb-4 text-center wow fadeIn">
-
-                                    <div class="card-header h4 mdb-color darken-3 white-text ">My Preferences</div>
-                    
-                                    <!--Card content-->
-                                    <div id="pref_list"class="card-body">
-            
-                                    </div>
-                                </div>
-                            </div>
-
-                            <a class="btn btn-outline-primary my-3" href="/mymenu" role="button" target="_blank">Set or see your preference  <i class="fab fa-gulp"></i> </a>
-
-
-                        </div> 
-                    
-                    {% else %}
-                  
                         <div class="card-header h4 mdb-color-text mb-3">Sign in <img src="static/img/holidayicon.png" alt="holidayicon" width="32" height="32"></div>
         
                         <!--Card content-->
@@ -245,55 +291,56 @@
                                 </p>
                             </form>
                         </div>    
-                    {% endif %}
                 
                     </div>
 
 
-
-                <!--Card-->
+                      <!--Card-->
                 <div class="card my-4 wow fadeIn">
 
-                    <div class="card-header h4 mdb-color-text text-center"> Related articles </div>
-
-                    <!--Card content-->
-                    <div class="card-body my-3">
-
-                        <ul class="list-unstyled">
-                            <li class="media">
-                                <img class="d-flex mr-3" src="https://imgcy.trivago.com/c_lfill,f_auto,g_faces,h_320,q_auto:good,w_488/mag/2018/03/29093835/coolest-hotels-in-new-york-city-1024x683.jpg" width="90px" height="90px" alt="Trivago New York image">
-                                <div class="media-body">
-                                    <a href="https://magazine.trivago.com/lower-east-side-hotels/">
-                                        <h5 class="mx-3 my-1 mdb-color-text font-weight-bold" >New York City's Cauldron of Creativity</h5>
-                                    </a>
-                                    <p class="mx-3 my-1">10 Coolest Hotels in the Lower East Side</p>
-                                </div>
-                            </li>
-                            <li class="media my-4">
-                                <img class="d-flex mr-3" src="https://imgcy.trivago.com/c_lfill,f_auto,g_faces,q_auto:good,w_1534/mag/2019/02/04145545/coolest-hotels-in-berlin.jpg" width="90px" height="90px" alt="Berlin image">
-                                <div class="media-body">
-                                    <a href="https://magazine.trivago.com/berlin-hotels/">
-                                        <h5 class="mx-3 my-1 mdb-color-text font-weight-bold">Unique Places to Stay in Europe's Party Capital</h5>
-                                    </a>
-                                    <p class="mx-3 my-1 mdb-color-text">10 Coolest Hotels in Berlin</p>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <img class="d-flex mr-3" src="https://imgcy.trivago.com/c_lfill,f_auto,g_faces,q_auto:good,w_1534/mag/2019/02/07134859/ski-resorts-victoria-falls-creek-accommodation1.jpg" width="90px" height="90px" alt="Victoria ski image">
-                                <div class="media-body">
-                                    <a href="https://magazine.trivago.com.au/ski-resorts-victoria/">
-                                        <h5 class="mt-0 mb-1 font-weight-bold" style='margin: 5px 10px;'>From Mt Buller to Falls Creek</h5>
-                                    </a>
-                                    <p style="margin: 5px 10px;">Accommodations for an iconic Victorian ski trip</p>
-                                    
-                                </div>
-                            </li>
-                        </ul>
+                        <div class="card-header h4 mdb-color-text text-center"> Related articles </div>
+    
+                        <!--Card content-->
+                        <div class="card-body my-3">
+    
+                            <ul class="list-unstyled">
+                                <li class="media">
+                                    <img class="d-flex mr-3" src="https://imgcy.trivago.com/c_lfill,f_auto,g_faces,h_320,q_auto:good,w_488/mag/2018/03/29093835/coolest-hotels-in-new-york-city-1024x683.jpg" width="90px" height="90px" alt="Trivago New York image">
+                                    <div class="media-body">
+                                        <a href="https://magazine.trivago.com/lower-east-side-hotels/">
+                                            <h5 class="mx-3 my-1 mdb-color-text font-weight-bold" >New York City's Cauldron of Creativity</h5>
+                                        </a>
+                                        <p class="mx-3 my-1">10 Coolest Hotels in the Lower East Side</p>
+                                    </div>
+                                </li>
+                                <li class="media my-4">
+                                    <img class="d-flex mr-3" src="https://imgcy.trivago.com/c_lfill,f_auto,g_faces,q_auto:good,w_1534/mag/2019/02/04145545/coolest-hotels-in-berlin.jpg" width="90px" height="90px" alt="Berlin image">
+                                    <div class="media-body">
+                                        <a href="https://magazine.trivago.com/berlin-hotels/">
+                                            <h5 class="mx-3 my-1 mdb-color-text font-weight-bold">Unique Places to Stay in Europe's Party Capital</h5>
+                                        </a>
+                                        <p class="mx-3 my-1 mdb-color-text">10 Coolest Hotels in Berlin</p>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <img class="d-flex mr-3" src="https://imgcy.trivago.com/c_lfill,f_auto,g_faces,q_auto:good,w_1534/mag/2019/02/07134859/ski-resorts-victoria-falls-creek-accommodation1.jpg" width="90px" height="90px" alt="Victoria ski image">
+                                    <div class="media-body">
+                                        <a href="https://magazine.trivago.com.au/ski-resorts-victoria/">
+                                            <h5 class="mt-0 mb-1 font-weight-bold" style='margin: 5px 10px;'>From Mt Buller to Falls Creek</h5>
+                                        </a>
+                                        <p style="margin: 5px 10px;">Accommodations for an iconic Victorian ski trip</p>
+                                        
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--/.Card-->
+    
                     </div>
-                    <!--/.Card-->
+                    <!--Grid column-->
+                {% endif %}
 
-                </div>
-                <!--Grid column-->
+
 
             </div>
             <!--Grid row-->
@@ -312,9 +359,20 @@
 {% block jsfunction %}
     <script>
 
-        const userid = {{session.loginUser.id}};
-        
+        let userid = {{session.loginUser.id}};
+
+        send_ajax('/linechart', 'GET', '', 'html', function(res){
+    
+
+            let html = $.parseHTML(res)
+            console.log(html)
+            
+            $( "#linechart" ).append(html);
+
+        })
+
         if (userid){
+
 
             send_ajax('/mymenu/' + userid, 'GET', '', '', function(res){
                 console.log(res)
@@ -331,6 +389,7 @@
 
                 hbs("preference_template", pref_data, 'pref_list');
             })
+            
         };
 
 
