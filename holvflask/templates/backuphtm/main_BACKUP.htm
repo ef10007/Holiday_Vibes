@@ -52,8 +52,8 @@
                 <div class="card mb-4 text-center wow fadeIn">
 
 
-                    <div id="session_user" value="{{session.loginUser.id}}" class="card-header h5 mdb-color-text ">
-                        <h1 id="session_user_name" value="{{session.loginUser.name}}"class='my-2 mdb-color darken-1 white-text text-bold'> Welcome, <strong> {{session.loginUser.name}}! </strong> </h1>
+                    <div id="session_user" class="card-header h5 mdb-color-text ">
+                        <h1 class='my-2 mdb-color darken-1 white-text text-bold'> Welcome, <strong> {{session.loginUser.name}}! </strong> </h1>
                         
                         <div class="class-body my-4">
                             <div class="card mb-4 text-center wow fadeIn">
@@ -69,9 +69,39 @@
 
                         <a class="btn btn-outline-primary my-3" href="/mymenu" role="button" target="_blank">Set or see your preference  <i class="fab fa-gulp"></i> </a>
 
+
                     </div> 
                 </div>
-        
+            
+
+                      <!--Card-->
+                <div class="card my-4 wow fadeIn">
+
+                    <div class="card-header h4 mdb-color-text text-center"> Related articles </div>
+    
+                        <!--Card content-->
+                        <div class="card-body my-3">
+    
+                            <ul class="list-unstyled">
+                                <li class="media">
+                                    <img class="d-flex mr-3" src="https://imgcy.trivago.com/c_lfill,f_auto,g_faces,h_320,q_auto:good,w_488/mag/2018/03/29093835/coolest-hotels-in-new-york-city-1024x683.jpg" width="90px" height="90px" alt="Trivago New York image">
+                                    <div class="media-body">
+                                        <a href="https://magazine.trivago.com/lower-east-side-hotels/">
+                                            <h5 class="mx-3 my-1 mdb-color-text font-weight-bold" >New York City's Cauldron of Creativity</h5>
+                                        </a>
+                                        <p class="mx-3 my-1">10 Coolest Hotels in the Lower East Side</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--/.Card-->
+    
+                    </div>
+                    <!--Grid column-->
+            </div>
+
+
+
 
             {% else %}
             <!--Grid row-->
@@ -324,21 +354,6 @@
     </main>
 
 <!-- background image end -->
-
-<!-- 
-[
-{"name":"Andy Hunt",
-"title":"Big Boss",
-"age": 68,
-"bonus": true
-},
-{"name":"Charles Mack",
-"title":"Jr Dev",
-"age":24,
-"bonus": false
-}
-] -->
-
 <!-- </div> -->
 
 {% endblock body %}
@@ -346,62 +361,11 @@
 {% block jsfunction %}
     <script>
 
-
-        const userid = $('#session_user').attr('value');
-        const username = $('#session_user_name').attr('value');
-
-        let cityname
-        let start_date
-        let end_date
-
-        let pref_data = {}
+        let margin = {top: 50, right: 20, bottom: 50, left: 70},
         
-        if (userid){
-            send_ajax('/mymenu/' + userid, 'GET', '', '', function(res){
-
-                pref_data = {
-                    cityname: res.cityname,
-                    end_date: res.end_date,
-                    maxbud: res.maxbud,
-                    minbud: res.minbud,
-                    start_date: res.start_date,
-                    temperature: res.temperature,
-                    userid: res.userid
-                };
-
-                hbs("preference_template", pref_data, 'pref_list');
-
-                cityname = pref_data['cityname']
-                start_date = pref_data['start_date']
-                end_date = pref_data['end_date']
-
-                linechart(start_date, end_date, cityname)
-
-            })
-        };
-
-        let dict = {}
-
-        function linechart(sdate, edate, cityname){
-
-            send_ajax('/mymenu/' + sdate + '&' + edate + '&' + cityname, 'GET', '', 'json', function(resp){
-                
-                for (i in resp['result']){
-
-                    date = resp['result'][i].days
-                    price = resp['result'][i].desc[3]
-
-                    dict[date] = price
-                }
-                
-            })
-        }
-        console.log("DICTIONARY", dict)
-
-        let margin = {top: 45, right: 30, bottom: 70, left: 90},
-        
-        width = 700 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom;
+        width = 650 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+    
 
         let svg = d3.select("#linechart")
                     .append("svg")
@@ -412,10 +376,10 @@
                             "translate(" + margin.left + "," + margin.top + ")");
                     
 
-        d3.json(dict,
-
+        d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/connectedscatter.csv",
+        
         function(d){
-            return { date : d3.timeParse("%Y-%m-%d")(d.date), price : d.price }
+            return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value }
         },
         
         function(data) {
@@ -425,67 +389,35 @@
                     .range([ 0, width ]);
 
             svg.append("g")
-               .attr("transform", "translate(0," + height + ")")
-               .call(d3.axisBottom(x));
-
-            svg.append("text")             
-            .attr("transform",
-                    "translate(" + (width/2) + " ," + 
-                                (height + margin.top + 10) + ")")
-            .style("text-anchor", "middle")
-            .style("font-size", "2rem")
-            .style("fill", "#2c364c")
-            .text("Date");
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
         
             let y = d3.scaleLinear()
-                      .domain( [8000, 9500])
-                      .range([ height, 0 ]);
+                    .domain( [8000, 9200])
+                    .range([ height, 0 ]);
 
             svg.append("g")
-               .call(d3.axisLeft(y));
-
-
-            svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y",10 - margin.left)
-            .attr("x",0 - (height / 2))
-            .attr("dy", "1em")
-            .style("text-anchor", "middle")
-            .style("font-size", "2rem")
-            .style("fill", "#2c364c")
-            .text("Ticket Price"); 
-
-
-            svg.append("text")
-                .attr("x", (width / 2))             
-                .attr("y", 0 - (margin.top / 2) + 25)
-                .attr("text-anchor", "middle") 
-                .attr('font-family', 'Roboto')
-                .style("fill", "#5077ce") 
-                .style("font-size", "2.5rem") 
-                .text(username + "'s Holiday Chart");
-
-
+            .call(d3.axisLeft(y));
+        
             svg.append("path")
             .datum(data)
             .attr("fill", "none")
-            .attr("stroke", "#384668")
-            .attr("stroke-width", 3)
+            .attr("stroke", "black")
+            .attr("stroke-width", 1.5)
             .attr("d", d3.line()
                 .curve(d3.curveBasis)
                 .x(function(d) { return x(d.date) })
                 .y(function(d) { return y(d.value) })
                 )
-            .s
         
             let Tooltip = d3.select("#linechart")
                             .append("div")
                             .style("opacity", 0)
                             .attr("class", "tooltip")
-                            .style("background-color", "#f2f6ff")
-                            .style("border", "none")
+                            .style("background-color", "white")
+                            .style("border", "solid")
                             .style("border-width", "2px")
-                            .style("border-radius", "10px")
+                            .style("border-radius", "5px")
                             .style("padding", "5px")
         
         
@@ -496,7 +428,7 @@
 
             let mousemove = function(d) {
                 Tooltip
-                .html("Ticket £" + d.value)
+                .html("Exact value is " + d.value)
                 .style("left", (d3.mouse(this)[0]+70) + "px")
                 .style("top", (d3.mouse(this)[1]) + "px")
             };
@@ -505,6 +437,7 @@
                 Tooltip
                 .style("opacity", 0)
             };
+        
         
             svg
             .append("g")
@@ -524,7 +457,31 @@
                 .on("mouseleave", mouseleave)
         });
 
- 
+
+        if (userid){
+
+
+            send_ajax('/mymenu/' + userid, 'GET', '', '', function(res){
+                console.log(res)
+
+                let pref_data = {
+                    cityname: res.cityname,
+                    end_date: res.end_date,
+                    maxbud: res.maxbud,
+                    minbud: res.minbud,
+                    start_date: res.start_date,
+                    temperature: res.temperature,
+                    userid: res.userid
+                };
+
+                hbs("preference_template", pref_data, 'pref_list');
+            })
+            
+        };
+
+
+
+        
     </script>
 
 {% endblock jsfunction %}

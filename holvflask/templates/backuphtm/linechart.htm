@@ -3,8 +3,6 @@
   <head>
     <meta charset="utf-8">
 
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-
     <style>
         .myCircle:hover {
             stroke: red;
@@ -116,6 +114,24 @@
             .on("mouseleave", mouseleave)
     });
       
+
+    function linechart(sdate, edate, cityname){
+
+      let dict = {}
+      send_ajax('/mymenu/' + sdate + '&' + edate + '&' + cityname, 'GET', '', 'json', function(resp){
+          
+          for (i in resp['result']){
+
+              date = resp['result'][i].days
+              price = resp['result'][i].desc[3]  
+
+              dict[date] = price
+              
+              console.log("DICTTT", dict)
+
+          }
+      })
+  }
     </script>
 
 </html>

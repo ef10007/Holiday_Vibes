@@ -32,9 +32,9 @@ def daterange(sdate, edate):
 def mymenu_user(userid):
 
     p = db_session.query(Preference).filter("userid = :userid").params(userid=userid).first()
-    print(p.json())
 
     return jsonify( p.json() )
+
 
 @app.route('/mymenu/<start_date>&<end_date>&<cityname>', methods=['GET'])
 
@@ -53,8 +53,6 @@ def mymenu_user_calendar(start_date, end_date, cityname):
         days = d.strftime("%Y-%m-%d")
 
         dwt = db_session.query(Weather).filter("dt = :dt and cityname=:cityname").params(dt=days, cityname=cityname).first()
-
-        print(dwt)
 
         dtk = db_session.query(Ticket).filter("dt = :dt and cityname=:cityname").params(dt=days, cityname=cityname).first()
 
@@ -274,10 +272,4 @@ def calendar():
     month = request.args.get('month', date.today().month, int)
 
     return render_template('calendar.htm', year=year, month=month, day=day)
-
-
-@app.route('/linechart')
-def d3():
-
-    return render_template('linechart.htm')
 
