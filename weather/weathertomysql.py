@@ -72,6 +72,8 @@ sql_insert = 'insert into Weather(citycode, cityname, dt, main, description, min
 
 conn = get_conn()
 
+
+
 with conn:
     cur = conn.cursor()
     cur.executemany(sql_insert, sql_list)

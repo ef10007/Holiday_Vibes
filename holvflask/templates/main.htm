@@ -412,9 +412,9 @@
                             "translate(" + margin.left + "," + margin.top + ")");
                     
 
-        d3.json(dict,
+        d3.entries(dict),
 
-        function(d){
+        function(dict){
             return { date : d3.timeParse("%Y-%m-%d")(d.date), price : d.price }
         },
         
