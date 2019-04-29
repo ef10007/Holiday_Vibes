@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import os
 
 
-mysql_url = "mysql+pymysql://holiday_vibe:Holiday1028#@35.221.123.143/projectdb?charset=utf8"
+mysql_url = "mysql+pymysql://" + os.getenv('mysql_user') + ":" + os.getenv('mysql_pw') + "@" + os.getenv('mysql_host') + "/projectdb?charset=utf8"
 
 engine = create_engine(mysql_url, echo=True, convert_unicode=True)
 

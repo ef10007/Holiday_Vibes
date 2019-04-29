@@ -185,13 +185,7 @@
 
 
     <script type="text/javascript">
-        
-        function openModal(modalId) {
-            $('#' + modalId).modal('show');
-        }
-        function closeModal(modalId) {
-            $('#' + modalId).modal('hide');
-        }
+    
 
         function send_ajax(url, method, data, dataType, fn) {
             $.ajax({
@@ -213,12 +207,12 @@
         }
 
         function hbs(sourceId, data, resultId) {
-            console.log("arguments", ...arguments)
+            //console.log("arguments", ...arguments)
             var source = document.getElementById(sourceId).innerHTML;
-            console.log("source", source)
+            //console.log("source", source)
             var template = Handlebars.compile(source);
             var html = template(data);
-            console.log("html template", html)
+           // console.log("html template", html)
             document.getElementById(resultId).innerHTML = html;
         }
 

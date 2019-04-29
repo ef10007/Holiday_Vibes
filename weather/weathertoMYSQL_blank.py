@@ -45,7 +45,7 @@ for citycode, cityname in codes.items():
             desc = w['weather'][0]['description']
             main = w['weather'][0]['main']
 
-            date = '2019-04-21'
+            date = '2019-04-28'
 
             tp = w['main']['temp']
 

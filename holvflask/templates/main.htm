@@ -30,6 +30,11 @@
         {% endraw %}
     </script>
 
+    <script id="preference_templatex" type="text/x-handlebars-template">
+
+        <div class="mdb-color-text">Please set your preference</div>
+    </script>
+
     <main class="mt-5 pt-5">
     <div class="container" style="opacity: 0.95;">
 
@@ -47,6 +52,8 @@
                         </div>
                     </div>
                 </div>
+
+                
 
             <div class="col-md-4 mb-4">
                 <div class="card mb-4 text-center wow fadeIn">
@@ -323,23 +330,8 @@
     </div>
     </main>
 
-<!-- background image end -->
 
-<!-- 
-[
-{"name":"Andy Hunt",
-"title":"Big Boss",
-"age": 68,
-"bonus": true
-},
-{"name":"Charles Mack",
-"title":"Jr Dev",
-"age":24,
-"bonus": false
-}
-] -->
 
-<!-- </div> -->
 
 {% endblock body %}
 
@@ -380,23 +372,30 @@
             })
         };
 
-        let dict = {}
+        let dict = [];
 
         function linechart(sdate, edate, cityname){
 
             send_ajax('/mymenu/' + sdate + '&' + edate + '&' + cityname, 'GET', '', 'json', function(resp){
-                
+
                 for (i in resp['result']){
+         
+                    let item = resp['result'][i];
 
-                    date = resp['result'][i].days
-                    price = resp['result'][i].desc[3]
-
-                    dict[date] = price
+                    date = item.days
+                    price = item.desc[3]
+                    dict.push({"date": date, "price": price})
                 }
-                
+               
+                dict.forEach(function(d) {
+                    d['date'] =  d3.timeParse("%Y-%m-%d")(d.date)
+                    d['price'] = d.price
+                });
+ 
+                draw(dict)
+
             })
         }
-        console.log("DICTIONARY", dict)
 
         let margin = {top: 45, right: 30, bottom: 70, left: 90},
         
@@ -410,19 +409,14 @@
                     .append("g")
                         .attr("transform",
                             "translate(" + margin.left + "," + margin.top + ")");
-                    
 
-        d3.entries(dict),
 
-        function(dict){
-            return { date : d3.timeParse("%Y-%m-%d")(d.date), price : d.price }
-        },
-        
-        function(data) {
+        function draw(dict) {
         
             let x = d3.scaleTime()
-                    .domain(d3.extent(data, function(d) { return d.date; }))
+                    .domain(d3.extent(dict, function(d) { return d.date; }))
                     .range([ 0, width ]);
+
 
             svg.append("g")
                .attr("transform", "translate(0," + height + ")")
@@ -438,7 +432,7 @@
             .text("Date");
         
             let y = d3.scaleLinear()
-                      .domain( [8000, 9500])
+                      .domain( [100, 1300])
                       .range([ height, 0 ]);
 
             svg.append("g")
@@ -454,7 +448,7 @@
             .style("font-size", "2rem")
             .style("fill", "#2c364c")
             .text("Ticket Price"); 
-
+            
 
             svg.append("text")
                 .attr("x", (width / 2))             
@@ -465,18 +459,17 @@
                 .style("font-size", "2.5rem") 
                 .text(username + "'s Holiday Chart");
 
-
             svg.append("path")
-            .datum(data)
+            .datum(dict)
             .attr("fill", "none")
             .attr("stroke", "#384668")
             .attr("stroke-width", 3)
             .attr("d", d3.line()
                 .curve(d3.curveBasis)
                 .x(function(d) { return x(d.date) })
-                .y(function(d) { return y(d.value) })
+                .y(function(d) { return y(d.price) })
                 )
-            .s
+        
         
             let Tooltip = d3.select("#linechart")
                             .append("div")
@@ -496,7 +489,7 @@
 
             let mousemove = function(d) {
                 Tooltip
-                .html("Ticket £" + d.value)
+                .html("Ticket £" + d.price)
                 .style("left", (d3.mouse(this)[0]+70) + "px")
                 .style("top", (d3.mouse(this)[1]) + "px")
             };
@@ -509,12 +502,12 @@
             svg
             .append("g")
             .selectAll("dot")
-            .data(data)
+            .data(dict)
             .enter()
             .append("circle")
                 .attr("class", "myCircle")
                 .attr("cx", function(d) { return x(d.date) } )
-                .attr("cy", function(d) { return y(d.value) } )
+                .attr("cy", function(d) { return y(d.price) } )
                 .attr("r", 8)
                 .attr("stroke", "#697db2")
                 .attr("stroke-width", 3)
@@ -522,7 +515,7 @@
                 .on("mouseover", mouseover)
                 .on("mousemove", mousemove)
                 .on("mouseleave", mouseleave)
-        });
+        };
 
  
     </script>

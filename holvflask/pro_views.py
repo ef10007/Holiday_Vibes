@@ -7,6 +7,7 @@ from sqlalchemy.sql import func
 from holvflask import app
 from holvflask.pro_init_db import db_session, init_database
 from holvflask.pro_models import User, City, Country, CityMPT, Preference, Ticket, Weather
+from pprint import pprint
 
 
 
@@ -37,7 +38,6 @@ def mymenu_user(userid):
 
 
 @app.route('/mymenu/<start_date>&<end_date>&<cityname>', methods=['GET'])
-
 def mymenu_user_calendar(start_date, end_date, cityname):
 
     start_date_datetime = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
@@ -68,6 +68,8 @@ def mymenu_user_calendar(start_date, end_date, cityname):
         data1['desc'] = datalist
 
         data['result'].append(data1)
+
+        pprint(data)
 
     return jsonify( data )
 
@@ -255,6 +257,7 @@ def login_post():
 def logout():
     if session.get('loginUser'):
         del session['loginUser']
+    
     return redirect('/')
 
 

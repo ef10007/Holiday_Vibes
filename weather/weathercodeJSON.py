@@ -10,7 +10,7 @@ def get_conn():
     user=os.getenv('mysql_user'),
     password=os.getenv('mysql_pw'),
     port=3306,
-    db='projectdb',
+    db='yay',
     charset='utf8')
 
 def weather():

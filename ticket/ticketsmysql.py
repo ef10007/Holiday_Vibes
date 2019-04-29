@@ -17,7 +17,7 @@ def get_conn():
     user=os.getenv('mysql_user'),
     password=os.getenv('mysql_pw'),
     port=3306,
-    db='projectdb',
+    db='yay',
     charset='utf8')
 
 countrynames = [('United Kingdom', 'London'), ('Australia', 'Sydney'), ('United States', 'New York')]
@@ -36,7 +36,7 @@ def ticket(countryname, cityname, price_sample):
     datelst = []
     ticketlst = []
 
-    while(i < 366):
+    while(i < 300):
 
         today = today + datetime.timedelta(days=1)
         day = today.strftime("%Y-%m-%d")
@@ -66,7 +66,7 @@ def ticket(countryname, cityname, price_sample):
 
 
 
-ticket('United States', 'New York', usprice_sample)
+ticket('United Kingdom', 'London', ukprice_sample)
 
 
 

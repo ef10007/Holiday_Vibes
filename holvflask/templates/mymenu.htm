@@ -312,22 +312,8 @@
         const userid = $('#userid').attr('value');
         console.log(userid)
 
-        let sm = {{month}};
-        let sy = {{year}};
-
-        if (!sm & sy){
-            sm = {{month}};
-            sy = {{selected_year}};
-        } else if (sm & !sy){
-            sm = {{selected_month}};
-            sy = {{year}};
-        } else if (!sm & !sy){
-            sm = {{selected_month}};
-            sy = {{selected_year}};
-        } else {
-            sm = {{month}};
-            sy = {{year}};
-        }
+        let sm;
+        let sy;
 
         if ($('#ifp')){
 
@@ -335,7 +321,29 @@
                 console.log(res)
                 Preference(res);
             });
-        };
+
+        } else {
+
+                if (!sm & sy){
+                sm = {{month}};
+                sy = {{selected_year}};
+                console.log("11111", sm, sy)
+            } else if (sm & !sy){
+                sm = {{selected_month}};
+                sy = {{year}};
+                console.log("22222", sm, sy)
+            } else if (!sm & !sy){
+                sm = {{selected_month}};
+                sy = {{selected_year}};
+                console.log("33333", sm, sy)
+            } else if (sm, sy) {
+                sm = {{month}};
+                sy = {{year}};
+                console.log("44444", sm, sy)
+            }
+        
+        }
+        ;
 
 
         function Preference(res){
@@ -445,6 +453,7 @@
                 dayarr.push(numday);
             }
         });
+        let arr = []
 
         let isSelecteds = false;
         let isSelectede = false;
@@ -452,26 +461,43 @@
         let sid = ''
         let eid = ''
 
-        
         function startDate(value){
             
             sid = '#' + value;
             
-            
             if (isSelecteds == false){
+
                 
                 isSelecteds = true;
                 $(sid).addClass('grey lighten-3');
                 
+                let content
                 if (sm & !sy){
-                    $('#startdate').html("{{year}}-{{selected_month}}-" + value);
+                    content = "{{year}}-{{selected_month}}-" + value;
+                    arr.push(content)
+                    //$('#startdate').html(arr[0]);
+                    console.log(sidarr)
+
                 } else if (sy & !sm){
-                    $('#startdate').html("{{selected_year}}-{{month}}-" + value);
+                    content = "{{selected_year}}-{{month}}-" + value;
+                    arr.push(content)
+                    //$('#startdate').html(arr[0]);
+                    console.log(arr)
+
                 } else if (sm & sy){
-                    $('#startdate').html("{{selected_year}}-{{selected_month}}-" + value);
+                    content = "{{selected_year}}-{{selected_month}}-" + value;
+                    arr.push(content)
+                   // $('#startdate').html(arr[0]);
+                    console.log("?HERER", arr)
+
                 } else {
-                    $('#startdate').html("{{year}}-{{month}}-" + value);
+                    content = "{{year}}-{{month}}-" + value;
+                    arr.push(content)
+                   // $('#startdate').html(arr[0]);
+                    console.log(arr)
                 }
+
+            $('#startdate').html(arr[0]);
 
 
                 for (da in dayarr){
@@ -491,7 +517,24 @@
 
                 isSelecteds = false;
                 $(sid).removeClass('grey lighten-3');
-                $('#startdate').html('');
+
+                if (sm & !sy){
+                    arr = []
+                    $('#startdate').html('');
+
+                } else if (sy & !sm){
+                    arr = []
+                    $('#startdate').html('');
+
+                } else if (sm & sy){
+                    arr = []
+                    $('#startdate').html('');
+
+                } else {
+                    arr = []
+                    $('#startdate').html('');
+                }
+
 
                 for (da in dayarr){
                     if (value <= dayarr[da]){
@@ -536,7 +579,6 @@
         function endDate(value){
 
             eid = '#' + value;
-
 
             if (isSelectede == false){
 
@@ -698,7 +740,7 @@
         });
             
         function getCity(keys){
-            $('#city').html('') //초기화
+            $('#city').html('')
 
             $.getJSON( "static/json/getcity.json", function( data ) {
            
