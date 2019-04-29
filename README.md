@@ -1,6 +1,10 @@
 # Project plan and daily note
 
-[Presentation Resource - Strategy](https://docs.google.com/presentation/d/1AvII3M6TztcOlt1fVw902jkoczVbgYWZzz-IWcQg1-Y/edit?usp=sharing)
+
+[THE FINAL PRESENTATION](https://docs.google.com/presentation/d/1f-88m5-hKJFiiw6qBY2rdFxKah-O09DTvid3MtbgryA/edit?usp=sharing)
+
+
+[Presentation Resource - Plan](https://docs.google.com/presentation/d/1AvII3M6TztcOlt1fVw902jkoczVbgYWZzz-IWcQg1-Y/edit?usp=sharing)
 
 [Trello - teamwork](https://trello.com/b/oyM55CWZ/project-team)
 
