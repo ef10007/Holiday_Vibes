@@ -139,9 +139,9 @@ def preference():
     
     return redirect('/mymenu')
 
-
 @app.route("/mymenu/edit", methods=['GET'])
 def preference_edit_get():
+
     today = date.today()
     dt = today.strftime("%Y-%m-%d")
         
@@ -169,7 +169,6 @@ def preference_edit():
     temperature = request.form.get('temperature')
     minbud = request.form.get('mininum')
     maxbud = request.form.get('maximum')
-
 
     p = Preference(userid, start_date, end_date, cityname, temperature, minbud, maxbud)
 

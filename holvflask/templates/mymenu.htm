@@ -365,13 +365,9 @@
             $('#minbud').html("£ " + minbud);
             $('#maxbud').html("£ " + maxbud);
 
-
             start_value = start_date.split('-')
             end_value = end_date.split('-')
 
-            if ($('#ifp')){
-
-                
                 let sd = parseInt(start_value[2])
                 let ed = parseInt(end_value[2])
                 
@@ -431,17 +427,13 @@
                         
                         $('#data' + days[2]).append('<div class="my-3"> £ ' + price + '<div>', '<div>' + maxt +  '°C - ' + mint+ '°C</div>', '<span>' + desc + '</span>');
                         
-
-                        $('#' + days[2]).addClass('indigo');
+                        $('#' + days[2]).removeClass('white').addClass('indigo lighten-5');
                         
                     }
 
 
                 });
             };
-
-        };
-
 
 
         const dayarr = []
@@ -453,6 +445,7 @@
                 dayarr.push(numday);
             }
         });
+
         let arr = []
 
         let isSelecteds = false;
@@ -725,8 +718,7 @@
         };
 
         
-
-        $.getJSON( "static/json/getcity.json", function( data ) {
+        $.getJSON( "static/json/getcity_renew.json", function( data ) {
            
             $.each( data, function( key, val ) {
               $('#country').append($('<option />').val(key).html(key))
@@ -742,12 +734,12 @@
         function getCity(keys){
             $('#city').html('')
 
-            $.getJSON( "static/json/getcity.json", function( data ) {
+            $.getJSON( "static/json/getcity_renew.json", function( data ) {
            
                 $.each( data, function( key, val ) {
                     if(key == keys){
                     for (c in val){
-                        $('#city').append($('<option />').val(val[c][0]).html(val[c][0]));
+                        $('#city').append($('<option />').val(val[c]).html(val[c]));
                     }
                 }});
               });

@@ -24,7 +24,6 @@ mintemp = ''
 with open('weathercode.json') as json_file:  
     codes = json.load(json_file)
 
-
 apikey = os.getenv('WeatherAPI')
 
 for citycode, cityname in codes.items():
