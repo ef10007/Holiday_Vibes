@@ -29,121 +29,68 @@ cur.execute(sql_select)
 rows = cur.fetchall()
 
 countrynames = []
+countrynames_tocompare = []
 
 for row in rows:
     country = row[1]
     city = row[2]
 
+    countrynames_tocompare.append(country)
+
     countrynames.append((country, city))
 
 # pprint(countrynames)
+
 
 with open('Ticketprice.json', 'r') as jsonfile:
     data = json.loads(jsonfile.read())
 
 dprice = ''
 idprice = ''
-countrynames = countrynames
-
-length = len(data['PlacePrices'])
 
 lst = []
 
-pprint(countrynames)
-
-for i in range(1, length):
+for i in data['PlacePrices']:
     
-    setdata = data['PlacePrices'][i]
-    setname = setdata['Name']
+    setdata = i
+    setname = i['Name']
 
-
-    if setname in countrynames:
-
-        print(setname)
-
+    if setname not in countrynames_tocompare:
+        continue
 
     keylist = setdata.keys()
 
+    if 'DirectPrice' in keylist:
+        price = setdata['DirectPrice']
 
-#     if 'DirectPrice' in keylist:
-
-#         price = data['DirectPrice']
-
-#         if price == 0:
-#             dprice = random.randint(500, 1100)
-
-#             continue
+        if price == 0:
+            dprice = random.randint(500, 1100)
+            continue
         
-#         else:
-#             dprice = price
+        else:
+            dprice = price
 
-#         direct = (countrynames, dprice)
+        direct = (setname, dprice)
 
+        lst.append(direct)
 
-#         lst.append(direct)
+    elif 'IndirectPrice' in keylist:
 
-
-#     elif 'IndirectPrice' in keylist:
-
-#         price = data['IndirectPrice']
+        price = setdata['IndirectPrice']
     
-#         if price == 0:
-            
-#             idprice = random.randint(500, 1400)
+        if price == 0:
+            idprice = random.randint(500, 1400)
+            continue
 
-#             continue
+        else:
+            idprice = price
 
-#         else:
-#             idprice = price
+        indirect = (setname, idprice)
 
-#             indirect = (countrynames, idprice)
+        lst.append(indirect)
 
-#         lst.append(indirect)
+pprint(lst)
 
-# pprint(lst)
-
-
-
-exit()
-
-
-def ticket(countryname, cityname, price_sample):
-    
-    today = datetime.datetime.now()
-
-    i = 0
-    datelst = []
-    ticketlst = []
-
-    while(i < 300):
-
-        today = today + datetime.timedelta(days=1)
-        day = today.strftime("%Y-%m-%d")
-        datelst.append(day)
-        i += 1
-
-    for i in range(len(datelst)):
-
-        price = random.randint((price_sample[1] - 200), (price_sample[1] + 200))
-
-        tupledata = (countryname, cityname, price, datelst[i])
-
-        print(tupledata)
-        
-        ticketlst.append(tupledata)
-
-    sql_insert = "insert into Ticket(countryname, cityname, price, dt) values(%s, %s, %s, %s)"
-
-    conn = get_conn()
-    with conn:
-                        
-        cur = conn.cursor()
-        cur.executemany(sql_insert, ticketlst)
-
-    print('---- Success to create ticket prices for {}!! ----'.format(cityname))
-
-for c in countrynames:
-    print(c)
 
 
 
