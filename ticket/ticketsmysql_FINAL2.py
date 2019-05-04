@@ -34,8 +34,9 @@ ukprice_sample =  ('United Kingdom', 639)
 moprice_sample =  ('Morocco', 552)
 sfprice_sample = ('South Africa', 790)
 
-countrynames = [('Russia', 'Moscow'), ('South Africa', 'Johannesburg'), ('Thailand', 'Phuket'), ('China', 'Shanghai'), ('Hong Kong', 'Hong Kong'), ('Japan', 'Tokyo'), ('Japan', 'Osaka'), ('Singapore', 'Singapore'), ('Australia', 'Sydney'), ('United Kingdom', 'London'), ('Belgium', 'Brussels'), ('Ireland', 'Dublin'), ('Hungary', 'Budapest'), ('South Africa', 'Cape Town'), ('Mexico', 'Cancun'), ('United States', 'Chicago'), ('United States', 'New York'), ('United States', 'Los Angeles'), ('Canada', 'Ottawa'), ('Canada', 'Toronto'), ('Morocco', 'Marrakech')]
+# countrynames = [('Russia', 'Moscow'), ('South Africa', 'Johannesburg'), ('Thailand', 'Phuket'), ('China', 'Shanghai'), ('Hong Kong', 'Hong Kong'), ('Japan', 'Tokyo'), ('Japan', 'Osaka'), ('Singapore', 'Singapore'), ('Australia', 'Sydney'), ('United Kingdom', 'London'), ('Belgium', 'Brussels'), ('Ireland', 'Dublin'), ('Hungary', 'Budapest'), ('South Africa', 'Cape Town'), ('Mexico', 'Cancun'), ('United States', 'Chicago'), ('United States', 'New York'), ('United States', 'Los Angeles'), ('Canada', 'Ottawa'), ('Canada', 'Toronto'), ('Morocco', 'Marrakech')]
 
+countrynames = [ ('Mexico', 'Cancun')]
 
 samplelist = [thprice_sample, sgprice_sample, hkprice_sample, caprice_sample, 
 cnprice_sample, jpprice_sample, ruprice_sample, hgprice_sample,
@@ -48,23 +49,14 @@ def ticket(countryname, cityname, price_sample):
     i = 0
     datelst = []
     ticketlst = []
+    
+    price = random.randint((price_sample[1] - 20), (price_sample[1] + 100))
 
-    while(i < 366):
+    tupledata = (countryname, cityname, price, '2019-05-03')
 
-        today = today + datetime.timedelta(days=1)
-        day = today.strftime("%Y-%m-%d")
-        datelst.append(day)
-        i += 1
-
-    for i in range(len(datelst)):
-
-        price = random.randint((price_sample[1] - 20), (price_sample[1] + 100))
-
-        tupledata = (countryname, cityname, price, datelst[i])
-
-        print(tupledata)
-        
-        ticketlst.append(tupledata)
+    print(tupledata)
+    
+    ticketlst.append(tupledata)
 
     sql_insert = "insert into Ticket(countryname, cityname, price, dt) values(%s, %s, %s, %s)"
 

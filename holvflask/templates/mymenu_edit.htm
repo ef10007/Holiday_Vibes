@@ -206,28 +206,30 @@
     <script type="text/javascript">
         
         const userid = $('#userid').attr('value');
+
+        let url = '{{request.url}}';
+
+        console.log(url)
         let sm;
         let sy;
 
-
         if (!sm & sy){
-        sm = {{month}};
-        sy = {{selected_year}};
-        console.log("11111", sm, sy)
+            sm = '{{month}}';
+            sy = '{{selected_year}}';
+            console.log("11111", sm, sy)
         } else if (sm & !sy){
-            sm = {{selected_month}};
-            sy = {{year}};
+            sm = '{{selected_month}}';
+            sy = '{{year}}';
             console.log("22222", sm, sy)
         } else if (!sm & !sy){
-            sm = {{selected_month}};
-            sy = {{selected_year}};
+            sm = '{{selected_month}}';
+            sy = '{{selected_year}}';
             console.log("33333", sm, sy)
         } else if (sm, sy) {
-            sm = {{month}};
-            sy = {{year}};
+            sm = '{{month}}';
+            sy = '{{year}}';
             console.log("44444", sm, sy)
-        };
-
+        }
 
         const dayarr = []
         $("td").each(function(){
@@ -238,8 +240,6 @@
                 dayarr.push(numday);
             }
         });
-        
-
 
         let arr = []
 
@@ -447,6 +447,7 @@
         };
 
 
+
         const budget = [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600]
 
         for (b in budget){
@@ -464,7 +465,6 @@
                 }
             };
         };
-
 
         const season = {'Spring': 'Spring', 
                     'Summer': 'Summer', 
@@ -488,7 +488,7 @@
         });
 
         function getTemperature(season){
-            $('#temperature').html('') //초기화
+            $('#temperature').html('')
 
             let temp = temperature[season]; 
 
@@ -496,8 +496,6 @@
                 $('#temperature').append($('<option />').val(temp[t]).html(temp[t]));
             }    
         };
-
-        //onchange="getTemp(this.value)
 
         function getTemp(value){
 
@@ -510,13 +508,13 @@
                 }
             };
         };
-
-        $.getJSON( "static/json/getcity_renew.json", function( data ) {
+        
+        $.getJSON( "/static/json/getcity_renew.json", function( data ) {
            
             $.each( data, function( key, val ) {
               $('#country').append($('<option />').val(key).html(key))
             });
-          });
+        });
 
         $('#country').change(function(){
             let $key = $('#country').val();
@@ -527,7 +525,7 @@
         function getCity(keys){
             $('#city').html('')
 
-            $.getJSON( "static/json/getcity_renew.json", function( data ) {
+            $.getJSON("/static/json/getcity_renew.json", function( data ) {
            
                 $.each( data, function( key, val ) {
                     if(key == keys){

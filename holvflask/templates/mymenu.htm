@@ -33,7 +33,7 @@
     
                     <li><small><a href="/mymenu?selected_year={{dt | year}}&selected_month={{dt | monthbf}}" class="text-muted"> <i class="fas fa-chevron-circle-left"></i> </a></small></li>
             
-                    <li id="named_month">{{dt | namedmonth}}</li>
+                    <li id="named_month" value="{{dt | month}}">{{dt | namedmonth}}</li>
             
                     <li><small><a href="/mymenu?selected_year={{dt | year}}&selected_month={{dt | monthaf}}" class="text-muted">  <i class="fas fa-chevron-circle-right"></i> </a></small></li>
 
@@ -52,10 +52,12 @@
 
                 <tbody class="white">
                     {% for row in range(dt | sdt, dt | edt) | batch(7, '&nbsp;') %}
+
                     <tr>
 
                         {% for col in row %}
                             <td class="text-left h5 hoverable" id="{{col}}" onclick="startDate(this.id)" value="{{col}}">
+                                
                                 {% if ((col|int) <= 0) %}
                                     &nbsp;
                                 {%else%}
@@ -68,6 +70,7 @@
                         {% endfor %}
 
                     </tr>
+
                     {% endfor %}
                 </tbody>
                 
@@ -81,7 +84,8 @@
 
 {% block body %}
 
-    <main class="mt-5 mx-5 pt-5 px-5">
+
+<main class="mt-5 mx-5 pt-5 px-5">
     
     {% if p %}
         
@@ -89,8 +93,8 @@
             <div class="row">
         
             <div class="col-lg-8 my-3">
-                <div class="card-header h4 mdb-color-text grey lighten-4 mb-4">My calendar</div>
 
+                <div class="card-header h4 mdb-color-text grey lighten-4 mb-4">My calendar</div>
 
                 <span id="startdate" class="border border-white my-1 mx-3 px-4 mdb-color-text"  style="font-size: 30px"></span>
 
@@ -101,7 +105,7 @@
                 <input type="text" id="formenddate" name="enddate" style="visibility: hidden;">
 
                 
-            <div class = "container-fluid mdb-color-text">
+            <div class ="container-fluid mdb-color-text">
                 
                 {% if selected_year and selected_month %}
                 {% set dt = "%s-%s-01" % (selected_year, selected_month) %}
@@ -115,6 +119,7 @@
                     {{calendar(dt)}}
 
                 {% endif %}
+
 
                 <div class="my-2" style="float: right;">
 
@@ -309,45 +314,45 @@
 
     <script type="text/javascript">
        
-        const userid = $('#userid').attr('value');
-        console.log(userid)
+        let userid;
 
         let sm;
         let sy;
+        let url = '{{request.url}}';
 
         if ($('#ifp')){
 
+            userid = $('#userid').attr('value');
+            console.log(userid)
+        
             send_ajax('/mymenu/' + userid, 'GET', '', '', function(res){
                 console.log(res)
                 Preference(res);
             });
 
         } else {
-
                 if (!sm & sy){
-                sm = {{month}};
-                sy = {{selected_year}};
+                sm = '{{month}}';
+                sy = '{{selected_year}}';
                 console.log("11111", sm, sy)
             } else if (sm & !sy){
-                sm = {{selected_month}};
-                sy = {{year}};
+                sm = '{{selected_month}}';
+                sy = '{{year}}';
                 console.log("22222", sm, sy)
             } else if (!sm & !sy){
-                sm = {{selected_month}};
-                sy = {{selected_year}};
+                sm = '{{selected_month}}';
+                sy = '{{selected_year}}';
                 console.log("33333", sm, sy)
             } else if (sm, sy) {
-                sm = {{month}};
-                sy = {{year}};
+                sm = '{{month}}';
+                sy = '{{year}}';
                 console.log("44444", sm, sy)
             }
         
-        }
-        ;
+        };
 
 
         function Preference(res){
-
 
             let cityname = res['cityname']
             let start_date = res['start_date']
@@ -368,70 +373,75 @@
             start_value = start_date.split('-')
             end_value = end_date.split('-')
 
-                let sd = parseInt(start_value[2])
-                let ed = parseInt(end_value[2])
-                
-                let smm = parseInt(start_value[1])
-                let emm = parseInt(end_value[1])
-                
-                if (smm !=  sm) {
-                    for (da in dayarr){
-
-                        let id22 = '#' + dayarr[da]
-                        $(id22).addClass('white').attr('onclick','');
-                    }
-                } else {
-
-                    for (da in dayarr){
-                        if (sd > dayarr[da]){
-                            
-                            let id2 = '#' + dayarr[da];
-                            $(id2).addClass('white').attr('onclick','');
-                            
-                        }  else if (ed < dayarr[da] ){
-                            let id4 = '#' + dayarr[da];
-
-                            $(id4).addClass('white').attr('onclick','');
-
-                        } else if (sd < dayarr[da]) {
-                            let id3 = '#' + dayarr[da];
-
-                            $(id3).addClass('indigo lighten-5').attr('onclick','');
-
-                        } else if (ed > dayarr[da]) {
-                            let id3 = '#' + dayarr[da];
-
-                            $(id3).addClass('indigo lighten-5').attr('onclick','');
-                        }
-
-                    };
-                }
+            let sd = parseInt(start_value[2])
+            let ed = parseInt(end_value[2])
             
+            let smm = parseInt(start_value[1])
+            let emm = parseInt(end_value[1])
 
-                //let keydata = $('#keydata').attr('value');
+            
+            if (smm !=  sm) {
+                for (da in dayarr){
 
-               // console.log("KEYDATA", keydata);
+                    let id22 = '#' + dayarr[da]
+                    $(id22).addClass('white').attr('onclick','');
+                }
 
-                send_ajax('/mymenu/' + start_date + '&' + end_date + '&' + cityname, 'GET', '', 'json', function(resp){
+            } else {
 
-                    for (i in resp['result']){
-
-                        let days = resp['result'][i]['days'];
-
-                        days = days.split('-')
-
-                        let desc = resp['result'][i]['desc'][0];
-                        let mint = resp['result'][i]['desc'][1];
-                        let maxt = resp['result'][i]['desc'][2];
-                        let price = resp['result'][i]['desc'][3];
+                for (da in dayarr){
+                    if (sd > dayarr[da]){
                         
-                        $('#data' + days[2]).append('<div class="my-3"> £ ' + price + '<div>', '<div>' + maxt +  '°C - ' + mint+ '°C</div>', '<span>' + desc + '</span>');
+                        let id2 = '#' + dayarr[da];
+                        $(id2).addClass('white').attr('onclick','');
                         
-                        $('#' + days[2]).removeClass('white').addClass('indigo lighten-5');
-                        
+                    }  else if (ed < dayarr[da] ){
+                        let id4 = '#' + dayarr[da];
+
+                        $(id4).addClass('white').attr('onclick','');
+
+                    } else if (sd < dayarr[da]) {
+                        let id3 = '#' + dayarr[da];
+
+                        $(id3).addClass('indigo lighten-5').attr('onclick','');
+
+                    } else if (ed > dayarr[da]) {
+                        let id3 = '#' + dayarr[da];
+
+                        $(id3).addClass('indigo lighten-5').attr('onclick','');
                     }
 
+                };
+            }
 
+            let year; let month; let day;
+
+            let m;
+            
+            
+            send_ajax('/mymenu/' + start_date + '&' + end_date + '&' + cityname, 'GET', '', 'json', function(resp){
+                
+                
+                for (i in resp['result']){
+                    
+                    let days = resp['result'][i]['days'];
+                    
+                    days = days.split('-')
+              
+                    m = $('#named_month').attr('value');
+
+                    let desc = resp['result'][i]['desc'][0];
+                    let mint = resp['result'][i]['desc'][1];
+                    let maxt = resp['result'][i]['desc'][2];
+                    let price = resp['result'][i]['desc'][3];
+                    
+                    console.log("<<<<<>>>>", desc,maxt , mint, price , parseInt(days[2]))
+
+                    $('#data'+ parseInt(days[2])).append('<div class="my-3"> £ ' + price + '<div>', '<div>' + maxt +  '°C - ' + mint + '°C</div>', '<span>' + desc + '</span>');
+                    
+                    $('#'+ parseInt(days[2])).removeClass('white').addClass('indigo lighten-5');
+
+                }
                 });
             };
 
@@ -671,7 +681,6 @@
             };
         };
 
-
         const season = {'Spring': 'Spring', 
                     'Summer': 'Summer', 
                     'Autumn': 'Autumn', 
@@ -694,7 +703,7 @@
         });
 
         function getTemperature(season){
-            $('#temperature').html('') //초기화
+            $('#temperature').html('')
 
             let temp = temperature[season]; 
 
@@ -702,8 +711,6 @@
                 $('#temperature').append($('<option />').val(temp[t]).html(temp[t]));
             }    
         };
-
-        //onchange="getTemp(this.value)
 
         function getTemp(value){
 

@@ -37,6 +37,18 @@ def mymenu_user(userid):
     return jsonify( p.json() )
 
 
+@app.route("/mymenu/edit/<userid>", methods=['GET'])
+def mymenu_user_edit(userid):
+
+    p = db_session.query(Preference).filter("userid = :userid").params(userid=userid).first()
+
+    if len(p) > 1:
+        print("WOOWOWOOWOW")
+
+
+    return jsonify( p.json() )
+
+
 @app.route('/mymenu/<start_date>&<end_date>&<cityname>', methods=['GET'])
 def mymenu_user_calendar(start_date, end_date, cityname):
 
@@ -75,7 +87,6 @@ def mymenu_user_calendar(start_date, end_date, cityname):
 
 
 
-
 @app.route("/mymenu", methods=['GET'])
 def mymenu():
 
@@ -102,6 +113,8 @@ def mymenu():
     else:
             
         return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, userid=userid)
+
+
 
 
 @app.route("/mymenu", methods=['POST'])
@@ -156,6 +169,7 @@ def preference_edit_get():
     userid = session['loginUser']['id']
     
     return render_template('mymenu_edit.htm',  year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, userid=userid)
+
 
 @app.route("/mymenu/edit", methods=['POST'])
 def preference_edit():
