@@ -42,10 +42,6 @@ def mymenu_user_edit(userid):
 
     p = db_session.query(Preference).filter("userid = :userid").params(userid=userid).first()
 
-    if len(p) > 1:
-        print("WOOWOWOOWOW")
-
-
     return jsonify( p.json() )
 
 

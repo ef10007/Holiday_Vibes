@@ -421,7 +421,6 @@
             
             send_ajax('/mymenu/' + start_date + '&' + end_date + '&' + cityname, 'GET', '', 'json', function(resp){
                 
-                
                 for (i in resp['result']){
                     
                     let days = resp['result'][i]['days'];
@@ -435,7 +434,7 @@
                     let maxt = resp['result'][i]['desc'][2];
                     let price = resp['result'][i]['desc'][3];
                     
-                    console.log("<<<<<>>>>", desc,maxt , mint, price , parseInt(days[2]))
+                    console.log("<<<<<>>>>", desc,maxt , mint, price ,parseInt(days[1]),  parseInt(days[2]))
 
                     $('#data'+ parseInt(days[2])).append('<div class="my-3"> £ ' + price + '<div>', '<div>' + maxt +  '°C - ' + mint + '°C</div>', '<span>' + desc + '</span>');
                     
