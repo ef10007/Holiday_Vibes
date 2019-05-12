@@ -111,8 +111,6 @@ def mymenu():
         return render_template('mymenu.htm', year=year, month=month, dt=dt, namedmonth=namedmonth, selected_year=selected_year, selected_month=selected_month, userid=userid)
 
 
-
-
 @app.route("/mymenu", methods=['POST'])
 def preference():
 
@@ -189,7 +187,7 @@ def preference_edit():
     except:
         db_session.rollback()
     
-    return redirect('/mymenu')
+    return redirect('/mymenu/edit')
     
 
 
